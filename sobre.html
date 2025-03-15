@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Meta Tags para SEO -->
+    <meta name="description" content="Conheça a ELP Green Technology e a ELP Move, empresas focadas em reciclagem de pneus e mobilidade sustentável no Brasil, China e Europa.">
+    <meta name="keywords" content="mobilidade sustentável, reciclagem de pneus, economia circular, ELP Move, ELP Green Technology">
+    <meta name="author" content="ELP Move">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Sobre Nós - ELP Move">
+    <meta property="og:description" content="Saiba mais sobre a ELP Green Technology e a ELP Move, nossas operações globais e compromisso com a sustentabilidade.">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630.png?text=ELP+Move+Sobre+N%C3%B3s">
+    <meta property="og:url" content="https://www.elpmove.it/sobre-nos">
+    <meta property="og:type" content="website">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sobre Nós - ELP Move">
+    <meta name="twitter:description" content="Descubra como a ELP Green Technology e a ELP Move promovem sustentabilidade e mobilidade no Brasil, China e Europa.">
+    <meta name="twitter:image" content="https://via.placeholder.com/1200x630.png?text=ELP+Move+Sobre+N%C3%B3s">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>Sobre Nós - ELP Move</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 2rem;
+            color: #ff6f61 !important;
+            transition: color 0.3s ease;
+        }
+        .navbar-brand:hover {
+            color: #ff4b3a !important;
+        }
+        .nav-link {
+            font-size: 1.1rem;
+            color: #333 !important;
+            margin-left: 25px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #ff6f61 !important;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #ff6f61;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        .about-section {
+            padding: 100px 0;
+            background: #fff;
+            border-radius: 20px;
+            margin: 20px auto;
+            max-width: 1200px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .about-section h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 40px;
+            text-align: center;
+            background: linear-gradient(90deg, #ff6f61, #007bff);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .about-section p.intro {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 50px;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .about-section h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #ff6f61;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .about-section h2::after {
+            content: '';
+            width: 50px;
+            height: 3px;
+            background: #007bff;
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            border-radius: 5px;
+        }
+        .about-section p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.8;
+        }
+        /* Tabs */
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .tab-btn {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            background: #e0e0e0;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            background: linear-gradient(90deg, #ff6f61, #007bff);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+        }
+        .project-card {
+            background: #f9f9f9;
+            border-radius: 15px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .project-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        .project-card i {
+            font-size: 2.5rem;
+            color: #ff6f61;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        .project-card:hover i {
+            transform: rotate(360deg);
+        }
+        .about-section .btn {
+            font-size: 1.2rem;
+            padding: 12px 40px;
+            border-radius: 50px;
+            background: linear-gradient(90deg, #ff6f61, #007bff);
+            border: none;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .about-section .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+        .about-section .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        .about-section .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        footer {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            color: white;
+            padding: 60px 0;
+            margin-top: 50px;
+        }
+        footer h5 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #ff6f61;
+        }
+        footer p, footer a {
+            font-size: 1rem;
+            color: #d1d1d1;
+            margin-bottom: 10px;
+        }
+        footer a {
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        footer a:hover {
+            color: #ff6f61;
+        }
+        footer .social-icons a {
+            font-size: 1.8rem;
+            margin: 0 15px;
+            color: #d1d1d1;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        footer .social-icons a:hover {
+            color: #ff6f61;
+            transform: scale(1.2);
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @media (max-width: 768px) {
+            .about-section h1 {
+                font-size: 2.2rem;
+            }
+            .about-section h2 {
+                font-size: 1.6rem;
+            }
+            .tab-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .tab-btn {
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">ELP Move</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.elpmove.it/produtos">Produtos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="https://www.elpmove.it/sobre-nos">Sobre Nós</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.elpmove.it/sustentabilidade">Sustentabilidade</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.elpmove.it/economia-circular">Economia Circular</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.elpmove.it/reciclagem-pneus">Reciclagem de Pneus</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.elpmove.it/contato">Contato</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.elpmove.it/carrinho">Carrinho <i class="fas fa-shopping-cart"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="about-section">
+        <div class="container">
+            <h1 class="fade-in">Sobre Nós</h1>
+            <p class="intro fade-in">A ELP Green Technology foi fundada em 2016 por Ericson Piccoli com a missão de oferecer soluções sustentáveis para desafios ambientais globais. Com operações consolidadas no Brasil e na China, somos especializados na produção de máquinas para reciclagem de pneus e na geração de goma regenerada, um material essencial para a economia circular. Fazemos parte do Tops Recycling Group, líder em sustentabilidade, e estamos expandindo nossa presença para a Europa, com foco inicial na Itália através da ELP Move.</p>
+            
+            <div class="fade-in">
+                <h2>Nosso Grupo</h2>
+                <p>Como parte do Tops Recycling Group, a ELP Green Technology atua como uma ponte entre Ásia, América Latina e Europa, promovendo tecnologias avançadas de reciclagem e mobilidade sustentável. Nosso modelo de negócios integra inovação, parcerias estratégicas e impacto ambiental, alinhando-se aos Objetivos de Desenvolvimento Sustentável da ONU.</p>
+            </div>
+
+            <div class="fade-in mt-5">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="brasil">Brasil</button>
+                    <button class="tab-btn" data-tab="china">China</button>
+                    <button class="tab-btn" data-tab="europa">Europa</button>
+                </div>
+
+                <div class="tab-content active" id="brasil">
+                    <div class="project-card">
+                        <i class="fas fa-globe-americas"></i>
+                        <h2>Projetos no Brasil</h2>
+                        <p>No Brasil, registrados sob o CNPJ 42.501.190/0001-70, concentramo-nos na reciclagem de pneus e na produção de matérias-primas sustentáveis. A ELP Move está sendo estruturada para oferecer scooters, monopattinos e bicicletas elétricas.</p>
+                    </div>
+                </div>
+                <div class="tab-content" id="china">
+                    <div class="project-card">
+                        <i class="fas fa-globe-asia"></i>
+                        <h2>Projetos na China</h2>
+                        <p>Na China, nossa parceria com o Tops Recycling Group nos permite desenvolver equipamentos de reciclagem de última geração, contribuindo para a meta de neutralidade de carbono até 2060 e exportando tecnologia.</p>
+                    </div>
+                </div>
+                <div class="tab-content" id="europa">
+                    <div class="project-card">
+                        <i class="fas fa-globe-europe"></i>
+                        <h2>Projetos na Europa</h2>
+                        <p>Com sede em Verona, Itália, desde 2021, a ELP Move traz mobilidade sustentável ao mercado europeu com veículos elétricos e parcerias estratégicas, como com a Ebroh.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fade-in">
+                <h2>Nosso Compromisso</h2>
+                <p>Nosso objetivo é liderar a transformação sustentável, conectando Brasil, China e Europa em uma rede global de inovação. Oferecemos soluções práticas para a mobilidade urbana e a gestão de resíduos, promovendo um futuro mais limpo e próspero.</p>
+            </div>
+
+            <div class="text-center mt-5 fade-in">
+                <a href="https://www.elpmove.it/contato" class="btn">Entre em Contato</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>Sobre a ELP Move</h5>
+                    <p>Fundada em 2021, a ELP Move é uma extensão da ELP Green Technology, sediada em Verona, Itália. Somos especializados em scooters elétricos, bicicletas elétricas e tecnologia de mobilidade sustentável.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Links Úteis</h5>
+                    <p><a href="https://www.elpmove.it/politica-privacidade">Política de Privacidade</a></p>
+                    <p><a href="https://www.elpmove.it/termos-uso">Termos de Uso</a></p>
+                    <p><a href="https://www.elpmove.it/contato">Contato</a></p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Siga-nos</h5>
+                    <div class="social-icons">
+                        <a href="https://facebook.com/elpmove" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://instagram.com/elpmove" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://twitter.com/elpmove" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://wa.me/+393501021359" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr style="border-color: #666; margin: 30px 0;">
+            <p class="text-center mb-0">© 2025 ELP Move. Todos os direitos reservados. | <a href="/sitemap.xml">Mapa do Site</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" async></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" async></script>
+    <script>
+        // Tabs Interatividade
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                button.classList.add('active');
+                document.getElementById(button.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Animação ao rolar
+        const fadeIns = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        fadeIns.forEach(element => observer.observe(element));
+    </script>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "ELP Move",
+            "url": "https://www.elpmove.it",
+            "logo": "https://via.placeholder.com/150x150.png?text=ELP+Move+Logo",
+            "description": "A ELP Move, parte da ELP Green Technology, promove mobilidade sustentável e reciclagem de pneus no Brasil, China e Europa.",
+            "founder": {
+                "@type": "Person",
+                "name": "Ericson Piccoli"
+            },
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Verona",
+                "addressCountry": "IT"
+            },
+            "sameAs": [
+                "https://facebook.com/elpmove",
+                "https://instagram.com/elpmove",
+                "https://twitter.com/elpmove"
+            ]
+        }
+    </script>
+</body>
+</html>

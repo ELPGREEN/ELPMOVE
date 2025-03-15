@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Meta Tags para SEO -->
+    <meta name="description" content="Explore a galáxia ELP com 5 planetas únicos, cada um representando uma visão futurista de sustentabilidade, mobilidade e tecnologia.">
+    <meta name="keywords" content="ELP, galáxia, planetas, sustentabilidade, mobilidade, tecnologia, 3D, futurista">
+    <meta name="author" content="ELP">
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph -->
+    <meta property="og:title" content="ELP - Explore a Galáxia do Futuro">
+    <meta property="og:description" content="Viaje por 5 planetas em 3D e descubra as inovações da ELP em sustentabilidade, mobilidade e tecnologia.">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630.png?text=ELP+Galaxy">
+    <meta property="og:url" content="https://www.elp.it">
+    <meta property="og:type" content="website">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ELP - Explore a Galáxia do Futuro">
+    <meta name="twitter:description" content="Descubra 5 planetas interativos em 3D com as inovações da ELP.">
+    <meta name="twitter:image" content="https://via.placeholder.com/1200x630.png?text=ELP+Galaxy">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>ELP - Explore a Galáxia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+ 
+<style>
+       body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #0a0a23;
+    color: #fff;
+    overflow: hidden;
+}
+
+#canvas {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(10, 10, 35, 0.7), rgba(0, 0, 0, 0.9));
+}
+
+.overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 5rem;
+    background: linear-gradient(90deg, #00ffcc, #ff00ff);
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 25px rgba(0, 255, 255, 0.7);
+    margin-bottom: 50px;
+}
+
+.directions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+
+.direction-btn {
+    padding: 20px 40px;
+    font-size: 1.5rem;
+    font-family: 'Orbitron', sans-serif;
+    color: #fff;
+    background: linear-gradient(135deg, #ff00ff, #00ffcc);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+    position: relative;
+    overflow: hidden;
+}
+
+.direction-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.story-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, rgba(10, 10, 35, 0.95), rgba(0, 0, 0, 0.95));
+    z-index: 3;
+    display: none;
+    opacity: 0;
+    padding: 60px;
+    text-align: center;
+}
+
+.story-section.active {
+    display: block;
+}
+
+.story-section h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3.5rem;
+    color: #00ffcc;
+    margin-bottom: 40px;
+    text-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+}
+
+.story-section p {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    max-width: 900px;
+    margin: 0 auto 30px;
+}
+
+.story-section img {
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+    margin: 30px auto;
+    display: block;
+    max-width: 100%;
+}
+
+.story-section .btn {
+    display: inline-block;
+    margin: 20px 10px;
+    padding: 15px 50px;
+    font-size: 1.3rem;
+    background: linear-gradient(90deg, #ff00ff, #00ffcc);
+    border: none;
+    border-radius: 50px;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+.story-section .btn-reverse {
+    background: linear-gradient(90deg, #00ffcc, #ff00ff);
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 3rem;
+    }
+
+    .directions {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .direction-btn {
+        padding: 15px 30px;
+        font-size: 1.2rem;
+    }
+
+    .story-section h2 {
+        font-size: 2.5rem;
+    }
+
+    .story-section p {
+        font-size: 1.1rem;
+    }
+}
+
+.product-detail {
+    padding: 80px 0;
+    background-color: #ffffff00;
+}
+
+.product-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(240, 240, 240, 0.6);
+    transition: transform 0.3s;
+}
+
+.product-image:hover {
+    transform: scale(1.02);
+}
+
+.product-info h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fffdfd;
+    margin-bottom: 20px;
+}
+
+.product-info .price {
+    font-size: 1.8rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, #ff00ff, #00ffcc); /* Gradiente no texto */
+    -webkit-background-clip: text; /* Aplica o gradiente apenas ao texto */
+    color: transparent; /* Torna o texto transparente para o gradiente aparecer */
+    margin-bottom: 20px;
+}
+
+
+
+.product-info p {
+    font-size: 1.1rem;
+    color: #fffbfb;
+    margin-bottom: 20px;
+}
+
+.product-info ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.product-info ul li {
+    font-size: 1rem;
+    color: hsl(0, 100%, 99%);
+    margin-bottom: 10px;
+}
+
+.product-info ul li:before {
+    content: "✓ ";
+    color: #28a745;
+}
+
+.product-info .btn {
+    font-size: 1.2rem;
+    padding: 12px 30px;
+    border-radius: 25px;
+    background-color: #007bff;
+    border: none;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.product-info .btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+
+    <div class="overlay" id="intro">
+        <h1>Explore a Galáxia ELP</h1>
+        <div class="directions">
+            <button class="direction-btn" onclick="travelTo(0)">Planeta Verde</button>
+            <button class="direction-btn" onclick="travelTo(1)">Planeta Elétrico</button>
+            <button class="direction-btn" onclick="travelTo(2)">Planeta Futura</button>
+            <button class="direction-btn" onclick="travelTo(3)">Planeta Inovação</button>
+            <button class="direction-btn" onclick="travelTo(4)">Planeta Harmonia</button>
+        </div>
+    </div>
+
+    <div class="story-section" id="planet-0">
+        <h2>Planeta Verde - ELP Green Technology</h2>
+       
+        <section class="product-detail">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <video src="video/1712538379970608.mp4" autoplay loop muted class="product-image" alt="Scooter Elétrico X6 Mini Portable" controls></video>
+                    </div>
+                    <div class="col-md-6 product-info">
+                        <h1>Scooter Elétrico X6</h1>
+                        <p>Scooter elétrico ultracompacto, ideal para transporte em mochilas. Design dobrável e leve, perfeito para estudantes ou usuários urbanos em curtas distâncias.</p>
+                        <a href="https://www.elpmove.it/green-technology" class="price">Explorar Green Technology</a>
+                        <ul>
+                            <button class="btn btn-reverse" onclick="travelBack()">Voltar ao Espaço</button>
+                        </ul>
+                        <div class="mt-4">
+                            <button class="btn" onclick="travelToNext(0)">Próximo Planeta</button>
+                            <button class="btn" onclick="travelToPrev(0)">Planeta Anterior</button>
+                            
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="story-section" id="planet-1">
+        <h2>Planeta Elétrico - ELP Move Mobilidade</h2>
+        <section class="product-detail">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <video src="video/1712538379970608.mp4" autoplay loop muted class="product-image" alt="Scooter Elétrico X6 Mini Portable" controls></video>
+                    </div>
+                    <div class="col-md-6 product-info">
+                    <h1>Scooter Elétrico X6</h1>
+                    <p>Scooter elétrico ultracompacto, ideal para transporte em mochilas. Design dobrável e leve, perfeito para estudantes ou usuários urbanos em curtas distâncias.</p>
+                    <ul>
+                        <li>Peso: 12 kg</li>
+                        <li>Autonomia: 25 km</li>
+                        <li>Velocidade máxima: 25 km/h</li>
+                        <li>Garantia: 1 ano</li>
+                    </ul>
+                    <a href="https://www.elpmove.it/green-technology" class="price">Explorar Green Technology</a>
+                    <div class="mt-4">
+                        <button class="btn" onclick="travelToNext(1)">Próximo Planeta</button>
+                        <button class="btn" onclick="travelToPrev(1)">Planeta Anterior</button>
+                        <button class="btn btn-reverse" onclick="travelBack()">Voltar ao Espaço</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="story-section" id="planet-2">
+        <h2>Planeta Futura - ELP Energia Renovável</h2>
+        <section class="product-detail">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <video src="video/1712538379970608.mp4" autoplay loop muted class="product-image" alt="Scooter Elétrico X6 Mini Portable" controls></video>
+                    </div>
+                    <div class="col-md-6 product-info">
+                    <h1>Scooter Elétrico X7</h1>
+                    <p>O Planeta Futura é o centro de inovação da ELP Energia Renovável. Desenvolvemos soluções de energia solar e eólica para um futuro energeticamente sustentável.</p>
+                    <p>Estamos iluminando o caminho para um universo mais verde e eficiente.</p>
+                    <a href="https://www.elpmove.it/energia" class="price">Conheça a Energia Renovável</a>
+                    <div class="mt-4">
+                        <button class="btn" onclick="travelToNext(2)">Próximo Planeta</button>
+                        <button class="btn" onclick="travelToPrev(2)">Planeta Anterior</button>
+                        <button class="btn btn-reverse" onclick="travelBack()">Voltar ao Espaço</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="story-section" id="planet-3">
+        <h2>Planeta Inovação - ELP Tecnologia Avançada</h2>
+        <section class="product-detail">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <video src="video/1712538379970608.mp4" autoplay loop muted class="product-image" alt="Scooter Elétrico X6 Mini Portable" controls></video>
+                    </div>
+                    <div class="col-md-6 product-info">
+                    <h1>Scooter Elétrico X8</h1>
+                    <p>No Planeta Inovação, a ELP Tecnologia Avançada desenvolve inteligência artificial e robótica para otimizar processos industriais sustentáveis.</p>
+                    <p>Nosso objetivo é acelerar a transição para uma economia circular com tecnologia de ponta.</p>
+                    <a href="https://www.elpmove.it/tecnologia" class="price">Explore a Tecnologia</a>
+                    <div class="mt-4">
+                        <button class="btn" onclick="travelToNext(3)">Próximo Planeta</button>
+                        <button class="btn" onclick="travelToPrev(3)">Planeta Anterior</button>
+                        <button class="btn btn-reverse" onclick="travelBack()">Voltar ao Espaço</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="story-section" id="planet-4">
+        <h2 class="col-md-6 product-info>Planeta Harmonia - ELP Comunidades Sustentáveis</h2>
+        <section class="product-detail">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <video src="video/1712538379970608.mp4" autoplay loop muted class="product-image" alt="Scooter Elétrico X6 Mini Portable" controls></video>
+                    </div>
+                    <div class="col-md-6 product-info">
+                    <h1>Scooter Elétrico X9</h1>
+                    <p>O Planeta Harmonia é onde a ELP promove comunidades sustentáveis, incentivando práticas de consumo consciente e educação ambiental.</p>
+                    <p>Construímos um futuro onde humanos e natureza vivem em equilíbrio.</p>
+                    <a href="https://www.elpmove.it/comunidades" class="price">Saiba Mais Sobre Comunidades</a>
+                    <div class="mt-4">
+                        <button class="btn" onclick="travelToNext(4)">Próximo Planeta</button>
+                        <button class="btn" onclick="travelToPrev(4)">Planeta Anterior</button>
+                        <button class="btn btn-reverse" onclick="travelBack()">Voltar ao Espaço</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</body>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        // Configuração Three.js
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas'), alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        // Névoa Espacial para maior imersão
+        scene.fog = new THREE.FogExp2(0x0a0a23, 0.002);
+
+        // Iluminação
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+        scene.add(ambientLight);
+        const pointLight = new THREE.PointLight(0xffffff, 1, 500);
+        pointLight.position.set(50, 50, 50);
+        scene.add(pointLight);
+
+        // Fundo de Galáxia
+        const galaxyGeometry = new THREE.SphereGeometry(1000, 64, 64);
+        const galaxyMaterial = new THREE.MeshBasicMaterial({
+            color: 0x1a1a3d,
+            side: THREE.BackSide,
+            transparent: true,
+            opacity: 0.8
+        });
+        const galaxy = new THREE.Mesh(galaxyGeometry, galaxyMaterial);
+        scene.add(galaxy);
+
+        // Estrelas (Partículas com tamanhos variados e brilho)
+        const starsGeometry = new THREE.BufferGeometry();
+        const starsCount = 20000;
+        const positions = new Float32Array(starsCount * 3);
+        const sizes = new Float32Array(starsCount);
+        const colors = new Float32Array(starsCount * 3);
+        for (let i = 0; i < starsCount; i++) {
+            positions[i * 3] = (Math.random() - 0.5) * 2000;
+            positions[i * 3 + 1] = (Math.random() - 0.5) * 2000;
+            positions[i * 3 + 2] = (Math.random() - 0.5) * 2000;
+            sizes[i] = Math.random() * 3 + 1;
+            colors[i * 3] = Math.random();
+            colors[i * 3 + 1] = Math.random();
+            colors[i * 3 + 2] = 1;
+        }
+        starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        starsGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+        starsGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        const starsMaterial = new THREE.PointsMaterial({
+            sizeAttenuation: true,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.8
+        });
+        const stars = new THREE.Points(starsGeometry, starsMaterial);
+        scene.add(stars);
+
+        // Partículas de Névoa (Camada Adicional para Galáxia)
+        const nebulaGeometry = new THREE.BufferGeometry();
+        const nebulaCount = 10000;
+        const nebulaPositions = new Float32Array(nebulaCount * 3);
+        const nebulaSizes = new Float32Array(nebulaCount);
+        const nebulaColors = new Float32Array(nebulaCount * 3);
+        for (let i = 0; i < nebulaCount; i++) {
+            const theta = Math.random() * Math.PI * 2;
+            const radius = Math.random() * 500;
+            nebulaPositions[i * 3] = Math.cos(theta) * radius;
+            nebulaPositions[i * 3 + 1] = (Math.random() - 0.5) * 100;
+            nebulaPositions[i * 3 + 2] = Math.sin(theta) * radius;
+            nebulaSizes[i] = Math.random() * 5 + 2;
+            nebulaColors[i * 3] = 0.2;
+            nebulaColors[i * 3 + 1] = Math.random() * 0.5 + 0.5;
+            nebulaColors[i * 3 + 2] = 1;
+        }
+        nebulaGeometry.setAttribute('position', new THREE.BufferAttribute(nebulaPositions, 3));
+        nebulaGeometry.setAttribute('size', new THREE.BufferAttribute(nebulaSizes, 1));
+        nebulaGeometry.setAttribute('color', new THREE.BufferAttribute(nebulaColors, 3));
+        const nebulaMaterial = new THREE.PointsMaterial({
+            sizeAttenuation: true,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.3
+        });
+        const nebula = new THREE.Points(nebulaGeometry, nebulaMaterial);
+        scene.add(nebula);
+
+        // Configuração dos 5 Planetas
+        const planets = [];
+        const planetData = [
+            { position: { x: -100, y: 50, z: -200 }, color: 0x00ffcc, ringColor: 0xff00ff }, // Planeta Verde
+            { position: { x: 80, y: -30, z: -180 }, color: 0xff00ff, ringColor: 0x00ffcc }, // Planeta Elétrico
+            { position: { x: -50, y: -80, z: -220 }, color: 0xffff00, ringColor: 0x00ffff }, // Planeta Futura
+            { position: { x: 120, y: 70, z: -190 }, color: 0x00ffff, ringColor: 0xffa500 }, // Planeta Inovação
+            { position: { x: 0, y: 100, z: -210 }, color: 0xffa500, ringColor: 0xffff00 }  // Planeta Harmonia
+        ];
+
+        planetData.forEach((data, index) => {
+            const planetGeometry = new THREE.SphereGeometry(15, 64, 64);
+            const planetMaterial = new THREE.MeshPhongMaterial({
+                color: data.color,
+                specular: 0x555555,
+                shininess: 30
+            });
+            const planet = new THREE.Mesh(planetGeometry, planetMaterial);
+            planet.position.set(data.position.x, data.position.y, data.position.z);
+            scene.add(planet);
+
+            const ringGeometry = new THREE.RingGeometry(20, 25, 64);
+            const ringMaterial = new THREE.MeshPhongMaterial({
+                color: data.ringColor,
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.8
+            });
+            const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+            ring.rotation.x = Math.PI / 2;
+            ring.position.set(data.position.x, data.position.y, data.position.z);
+            scene.add(ring);
+
+            // Fragmentos para Explosão
+            const fragmentsGeometry = new THREE.BufferGeometry();
+            const fragmentCount = 200;
+            const fragmentPositions = new Float32Array(fragmentCount * 3);
+            const fragmentVelocities = new Float32Array(fragmentCount * 3);
+            for (let i = 0; i < fragmentCount; i++) {
+                fragmentPositions[i * 3] = data.position.x;
+                fragmentPositions[i * 3 + 1] = data.position.y;
+                fragmentPositions[i * 3 + 2] = data.position.z;
+                fragmentVelocities[i * 3] = (Math.random() - 0.5) * 5;
+                fragmentVelocities[i * 3 + 1] = (Math.random() - 0.5) * 5;
+                fragmentVelocities[i * 3 + 2] = (Math.random() - 0.5) * 5;
+            }
+            fragmentsGeometry.setAttribute('position', new THREE.BufferAttribute(fragmentPositions, 3));
+            const fragmentsMaterial = new THREE.PointsMaterial({
+                color: data.color,
+                size: 2,
+                transparent: true,
+                opacity: 0
+            });
+            const fragments = new THREE.Points(fragmentsGeometry, fragmentsMaterial);
+            scene.add(fragments);
+
+            // Raios Eletromagnéticos
+            const rays = new THREE.Group();
+            for (let i = 0; i < 5; i++) {
+                const rayGeometry = new THREE.BufferGeometry();
+                const rayVertices = new Float32Array([
+                    data.position.x, data.position.y, data.position.z,
+                    data.position.x + (Math.random() - 0.5) * 30,
+                    data.position.y + (Math.random() - 0.5) * 30,
+                    data.position.z + (Math.random() - 0.5) * 30
+                ]);
+                rayGeometry.setAttribute('position', new THREE.BufferAttribute(rayVertices, 3));
+                const rayMaterial = new THREE.LineBasicMaterial({
+                    color: 0x00ffff,
+                    transparent: true,
+                    opacity: 0
+                });
+                const ray = new THREE.Line(rayGeometry, rayMaterial);
+                rays.add(ray);
+            }
+            scene.add(rays);
+
+            planets.push({ planet, ring, fragments, fragmentVelocities, rays });
+        });
+
+        // Nave Espacial (Mais Detalhada)
+        const shipGroup = new THREE.Group();
+        const shipBody = new THREE.Mesh(
+            new THREE.ConeGeometry(2, 5, 32),
+            new THREE.MeshPhongMaterial({ color: 0x00ffcc, specular: 0xffffff, shininess: 50 })
+        );
+        shipBody.rotation.x = Math.PI / 2;
+        shipGroup.add(shipBody);
+
+        const shipWings = new THREE.Mesh(
+            new THREE.BoxGeometry(6, 0.5, 2),
+            new THREE.MeshPhongMaterial({ color: 0xff00ff })
+        );
+        shipWings.position.set(0, -1, 0);
+        shipGroup.add(shipWings);
+
+        const shipGlow = new THREE.Mesh(
+            new THREE.SphereGeometry(1, 16, 16),
+            new THREE.MeshBasicMaterial({ color: 0x00ffcc, transparent: true, opacity: 0.5 })
+        );
+        shipGlow.position.set(0, 0, -3);
+        shipGroup.add(shipGlow);
+
+        shipGroup.position.set(0, 10, 20);
+        scene.add(shipGroup);
+
+        camera.position.set(0, 0, 100);
+
+        // Configuração dos Efeitos Sonoros com Howler.js
+        const spaceAmbience = new Howl({
+            src: ['https://cdn.freesound.org/previews/242/242999_4486188-lq.mp3'],
+            loop: true,
+            volume: 0.3,
+            autoplay: true
+        });
+
+        const warpSound = new Howl({
+            src: ['https://cdn.freesound.org/previews/120/120859_649468-lq.mp3'],
+            volume: 0.7
+        });
+
+        const clickSound = new Howl({
+            src: ['https://cdn.freesound.org/previews/242/242934_71257-lq.mp3'],
+            volume: 0.5
+        });
+
+        const hoverSound = new Howl({
+            src: ['https://cdn.freesound.org/previews/242/242934_71257-lq.mp3'],
+            volume: 0.3
+        });
+
+        // Animações GSAP para Elementos DOM
+        gsap.from("h1", {
+            opacity: 0,
+            y: 50,
+            duration: 1.5,
+            ease: "elastic.out(1, 0.3)"
+        });
+
+        document.querySelectorAll('.direction-btn, .btn, .btn-reverse').forEach(button => {
+            button.addEventListener('mouseover', () => {
+                hoverSound.play();
+                gsap.to(button, {
+                    scale: 1.1,
+                    boxShadow: "0 0 30px rgba(0, 255, 255, 0.8)",
+                    duration: 0.5,
+                    ease: "elastic.out(1, 0.3)",
+                    onUpdate: () => {
+                        if (button.classList.contains('direction-btn')) {
+                            const progress = gsap.getProperty(button, "scale") - 1;
+                            button.style.setProperty('--before-width', `${progress * 500}px`);
+                            button.style.setProperty('--before-height', `${progress * 500}px`);
+                        }
+                    }
+                });
+            });
+            button.addEventListener('mouseout', () => {
+                gsap.to(button, {
+                    scale: 1,
+                    boxShadow: "0 0 20px rgba(0, 255, 255, 0.5)",
+                    duration: 0.5,
+                    ease: "elastic.out(1, 0.3)",
+                    onUpdate: () => {
+                        if (button.classList.contains('direction-btn')) {
+                            const progress = gsap.getProperty(button, "scale") - 1;
+                            button.style.setProperty('--before-width', `${progress * 500}px`);
+                            button.style.setProperty('--before-height', `${progress * 500}px`);
+                        }
+                    }
+                });
+            });
+            button.addEventListener('click', () => {
+                clickSound.play();
+            });
+        });
+
+        // Animação de Fundo com GSAP
+        gsap.to(stars.rotation, {
+            y: "+=6.28",
+            duration: 20,
+            ease: "linear",
+            repeat: -1
+        });
+
+        gsap.to(nebula.rotation, {
+            y: "+=6.28",
+            duration: 40,
+            ease: "linear",
+            repeat: -1
+        });
+
+        planets.forEach(({ planet, ring }) => {
+            gsap.to(planet.rotation, {
+                y: "+=6.28",
+                duration: 10,
+                ease: "linear",
+                repeat: -1
+            });
+            gsap.to(ring.rotation, {
+                z: "+=6.28",
+                duration: 15,
+                ease: "linear",
+                repeat: -1
+            });
+        });
+
+        gsap.to(shipGroup.rotation, {
+            y: "+=6.28",
+            duration: 10,
+            ease: "linear",
+            repeat: -1
+        });
+
+        gsap.to(shipGlow.scale, {
+            x: 1.2,
+            y: 1.2,
+            z: 1.2,
+            duration: 1,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true
+        });
+
+        // Estado Atual
+        let currentPlanetIndex = -1;
+
+        // Função para Explodir o Planeta
+        function explodePlanet(index, callback) {
+            const { planet, ring, fragments, fragmentVelocities, rays } = planets[index];
+            planet.visible = false;
+            ring.visible = false;
+            fragments.material.opacity = 1;
+
+            // Animar Fragmentos (Explosão)
+            const positions = fragments.geometry.attributes.position.array;
+            gsap.to(fragments.material, {
+                opacity: 0,
+                duration: 2,
+                ease: "power2.in",
+                onUpdate: () => {
+                    for (let i = 0; i < fragmentVelocities.length / 3; i++) {
+                        positions[i * 3] += fragmentVelocities[i * 3];
+                        positions[i * 3 + 1] += fragmentVelocities[i * 3 + 1];
+                        positions[i * 3 + 2] += fragmentVelocities[i * 3 + 2];
+                    }
+                    fragments.geometry.attributes.position.needsUpdate = true;
+                },
+                onComplete: () => {
+                    fragments.material.opacity = 0;
+                    callback();
+                }
+            });
+
+            // Animar Raios Eletromagnéticos
+            rays.children.forEach(ray => {
+                gsap.to(ray.material, {
+                    opacity: 0.8,
+                    duration: 0.5,
+                    ease: "power2.out",
+                    yoyo: true,
+                    repeat: 1,
+                    onComplete: () => {
+                        ray.material.opacity = 0;
+                    }
+                });
+            });
+        }
+
+        // Função para Reconstruir o Planeta
+        function reconstructPlanet(index, callback) {
+            const { planet, ring, fragments, fragmentVelocities, rays } = planets[index];
+            planet.visible = true;
+            ring.visible = true;
+            fragments.material.opacity = 0;
+
+            // Resetar Posições dos Fragmentos
+            const positions = fragments.geometry.attributes.position.array;
+            for (let i = 0; i < fragmentVelocities.length / 3; i++) {
+                positions[i * 3] = planet.position.x;
+                positions[i * 3 + 1] = planet.position.y;
+                positions[i * 3 + 2] = planet.position.z;
+            }
+            fragments.geometry.attributes.position.needsUpdate = true;
+
+            fragments.material.opacity = 1;
+            gsap.to(fragments.material, {
+                opacity: 0,
+                duration: 2,
+                ease: "power2.out",
+                onComplete: callback
+            });
+
+            // Animar Raios Eletromagnéticos
+            rays.children.forEach(ray => {
+                gsap.to(ray.material, {
+                    opacity: 0.8,
+                    duration: 0.5,
+                    ease: "power2.out",
+                    yoyo: true,
+                    repeat: 1,
+                    onComplete: () => {
+                        ray.material.opacity = 0;
+                    }
+                });
+            });
+        }
+
+        // Função de Viagem para um Planeta
+        function travelTo(index) {
+            currentPlanetIndex = index;
+            const intro = document.getElementById('intro');
+            const targetPlanet = planets[index];
+
+            const timeline = gsap.timeline({
+                onComplete: () => {
+                    reconstructPlanet(index, () => showStory(index));
+                }
+            });
+
+            // Esconder Overlay
+            timeline.to(intro, {
+                opacity: 0,
+                duration: 1,
+                ease: "power2.inOut",
+                onComplete: () => intro.classList.add('hidden')
+            });
+
+            // Mover Nave e Câmera até o Planeta
+            timeline.to(shipGroup.position, {
+                x: targetPlanet.planet.position.x,
+                y: targetPlanet.planet.position.y + 30,
+                z: targetPlanet.planet.position.z + 50,
+                duration: 2,
+                ease: "power2.inOut"
+            }, 0);
+
+            timeline.to(camera.position, {
+                x: targetPlanet.planet.position.x,
+                y: targetPlanet.planet.position.y,
+                z: targetPlanet.planet.position.z + 70,
+                duration: 2,
+                ease: "power2.inOut"
+            }, 0);
+
+            // Efeito de Warp
+            timeline.to(starsMaterial, {
+                opacity: 0.5,
+                duration: 1,
+                ease: "power2.inOut"
+            }, 0);
+
+            timeline.to(nebulaMaterial, {
+                opacity: 0.5,
+                duration: 1,
+                ease: "power2.inOut"
+            }, 0);
+
+            timeline.to(stars.rotation, {
+                y: "+=1",
+                duration: 2,
+                ease: "power2.inOut"
+            }, 0);
+
+            warpSound.play();
+        }
+
+        // Função para Avançar ao Próximo Planeta
+        function travelToNext(currentIndex) {
+            const nextIndex = (currentIndex + 1) % planets.length;
+            hideStory(currentIndex, () => {
+                explodePlanet(currentIndex, () => travelTo(nextIndex));
+            });
+        }
+
+        // Função para Voltar ao Planeta Anterior
+        function travelToPrev(currentIndex) {
+            const prevIndex = (currentIndex - 1 + planets.length) % planets.length;
+            hideStory(currentIndex, () => {
+                // Não explode o planeta atual ao voltar
+                travelTo(prevIndex);
+            });
+        }
+
+        // Função de Viagem de Volta ao Espaço
+        function travelBack() {
+            hideStory(currentPlanetIndex, () => {
+                const timeline = gsap.timeline({
+                    onComplete: resetScene
+                });
+
+                // Mover Nave e Câmera de Volta
+                timeline.to(shipGroup.position, {
+                    x: 0,
+                    y: 10,
+                    z: 20,
+                    duration: 2,
+                    ease: "power2.inOut"
+                }, 0);
+
+                timeline.to(camera.position, {
+                    x: 0,
+                    y: 0,
+                    z: 100,
+                    duration: 2,
+                    ease: "power2.inOut"
+                }, 0);
+
+                // Efeito de Warp
+                timeline.to(starsMaterial, {
+                    opacity: 0.8,
+                    duration: 1,
+                    ease: "power2.inOut"
+                }, 0);
+
+                timeline.to(nebulaMaterial, {
+                    opacity: 0.3,
+                    duration: 1,
+                    ease: "power2.inOut"
+                }, 0);
+
+                timeline.to(stars.rotation, {
+                    y: "-=1",
+                    duration: 2,
+                    ease: "power2.inOut"
+                }, 0);
+
+                warpSound.play();
+
+                // Reconstruir Todos os Planetas
+                planets.forEach((planet, index) => {
+                    if (index !== currentPlanetIndex) {
+                        reconstructPlanet(index, () => {});
+                    }
+                });
+            });
+        }
+
+        // Mostrar Seção do Planeta
+        function showStory(index) {
+            const story = document.getElementById(`planet-${index}`);
+            story.classList.add('active');
+            gsap.fromTo(story, {
+                opacity: 0,
+                y: 50
+            }, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power2.out"
+            });
+
+            gsap.from(story.querySelectorAll('h2, p, img, .btn, .btn-reverse'), {
+                opacity: 0,
+                y: 20,
+                duration: 1,
+                ease: "power2.out",
+                stagger: 0.2
+            });
+        }
+
+        // Esconder Seção do Planeta
+        function hideStory(index, callback) {
+            const story = document.getElementById(`planet-${index}`);
+            gsap.to(story, {
+                opacity: 0,
+                duration: 1,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    story.classList.remove('active');
+                    callback();
+                }
+            });
+        }
+
+        // Resetar Cena
+        function resetScene() {
+            const intro = document.getElementById('intro');
+            intro.classList.remove('hidden');
+            gsap.to(intro, {
+                opacity: 1,
+                duration: 1,
+                ease: "power2.out"
+            });
+            currentPlanetIndex = -1;
+        }
+
+        // Redimensionamento (Responsividade)
+        window.addEventListener('resize', () => {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+
+            const scaleFactor = Math.min(width, height) / 800;
+            planets.forEach(({ planet, ring }) => {
+                planet.scale.set(scaleFactor, scaleFactor, scaleFactor);
+                ring.scale.set(scaleFactor, scaleFactor, scaleFactor);
+            });
+            shipGroup.scale.set(scaleFactor, scaleFactor, scaleFactor);
+        });
+
+        // Render Loop
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>
