@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Meta Tags para SEO -->
+    <meta name="description" content="Explore o futuro com ELP Green Technology (reciclagem e sustentabilidade) e ELP Move Mobilidade Urbana (veículos elétricos) em uma experiência 3D futurista.">
+    <meta name="keywords" content="ELP, Green Technology, mobilidade urbana, scooters elétricas, reciclagem, sustentabilidade, 3D, futurista">
+    <meta name="author" content="ELP">
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph -->
+    <meta property="og:title" content="ELP - Escolha sua Direção no Futuro">
+    <meta property="og:description" content="Viaje em 3D para ELP Green Technology ou ELP Move Mobilidade Urbana e conheça o futuro da sustentabilidade e mobilidade.">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630.png?text=ELP+Future">
+    <meta property="og:url" content="https://www.elp.it">
+    <meta property="og:type" content="website">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ELP - Escolha sua Direção no Futuro">
+    <meta name="twitter:description" content="Descubra ELP Green Technology e ELP Move Mobilidade Urbana em 3D interativo.">
+    <meta name="twitter:image" content="https://via.placeholder.com/1200x630.png?text=ELP+Future">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>ELP - Escolha sua Direção</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a23;
+            color: #fff;
+        }
+        #canvas {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(10, 10, 35, 0.7), rgba(0, 0, 0, 0.9));
+        }
+        .overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 5rem;
+            background: linear-gradient(90deg, #00ffcc, #ff00ff);
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 25px rgba(0, 255, 255, 0.7);
+            margin-bottom: 50px;
+        }
+        .directions {
+            display: flex;
+            gap: 60px;
+        }
+        .direction-btn {
+            padding: 25px 50px;
+            font-size: 1.8rem;
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            background: linear-gradient(135deg, #ff00ff, #00ffcc);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+            position: relative;
+            overflow: hidden;
+        }
+        .direction-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .story-section {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 10, 35, 0.95), rgba(0, 0, 0, 0.95));
+            z-index: 3;
+            display: none;
+            opacity: 0;
+            padding: 60px;
+            overflow-y: auto;
+        }
+        .story-section.active {
+            display: block;
+        }
+        .story-section h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            color: #00ffcc;
+            margin-bottom: 40px;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+        .story-section p {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto 30px;
+        }
+        .story-section img {
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+            margin: 30px auto;
+            display: block;
+            max-width: 100%;
+        }
+        .story-section .btn {
+            display: inline-block;
+            margin: 20px 10px;
+            padding: 15px 50px;
+            font-size: 1.3rem;
+            background: linear-gradient(90deg, #ff00ff, #00ffcc);
+            border: none;
+            border-radius: 50px;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+        .story-section .btn-reverse {
+            background: linear-gradient(90deg, #00ffcc, #ff00ff);
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+            .directions {
+                flex-direction: column;
+                gap: 30px;
+            }
+            .direction-btn {
+                padding: 20px 40px;
+                font-size: 1.5rem;
+            }
+            .story-section h2 {
+                font-size: 2.5rem;
+            }
+            .story-section p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+
+    <div class="overlay" id="intro">
+        <h1>Para onde você quer ir?</h1>
+        <div class="directions">
+            <button class="direction-btn" onclick="travelTo('green')">ELP Green Technology</button>
+            <button class="direction-btn" onclick="travelTo('move')">ELP Move Mobilidade</button>
+        </div>
+    </div>
+
+    <div class="story-section" id="green-story">
+        <h2>ELP Green Technology</h2>
+        <p>Sua jornada começou no espaço profundo. A nave acelerou, atravessando nebulosas e constelações, até aterrissar em um planeta vibrante de inovação: as operações da ELP Green Technology, espalhadas pelo Brasil, China e Europa.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Green+Tech+Global" alt="ELP Green Technology Global">
+        <p>Fundada em 2016 por Ericson Piccoli no Brasil, a ELP Green Technology nasceu com a visão de transformar resíduos em recursos. Como parte do Tops Recycling Group, reciclamos milhões de pneus usados anualmente, convertendo-os em goma regenerada para indústrias globais. Nossas fábricas na China ampliam essa missão com tecnologia de ponta, enquanto na Europa conectamos o Green Industries Cluster, unindo empresas por um futuro sustentável.</p>
+        <p>Hoje, somos líderes na economia circular, reduzindo emissões e redefinindo o ciclo de vida dos materiais. Este é o nosso legado: um planeta mais limpo, uma galáxia mais verde.</p>
+        <a href="https://www.elpmove.it/green-technology" class="btn">Explorar Green Technology</a>
+        <button class="btn btn-reverse" onclick="travelBack('green')">Voltar ao Espaço</button>
+    </div>
+
+    <div class="story-section" id="move-story">
+        <h2>ELP Move Mobilidade Urbana</h2>
+        <p>Você deixou o vazio estelar para trás, navegando por campos de asteroides até pousar em Verona, Itália, em 2021. Bem-vindo à sede da ELP Move Mobilidade Urbana, onde o futuro da locomoção ganha vida.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Verona+Mobility" alt="ELP Move Verona">
+        <p>A ELP Move surgiu como uma extensão da visão sustentável da ELP, trazendo scooters elétricas, bicicletas elétricas e patinetes elétricos para as ruas. Nosso modelo de franquia permite que empreendedores ao redor do mundo ofereçam venda e aluguel desses veículos, promovendo uma mobilidade urbana ágil, silenciosa e sem carbono.</p>
+        <p>Com tecnologia avançada e design inovador, conectamos cidades e reduzimos a dependência de combustíveis fósseis. Verona é nosso ponto de partida, mas nosso destino é global: uma revolução elétrica para todos.</p>
+        <a href="https://www.elpmove.it/mobilidade" class="btn">Descubra a Mobilidade</a>
+        <button class="btn btn-reverse" onclick="travelBack('move')">Voltar ao Espaço</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        // Configuração Three.js
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas'), alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        // Névoa Espacial para maior imersão
+        scene.fog = new THREE.FogExp2(0x0a0a23, 0.002);
+
+        // Iluminação
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+        scene.add(ambientLight);
+        const pointLight = new THREE.PointLight(0xffffff, 1, 500);
+        pointLight.position.set(50, 50, 50);
+        scene.add(pointLight);
+
+        // Estrelas (Partículas com tamanhos variados e brilho)
+        const starsGeometry = new THREE.BufferGeometry();
+        const starsCount = 20000;
+        const positions = new Float32Array(starsCount * 3);
+        const sizes = new Float32Array(starsCount);
+        const colors = new Float32Array(starsCount * 3);
+        for (let i = 0; i < starsCount; i++) {
+            positions[i * 3] = (Math.random() - 0.5) * 3000;
+            positions[i * 3 + 1] = (Math.random() - 0.5) * 3000;
+            positions[i * 3 + 2] = (Math.random() - 0.5) * 3000;
+            sizes[i] = Math.random() * 3 + 1;
+            colors[i * 3] = Math.random();
+            colors[i * 3 + 1] = Math.random();
+            colors[i * 3 + 2] = 1;
+        }
+        starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        starsGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+        starsGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        const starsMaterial = new THREE.PointsMaterial({
+            sizeAttenuation: true,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.8
+        });
+        const stars = new THREE.Points(starsGeometry, starsMaterial);
+        scene.add(stars);
+
+        // Partículas de Névoa (Camada Adicional para Efeito Awwwards)
+        const nebulaGeometry = new THREE.BufferGeometry();
+        const nebulaCount = 5000;
+        const nebulaPositions = new Float32Array(nebulaCount * 3);
+        const nebulaSizes = new Float32Array(nebulaCount);
+        for (let i = 0; i < nebulaCount; i++) {
+            nebulaPositions[i * 3] = (Math.random() - 0.5) * 2000;
+            nebulaPositions[i * 3 + 1] = (Math.random() - 0.5) * 2000;
+            nebulaPositions[i * 3 + 2] = (Math.random() - 0.5) * 2000;
+            nebulaSizes[i] = Math.random() * 5 + 2;
+        }
+        nebulaGeometry.setAttribute('position', new THREE.BufferAttribute(nebulaPositions, 3));
+        nebulaGeometry.setAttribute('size', new THREE.BufferAttribute(nebulaSizes, 1));
+        const nebulaMaterial = new THREE.PointsMaterial({
+            color: 0x00ffcc,
+            sizeAttenuation: true,
+            transparent: true,
+            opacity: 0.3
+        });
+        const nebula = new THREE.Points(nebulaGeometry, nebulaMaterial);
+        scene.add(nebula);
+
+        // Planeta com Anéis
+        const planetGeometry = new THREE.SphereGeometry(15, 64, 64);
+        const planetMaterial = new THREE.MeshPhongMaterial({
+            color: 0x00ffcc,
+            specular: 0x555555,
+            shininess: 30,
+            wireframe: false
+        });
+        const planet = new THREE.Mesh(planetGeometry, planetMaterial);
+        planet.position.set(0, 0, -100);
+        scene.add(planet);
+
+        const ringGeometry = new THREE.RingGeometry(20, 25, 64);
+        const ringMaterial = new THREE.MeshPhongMaterial({
+            color: 0xff00ff,
+            side: THREE.DoubleSide,
+            transparent: true,
+            opacity: 0.8
+        });
+        const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+        ring.rotation.x = Math.PI / 2;
+        ring.position.set(0, 0, -100);
+        scene.add(ring);
+
+        // Nave Espacial (Mais Detalhada)
+        const shipGroup = new THREE.Group();
+        const shipBody = new THREE.Mesh(
+            new THREE.ConeGeometry(2, 5, 32),
+            new THREE.MeshPhongMaterial({ color: 0x00ffcc, specular: 0xffffff, shininess: 50 })
+        );
+        shipBody.rotation.x = Math.PI / 2;
+        shipGroup.add(shipBody);
+
+        const shipWings = new THREE.Mesh(
+            new THREE.BoxGeometry(6, 0.5, 2),
+            new THREE.MeshPhongMaterial({ color: 0xff00ff })
+        );
+        shipWings.position.set(0, -1, 0);
+        shipGroup.add(shipWings);
+
+        const shipGlow = new THREE.Mesh(
+            new THREE.SphereGeometry(1, 16, 16),
+            new THREE.MeshBasicMaterial({ color: 0x00ffcc, transparent: true, opacity: 0.5 })
+        );
+        shipGlow.position.set(0, 0, -3);
+        shipGroup.add(shipGlow);
+
+        shipGroup.position.set(0, 10, 20);
+        scene.add(shipGroup);
+
+        camera.position.z = 50;
+
+        // Configuração dos Efeitos Sonoros com Howler.js
+        const spaceAmbience = new Howl({
+            src: ['https://cdn.freesound.org/previews/242/242999_4486188-lq.mp3'],
+            loop: true,
+            volume: 0.3,
+            autoplay: true
+        });
+
+        const warpSound = new Howl({
+            src: ['https://cdn.freesound.org/previews/120/120859_649468-lq.mp3'],
+            volume: 0.7
+        });
+
+        const clickSound = new Howl({
+            src: ['https://cdn.freesound.org/previews/242/242934_71257-lq.mp3'],
+            volume: 0.5
+        });
+
+        const hoverSound = new Howl({
+            src: ['https://cdn.freesound.org/previews/242/242934_71257-lq.mp3'],
+            volume: 0.3
+        });
+
+        // Animações GSAP para Elementos DOM
+        gsap.from("h1", {
+            opacity: 0,
+            y: 50,
+            duration: 1.5,
+            ease: "elastic.out(1, 0.3)"
+        });
+
+        document.querySelectorAll('.direction-btn').forEach(button => {
+            // Hover
+            button.addEventListener('mouseover', () => {
+                hoverSound.play();
+                gsap.to(button, {
+                    scale: 1.15,
+                    boxShadow: "0 0 40px rgba(0, 255, 255, 0.9)",
+                    duration: 0.5,
+                    ease: "elastic.out(1, 0.3)",
+                    onUpdate: () => {
+                        const progress = gsap.getProperty(button, "scale") - 1;
+                        button.style.setProperty('--before-width', `${progress * 500}px`);
+                        button.style.setProperty('--before-height', `${progress * 500}px`);
+                    }
+                });
+            });
+            button.addEventListener('mouseout', () => {
+                gsap.to(button, {
+                    scale: 1,
+                    boxShadow: "0 0 20px rgba(0, 255, 255, 0.6)",
+                    duration: 0.5,
+                    ease: "elastic.out(1, 0.3)",
+                    onUpdate: () => {
+                        const progress = gsap.getProperty(button, "scale") - 1;
+                        button.style.setProperty('--before-width', `${progress * 500}px`);
+                        button.style.setProperty('--before-height', `${progress * 500}px`);
+                    }
+                });
+            });
+            // Clique
+            button.addEventListener('click', () => {
+                clickSound.play();
+            });
+        });
+
+        document.querySelectorAll('.btn, .btn-reverse').forEach(button => {
+            button.addEventListener('mouseover', () => {
+                hoverSound.play();
+                gsap.to(button, {
+                    scale: 1.1,
+                    boxShadow: "0 0 30px rgba(0, 255, 255, 0.8)",
+                    duration: 0.5,
+                    ease: "elastic.out(1, 0.3)"
+                });
+            });
+            button.addEventListener('mouseout', () => {
+                gsap.to(button, {
+                    scale: 1,
+                    boxShadow: "0 0 20px rgba(0, 255, 255, 0.5)",
+                    duration: 0.5,
+                    ease: "elastic.out(1, 0.3)"
+                });
+            });
+            button.addEventListener('click', () => {
+                clickSound.play();
+            });
+        });
+
+        // Animação de Fundo com GSAP
+        gsap.to(stars.rotation, {
+            y: "+=6.28", // Rotação de 360 graus (2π)
+            duration: 20,
+            ease: "linear",
+            repeat: -1
+        });
+
+        gsap.to(nebula.rotation, {
+            y: "+=6.28",
+            duration: 40,
+            ease: "linear",
+            repeat: -1
+        });
+
+        gsap.to(planet.rotation, {
+            y: "+=6.28",
+            duration: 10,
+            ease: "linear",
+            repeat: -1
+        });
+
+        gsap.to(ring.rotation, {
+            z: "+=6.28",
+            duration: 15,
+            ease: "linear",
+            repeat: -1
+        });
+
+        gsap.to(shipGroup.rotation, {
+            y: "+=6.28",
+            duration: 10,
+            ease: "linear",
+            repeat: -1
+        });
+
+        gsap.to(shipGroup.position, {
+            z: -50,
+            duration: 5,
+            ease: "power2.inOut",
+            repeat: -1,
+            yoyo: true
+        });
+
+        gsap.to(shipGlow.scale, {
+            x: 1.2,
+            y: 1.2,
+            z: 1.2,
+            duration: 1,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true
+        });
+
+        // Função de Viagem (Ida) com GSAP
+        function travelTo(direction) {
+            const intro = document.getElementById('intro');
+            const timeline = gsap.timeline({
+                onComplete: () => showStory(direction)
+            });
+
+            // Animação da Overlay
+            timeline.to(intro, {
+                opacity: 0,
+                duration: 1,
+                ease: "power2.inOut",
+                onComplete: () => intro.classList.add('hidden')
+            });
+
+            // Animação 3D
+            timeline.to(camera.position, {
+                z: -50,
+                duration: 2,
+                ease: "power2.inOut"
+            }, 0);
+
+            timeline.to(planet.position, {
+                z: 0,
+                duration: 2,
+                ease: "power2.inOut"
+            }, 0);
+
+            timeline.to(ring.position, {
+                z: 0,
+                duration: 2,
+                ease: "power2.inOut"
+            }, 0);
+
+            timeline.to(stars.rotation, {
+                y: "+=1",
+                duration: 2,
+                ease: "power2.inOut"
+            }, 0);
+
+            timeline.to(nebula.rotation, {
+                y: "+=0.5",
+                duration: 2,
+                ease: "power2.inOut"
+            }, 0);
+
+            // Efeito de Warp
+            timeline.to(starsMaterial, {
+                opacity: 0.5,
+                duration: 1,
+                ease: "power2.inOut"
+            }, 0);
+
+            timeline.to(nebulaMaterial, {
+                opacity: 0.5,
+                duration: 1,
+                ease: "power2.inOut"
+            }, 0);
+
+            timeline.to(starsMaterial.color, {
+                r: 1,
+                g: 0,
+                b: 1,
+                duration: 1,
+                ease: "power2.inOut"
+            }, 0);
+
+            warpSound.play();
+        }
+
+        // Função de Viagem Reversa com GSAP
+        function travelBack(direction) {
+            const greenStory = document.getElementById('green-story');
+            const moveStory = document.getElementById('move-story');
+            const timeline = gsap.timeline({
+                onComplete: () => {
+                    if (direction === 'green') greenStory.classList.remove('active');
+                    else if (direction === 'move') moveStory.classList.remove('active');
+                    resetScene();
+                }
+            });
+
+            // Animação das Seções de História
+            timeline.to(direction === 'green' ? greenStory : moveStory, {
+                opacity: 0,
+                duration: 1,
+                ease: "power2.inOut"
+            });
+
+            // Animação 3D
+            timeline.to(camera.position, {
+                z: 50,
+                duration: 2,
+                ease: "power2.inOut"
+            }, 0);
+
+            timeline.to(planet.position, {
+                z: -100,
+                duration: 2,
+                ease: "power2.inOut"
+            }, 0);
+
+            timeline.to(ring.position, {
+                z: -100,
+                duration: 2,
+                ease: "power2.inOut"
+            }, 0);
+
+            timeline.to(stars.rotation, {
+                y: "-=1",
+                duration: 2,
+                ease: "power2.inOut"
+            }, 0);
+
+            timeline.to(nebula.rotation, {
+                y: "-=0.5",
+                duration: 2,
+                ease: "power2.inOut"
+            }, 0);
+
+            // Efeito de Warp
+            timeline.to(starsMaterial, {
+                opacity: 0.8,
+                duration: 1,
+                ease: "power2.inOut"
+            }, 0);
+
+            timeline.to(nebulaMaterial, {
+                opacity: 0.3,
+                duration: 1,
+                ease: "power2.inOut"
+            }, 0);
+
+            timeline.to(starsMaterial.color, {
+                r: 1,
+                g: 1,
+                b: 1,
+                duration: 1,
+                ease: "power2.inOut"
+            }, 0);
+
+            warpSound.play();
+        }
+
+        // Mostrar História com GSAP
+        function showStory(direction) {
+            const greenStory = document.getElementById('green-story');
+            const moveStory = document.getElementById('move-story');
+            const story = direction === 'green' ? greenStory : moveStory;
+
+            story.classList.add('active');
+            gsap.fromTo(story, {
+                opacity: 0,
+                y: 50
+            }, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power2.out",
+                stagger: 0.2
+            });
+
+            gsap.from(story.querySelectorAll('h2, p, img, .btn, .btn-reverse'), {
+                opacity: 0,
+                y: 20,
+                duration: 1,
+                ease: "power2.out",
+                stagger: 0.2
+            });
+        }
+
+        // Resetar Cena com GSAP
+        function resetScene() {
+            const intro = document.getElementById('intro');
+            intro.classList.remove('hidden');
+            gsap.to(intro, {
+                opacity: 1,
+                duration: 1,
+                ease: "power2.out"
+            });
+
+            gsap.set(camera.position, { z: 50 });
+            gsap.set(planet.position, { z: -100 });
+            gsap.set(ring.position, { z: -100 });
+            gsap.set(starsMaterial, { opacity: 0.8 });
+            gsap.set(nebulaMaterial, { opacity: 0.3 });
+            gsap.set(starsMaterial.color, { r: 1, g: 1, b: 1 });
+        }
+
+        // Redimensionamento (Responsividade)
+        window.addEventListener('resize', () => {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+
+            const scaleFactor = Math.min(width, height) / 800;
+            planet.scale.set(scaleFactor, scaleFactor, scaleFactor);
+            ring.scale.set(scaleFactor, scaleFactor, scaleFactor);
+            shipGroup.scale.set(scaleFactor, scaleFactor, scaleFactor);
+        });
+
+        // Render Loop
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>

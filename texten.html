@@ -1,0 +1,1990 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore o universo interativo da ELP com soluções inovadoras em sustentabilidade, tecnologia e mobilidade ecológica. Conheça ELP Green Technology e ELP Move Mobilidade, lideradas por Ericson Piccoli, para um futuro sustentável.">
+    <meta name="keywords" content="ELP Move, ELP Green, Ericson Piccoli, sustentabilidade, tecnologia, ecologia, inovação, futuro, mobilidade sustentável, energia limpa, reciclagem, universo interativo, 3D, tecnologia verde">
+    <meta name="author" content="Ericson Piccoli, ELP">
+    <meta name="robots" content="index, follow">
+    <meta name="revisit-after" content="7 days">
+    <meta property="og:title" content="ELP - Universo Interativo de Sustentabilidade e Mobilidade">
+    <meta property="og:description" content="Descubra as galáxias ELP Green Technology e ELP Move Mobilidade, lideradas por Ericson Piccoli, com inovações em ecologia, tecnologia e futuro sustentável.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.elp-universe.com"> <!-- Substitua pelo URL real -->
+    <meta property="og:image" content="https://via.placeholder.com/800x400.png?text=ELP+Universe"> <!-- Substitua por uma imagem real -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ELP - Navegação Interativa pelo Universo">
+    <meta name="twitter:description" content="Explore o futuro da sustentabilidade e mobilidade com ELP Green e ELP Move, sob a visão de Ericson Piccoli.">
+    <meta name="twitter:image" content="https://via.placeholder.com/800x400.png?text=ELP+Universe"> <!-- Substitua por uma imagem real -->
+    <title>ELP - Universo Interativo | Sustentabilidade, Tecnologia e Mobilidade por Ericson Piccoli</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <link rel="canonical" href="https://www.elp-universe.com"> <!-- Substitua pelo URL real -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a23;
+            color: #fff;
+            overflow-y: auto; /* Permitir rolagem no body se necessário */
+            height: auto;
+        }
+        #canvas {
+            width: 100vw;
+            height: 100vh;
+            position: fixed; /* Mantém o fundo fixo para imersão */
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        .overlay, .cosmo-intro {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(10, 10, 35, 0.7), rgba(0, 0, 0, 0.9));
+        }
+        .overlay.hidden, .cosmo-intro.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .overlay {
+            display: none;
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 8vw, 5rem);
+            background: linear-gradient(90deg, #00ffcc, #ff00ff);
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 25px rgba(0, 255, 255, 0.7);
+            margin-bottom: clamp(20px, 5vw, 50px);
+        }
+        .directions, .cosmo-options, .dimension-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: clamp(10px, 2vw, 30px);
+            justify-content: center;
+            padding: 0 10px;
+        }
+        .direction-btn, .cosmo-btn, .dimension-btn {
+            padding: clamp(10px, 2vw, 20px) clamp(20px, 4vw, 40px);
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            background: linear-gradient(135deg, #ff00ff, #00ffcc);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+            transition: transform 0.3s ease;
+        }
+        .direction-btn:hover, .cosmo-btn:hover, .dimension-btn:hover {
+            transform: scale(1.1);
+        }
+        .story-section, .dimension-section {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto; /* Ajustado para crescer com o conteúdo */
+            min-height: 100vh; /* Garante pelo menos a altura da tela */
+            background: linear-gradient(135deg, rgba(10, 10, 35, 0.95), rgba(0, 0, 0, 0.95));
+            z-index: 3;
+            display: none;
+            opacity: 0;
+            padding: clamp(20px, 5vw, 60px);
+            text-align: center;
+            overflow-y: auto; /* Rolagem vertical */
+            box-sizing: border-box;
+        }
+        .story-section.active, .dimension-section.active {
+            display: block;
+        }
+        .story-section h2, .dimension-section h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.5rem, 5vw, 3.5rem);
+            color: #00ffcc;
+            margin-bottom: clamp(20px, 3vw, 40px);
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+        .story-section p, .dimension-section p {
+            font-size: clamp(0.9rem, 2vw, 1.3rem);
+            line-height: 1.8;
+            max-width: 90%;
+            margin: 0 auto clamp(10px, 2vw, 30px);
+        }
+        .story-section img, .dimension-section img {
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+            margin: clamp(10px, 2vw, 30px) auto;
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+        .story-section .btn, .dimension-section .btn {
+            display: inline-block;
+            margin: clamp(10px, 1.5vw, 20px) 10px;
+            padding: clamp(8px, 2vw, 15px) clamp(20px, 4vw, 50px);
+            font-size: clamp(0.9rem, 2vw, 1.3rem);
+            background: linear-gradient(90deg, #ff00ff, #00ffcc);
+            border: none;
+            border-radius: 50px;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            transition: transform 0.3s ease;
+        }
+        .story-section .btn:hover, .dimension-section .btn:hover {
+            transform: scale(1.1);
+        }
+        .story-section .btn-reverse, .dimension-section .btn-reverse {
+            background: linear-gradient(90deg, #00ffcc, #ff00ff);
+        }
+        .product-section {
+            margin: clamp(20px, 3vw, 40px) 0;
+            padding: clamp(10px, 2vw, 20px);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .product-section h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: #ff00ff;
+            margin-bottom: clamp(10px, 2vw, 20px);
+        }
+        .dimension-section {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+            border: 1px solid rgba(0, 255, 255, 0.3);
+        }
+        .btn-back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            background: linear-gradient(90deg, #00ffcc, #ff00ff);
+            border: none;
+            border-radius: 50px;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            display: none;
+            z-index: 4;
+        }
+        .story-section.active .btn-back-to-top,
+        .dimension-section.active .btn-back-to-top {
+            display: block;
+        }
+        @media (max-width: 1024px) {
+            .directions, .cosmo-options, .dimension-options { flex-direction: column; align-items: center; }
+        }
+        @media (max-width: 768px) {
+            .direction-btn, .cosmo-btn, .dimension-btn { width: 80%; max-width: 300px; }
+            .story-section, .dimension-section { padding: 15px; }
+        }
+        @media (max-width: 480px) {
+            .story-section .btn, .dimension-section .btn { width: 80%; max-width: 250px; }
+        }
+    </style>
+</head>
+<<ul></ul>>
+    <canvas id="canvas"></canvas>
+
+    <!-- Tela Inicial - Cosmo -->
+    <div class="cosmo-intro" id="cosmo-intro">
+        <h1>Para onde você deseja viajar?</h1>
+        <div class="cosmo-options">
+            <button class="cosmo-btn" onclick="enterGalaxy('green')">ELP Green Technology</button>
+            <button class="cosmo-btn" onclick="enterGalaxy('move')">ELP Move Mobilidade</button>
+        </div>
+    </div>
+
+    <!-- Overlay da Galáxia -->
+    <div class="overlay" id="intro">
+        <h1>Explore a Galáxia ELP</h1>
+        <div class="directions" id="direction-buttons">
+            <!-- Botões serão inseridos dinamicamente via JS -->
+        </div>
+        <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+    </div>
+
+    <!-- Galáxia Green Technology -->
+    <div class="story-section" id="green-planet-0">
+        <h2>Planeta Verde - Reciclagem Sustentável</h2>
+        <p>Bem-vindo ao Planeta Verde, onde resíduos se tornam recursos com tecnologia inovadora.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Planeta+Verde" alt="Planeta Verde - Reciclagem Sustentável">
+        <div class="product-section">
+            <h3>Reciclagem de Pneus</h3>
+            <p>Transformamos pneus usados em materiais de alta qualidade para um futuro ecológico.</p>
+            <img src="https://via.placeholder.com/600x300.png?text=Reciclagem+Pneus" alt="Reciclagem de Pneus ELP Green">
+            <div class="dimension-options">
+                <button class="dimension-btn" onclick="travelToDimension(0, 0)">Tecnologia</button>
+                <button class="dimension-btn" onclick="travelToDimension(0, 1)">Impacto</button>
+                <button class="dimension-btn" onclick="travelToDimension(0, 2)">Produtos</button>
+            </div>
+        </div>
+        <button class="btn" onclick="travelToNextPlanet(0)">Próximo Planeta</button>
+        <button class="btn btn-reverse" onclick="travelToPreviousPlanet(0)">Planeta Anterior</button>
+        <button class="btn btn-reverse" onclick="travelBack()">Voltar à Galáxia</button>
+        <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        <button class="btn btn-back-to-top" onclick="scrollToTop(this.parentElement)">Voltar ao Topo</button>
+    </div>
+    <div class="dimension-section" id="green-dimension-0-0">
+        <h2>Tecnologia de Reciclagem</h2>
+        <p>Inovações que reciclam mais de 1 milhão de pneus por ano, lideradas por Ericson Piccoli.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Tecnologia+Reciclagem" alt="Tecnologia de Reciclagem ELP Green">
+        <button class="btn btn-reverse" onclick="travelBackToPlanet(0)">Voltar ao Planeta</button>
+        <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        <button class="btn btn-back-to-top" onclick="scrollToTop(this.parentElement)">Voltar ao Topo</button>
+    </div>
+    <!-- Adicione as outras dimensões e planetas conforme necessário -->
+
+    <!-- Galáxia Move Mobilidade -->
+    <div class="story-section" id="move-planet-0">
+        <h2>Planeta Eco-Trans - Mobilidade Verde</h2>
+        <p>Mobilidade sustentável para o dia a dia com inovações da ELP Move.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Planeta+Eco-Trans" alt="Planeta Eco-Trans - Mobilidade Verde">
+        <div class="product-section">
+            <h3>Bicicleta Elétrica ELP-B2</h3>
+            <p>Leve, dobrável e eficiente, projetada para um futuro sustentável.</p>
+            <img src="https://via.placeholder.com/600x300.png?text=Bicicleta+ELP-B2" alt="Bicicleta Elétrica ELP-B2">
+            <div class="dimension-options">
+                <button class="dimension-btn" onclick="travelToDimension(0, 0)">Design</button>
+                <button class="dimension-btn" onclick="travelToDimension(0, 1)">Autonomia</button>
+                <button class="dimension-btn" onclick="travelToDimension(0, 2)">Benefícios</button>
+            </div>
+        </div>
+        <button class="btn" onclick="travelToNextPlanet(0)">Próximo Planeta</button>
+        <button class="btn btn-reverse" onclick="travelToPreviousPlanet(0)">Planeta Anterior</button>
+        <button class="btn btn-reverse" onclick="travelBack()">Voltar à Galáxia</button>
+        <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        <button class="btn btn-back-to-top" onclick="scrollToTop(this.parentElement)">Voltar ao Topo</button>
+    </div>
+    <div class="dimension-section" id="move-dimension-0-0">
+        <h2>Design do Eco-Trans</h2>
+        <p>Leveza e ergonomia para mobilidade urbana ecológica, by Ericson Piccoli.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Design+Bicicleta" alt="Design Bicicleta Elétrica ELP Move">
+        <button class="btn btn-reverse" onclick="travelBackToPlanet(0)">Voltar ao Planeta</button>
+        <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        <button class="btn btn-back-to-top" onclick="scrollToTop(this.parentElement)">Voltar ao Topo</button>
+    </div>
+    <!-- Adicione as outras dimensões e planetas conforme necessário -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas'), alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        scene.fog = new THREE.FogExp2(0x0a0a23, 0.002);
+
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+        scene.add(ambientLight);
+        const pointLight = new THREE.PointLight(0xffffff, 1, 500);
+        pointLight.position.set(50, 50, 50);
+        scene.add(pointLight);
+
+        const galaxyGeometry = new THREE.SphereGeometry(1000, 64, 64);
+        const galaxyMaterial = new THREE.MeshBasicMaterial({
+            color: 0x1a1a3d,
+            side: THREE.BackSide,
+            transparent: true,
+            opacity: 0.8
+        });
+        const galaxy = new THREE.Mesh(galaxyGeometry, galaxyMaterial);
+        scene.add(galaxy);
+
+        const starsGeometry = new THREE.BufferGeometry();
+        const starsCount = 20000;
+        const positions = new Float32Array(starsCount * 3);
+        const sizes = new Float32Array(starsCount);
+        const colors = new Float32Array(starsCount * 3);
+        for (let i = 0; i < starsCount; i++) {
+            positions[i * 3] = (Math.random() - 0.5) * 2000;
+            positions[i * 3 + 1] = (Math.random() - 0.5) * 2000;
+            positions[i * 3 + 2] = (Math.random() - 0.5) * 2000;
+            sizes[i] = Math.random() * 3 + 1;
+            colors[i * 3] = Math.random();
+            colors[i * 3 + 1] = Math.random();
+            colors[i * 3 + 2] = 1;
+        }
+        starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        starsGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+        starsGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        const starsMaterial = new THREE.PointsMaterial({
+            sizeAttenuation: true,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.8
+        });
+        const stars = new THREE.Points(starsGeometry, starsMaterial);
+        scene.add(stars);
+
+        const comets = [];
+        function createComet() {
+            const cometGroup = new THREE.Group();
+            const headGeometry = new THREE.SphereGeometry(2, 16, 16);
+            const headMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8 });
+            const head = new THREE.Mesh(headGeometry, headMaterial);
+            cometGroup.add(head);
+
+            const tailGeometry = new THREE.BufferGeometry();
+            const tailPositions = new Float32Array(30 * 3);
+            for (let i = 0; i < 30; i++) {
+                tailPositions[i * 3] = 0;
+                tailPositions[i * 3 + 1] = 0;
+                tailPositions[i * 3 + 2] = -i * 2;
+            }
+            tailGeometry.setAttribute('position', new THREE.BufferAttribute(tailPositions, 3));
+            const tailMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, transparent: true, opacity: 0.5 });
+            const tail = new THREE.Line(tailGeometry, tailMaterial);
+            cometGroup.add(tail);
+
+            cometGroup.position.set(
+                Math.random() * 2000 - 1000,
+                Math.random() * 2000 - 1000,
+                1000
+            );
+            scene.add(cometGroup);
+            comets.push(cometGroup);
+
+            gsap.to(cometGroup.position, {
+                z: -2000,
+                duration: 5 + Math.random() * 5,
+                ease: "linear",
+                onUpdate: () => {
+                    const positions = tail.geometry.attributes.position.array;
+                    for (let i = 0; i < 30; i++) {
+                        positions[i * 3] = (Math.random() - 0.5) * i * 0.2;
+                        positions[i * 3 + 1] = (Math.random() - 0.5) * i * 0.2;
+                    }
+                    tail.geometry.attributes.position.needsUpdate = true;
+                },
+                onComplete: () => {
+                    scene.remove(cometGroup);
+                    comets.splice(comets.indexOf(cometGroup), 1);
+                    createComet();
+                }
+            });
+        }
+        for (let i = 0; i < 10; i++) createComet();
+
+        const planets = [];
+        const planetData = {
+            green: [
+                { position: { x: -100, y: 50, z: -200 }, color: 0x00ffcc, ringColor: 0xff00ff },
+                { position: { x: 80, y: -30, z: -180 }, color: 0xff00ff, ringColor: 0x00ffcc },
+                { position: { x: -50, y: -80, z: -220 }, color: 0xffff00, ringColor: 0x00ffff },
+                { position: { x: 120, y: 70, z: -190 }, color: 0x00ffff, ringColor: 0xffa500 },
+                { position: { x: 0, y: 100, z: -210 }, color: 0xffa500, ringColor: 0xffff00 }
+            ],
+            move: [
+                { position: { x: -90, y: 60, z: -230 }, color: 0x66ccff, ringColor: 0xff66cc },
+                { position: { x: 70, y: -40, z: -200 }, color: 0xff66cc, ringColor: 0x66ccff },
+                { position: { x: -60, y: -70, z: -240 }, color: 0xccff66, ringColor: 0x66ffcc },
+                { position: { x: 110, y: 80, z: -210 }, color: 0x66ffcc, ringColor: 0xccff66 },
+                { position: { x: 10, y: 90, z: -220 }, color: 0xffcc66, ringColor: 0x66ccff }
+            ]
+        };
+
+        const dimensionPositions = {
+            green: [
+                [{ x: -120, y: 60, z: -250 }, { x: -90, y: 40, z: -230 }, { x: -110, y: 70, z: -240 }],
+                [{ x: 100, y: -20, z: -220 }, { x: 70, y: -40, z: -200 }, { x: 90, y: -10, z: -210 }],
+                [{ x: -70, y: -90, z: -260 }, { x: -40, y: -70, z: -240 }, { x: -60, y: -80, z: -250 }],
+                [{ x: 140, y: 80, z: -230 }, { x: 110, y: 60, z: -210 }, { x: 130, y: 90, z: -220 }],
+                [{ x: 20, y: 110, z: -250 }, { x: -10, y: 90, z: -230 }, { x: 10, y: 120, z: -240 }]
+            ],
+            move: [
+                [{ x: -110, y: 70, z: -260 }, { x: -80, y: 50, z: -240 }, { x: -100, y: 80, z: -250 }],
+                [{ x: 90, y: -30, z: -230 }, { x: 60, y: -50, z: -210 }, { x: 80, y: -20, z: -220 }],
+                [{ x: -80, y: -80, z: -270 }, { x: -50, y: -60, z: -250 }, { x: -70, y: -70, z: -260 }],
+                [{ x: 130, y: 90, z: -240 }, { x: 100, y: 70, z: -220 }, { x: 120, y: 100, z: -230 }],
+                [{ x: 30, y: 100, z: -260 }, { x: 0, y: 80, z: -240 }, { x: 20, y: 110, z: -250 }]
+            ]
+        };
+
+        function adjustPlanetScale() {
+            const scaleFactor = Math.min(window.innerWidth, window.innerHeight) / 800;
+            planets.forEach(({ planet, ring }) => {
+                planet.scale.set(scaleFactor, scaleFactor, scaleFactor);
+                ring.scale.set(scaleFactor, scaleFactor, scaleFactor);
+            });
+            shipGroup.scale.set(scaleFactor, scaleFactor, scaleFactor);
+        }
+
+        function createPlanets(galaxyKey) {
+            const data = planetData[galaxyKey];
+            data.forEach((planetInfo, index) => {
+                const planetGeometry = new THREE.SphereGeometry(15, 64, 64);
+                const planetMaterial = new THREE.MeshPhongMaterial({
+                    color: planetInfo.color,
+                    specular: 0x555555,
+                    shininess: 30
+                });
+                const planet = new THREE.Mesh(planetGeometry, planetMaterial);
+                planet.position.set(planetInfo.position.x, planetInfo.position.y, planetInfo.position.z);
+                planet.visible = false;
+                scene.add(planet);
+
+                const ringGeometry = new THREE.RingGeometry(20, 25, 64);
+                const ringMaterial = new THREE.MeshPhongMaterial({
+                    color: planetInfo.ringColor,
+                    side: THREE.DoubleSide,
+                    transparent: true,
+                    opacity: 0.8
+                });
+                const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+                ring.rotation.x = Math.PI / 2;
+                ring.position.set(planetInfo.position.x, planetInfo.position.y, planetInfo.position.z);
+                ring.visible = false;
+                scene.add(ring);
+
+                const fragmentsGeometry = new THREE.BufferGeometry();
+                const fragmentCount = 200;
+                const fragmentPositions = new Float32Array(fragmentCount * 3);
+                const fragmentVelocities = new Float32Array(fragmentCount * 3);
+                for (let i = 0; i < fragmentCount; i++) {
+                    fragmentPositions[i * 3] = planetInfo.position.x;
+                    fragmentPositions[i * 3 + 1] = planetInfo.position.y;
+                    fragmentPositions[i * 3 + 2] = planetInfo.position.z;
+                    fragmentVelocities[i * 3] = (Math.random() - 0.5) * 5;
+                    fragmentVelocities[i * 3 + 1] = (Math.random() - 0.5) * 5;
+                    fragmentVelocities[i * 3 + 2] = (Math.random() - 0.5) * 5;
+                }
+                fragmentsGeometry.setAttribute('position', new THREE.BufferAttribute(fragmentPositions, 3));
+                const fragmentsMaterial = new THREE.PointsMaterial({
+                    color: planetInfo.color,
+                    size: 2,
+                    transparent: true,
+                    opacity: 0
+                });
+                const fragments = new THREE.Points(fragmentsGeometry, fragmentsMaterial);
+                scene.add(fragments);
+
+                const rays = new THREE.Group();
+                for (let i = 0; i < 5; i++) {
+                    const rayGeometry = new THREE.BufferGeometry();
+                    const rayVertices = new Float32Array([
+                        planetInfo.position.x, planetInfo.position.y, planetInfo.position.z,
+                        planetInfo.position.x + (Math.random() - 0.5) * 30,
+                        planetInfo.position.y + (Math.random() - 0.5) * 30,
+                        planetInfo.position.z + (Math.random() - 0.5) * 30
+                    ]);
+                    rayGeometry.setAttribute('position', new THREE.BufferAttribute(rayVertices, 3));
+                    const rayMaterial = new THREE.LineBasicMaterial({
+                        color: 0x00ffff,
+                        transparent: true,
+                        opacity: 0
+                    });
+                    const ray = new THREE.Line(rayGeometry, rayMaterial);
+                    rays.add(ray);
+                }
+                scene.add(rays);
+
+                planets.push({ planet, ring, fragments, fragmentVelocities, rays, galaxy: galaxyKey });
+            });
+        }
+
+        createPlanets('green');
+        createPlanets('move');
+
+        const shipGroup = new THREE.Group();
+        const shipBody = new THREE.Mesh(
+            new THREE.ConeGeometry(2, 5, 32),
+            new THREE.MeshPhongMaterial({ color: 0x00ffcc, specular: 0xffffff, shininess: 50 })
+        );
+        shipBody.rotation.x = Math.PI / 2;
+        shipGroup.add(shipBody);
+
+        const shipWings = new THREE.Mesh(
+            new THREE.BoxGeometry(6, 0.5, 2),
+            new THREE.MeshPhongMaterial({ color: 0xff00ff })
+        );
+        shipWings.position.set(0, -1, 0);
+        shipGroup.add(shipWings);
+
+        const shipGlow = new THREE.Mesh(
+            new THREE.SphereGeometry(1, 16, 16),
+            new THREE.MeshBasicMaterial({ color: 0x00ffcc, transparent: true, opacity: 0.5 })
+        );
+        shipGlow.position.set(0, 0, -3);
+        shipGroup.add(shipGlow);
+
+        shipGroup.position.set(0, 10, 20);
+        scene.add(shipGroup);
+
+        camera.position.set(0, 0, window.innerWidth < 768 ? 150 : 100);
+
+        const spaceAmbience = new Howl({
+            src: ['https://cdn.freesound.org/previews/242/242999_4486188-lq.mp3'],
+            loop: true,
+            volume: 0.3,
+            autoplay: true
+        });
+
+        const warpSound = new Howl({
+            src: ['https://cdn.freesound.org/previews/120/120859_649468-lq.mp3'],
+            volume: 0.7
+        });
+
+        const clickSound = new Howl({
+            src: ['https://cdn.freesound.org/previews/242/242934_71257-lq.mp3'],
+            volume: 0.5
+        });
+
+        gsap.from("#cosmo-intro h1", {
+            opacity: 0,
+            y: 50,
+            duration: 1.5,
+            ease: "elastic.out(1, 0.3)"
+        });
+
+        gsap.from(".cosmo-btn", {
+            opacity: 0,
+            y: 20,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power2.out",
+            delay: 0.5
+        });
+
+        document.querySelectorAll('.direction-btn, .cosmo-btn, .dimension-btn, .btn, .btn-reverse, .btn-back-to-top').forEach(button => {
+            button.addEventListener('click', () => clickSound.play());
+        });
+
+        gsap.to(stars.rotation, {
+            y: "+=6.28",
+            duration: 20,
+            ease: "linear",
+            repeat: -1
+        });
+
+        planets.forEach(({ planet, ring }) => {
+            gsap.to(planet.rotation, {
+                y: "+=6.28",
+                duration: 10,
+                ease: "linear",
+                repeat: -1
+            });
+            gsap.to(ring.rotation, {
+                z: "+=6.28",
+                duration: 15,
+                ease: "linear",
+                repeat: -1
+            });
+        });
+
+        gsap.to(shipGroup.rotation, {
+            y: "+=6.28",
+            duration: 10,
+            ease: "linear",
+            repeat: -1
+        });
+
+        gsap.to(shipGlow.scale, {
+            x: 1.2,
+            y: 1.2,
+            z: 1.2,
+            duration: 1,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true
+        });
+
+        gsap.to(starsMaterial, {
+            opacity: 0.6,
+            duration: 2,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true
+        });
+
+        let currentPlanetIndex = -1;
+        let currentDimensionIndex = -1;
+        let currentGalaxy = null;
+
+        function enterGalaxy(galaxy) {
+            currentGalaxy = galaxy;
+            const cosmoIntro = document.getElementById('cosmo-intro');
+            const intro = document.getElementById('intro');
+            const directionButtons = document.getElementById('direction-buttons');
+
+            const planetNames = {
+                green: ['Planeta Verde', 'Planeta Elétrico', 'Planeta Futura', 'Planeta Inovação', 'Planeta Harmonia'],
+                move: ['Planeta Eco-Trans', 'Planeta Volt-Way', 'Planeta Neo-Route', 'Planeta Charge-Nex', 'Planeta Share-Move']
+            };
+
+            directionButtons.innerHTML = '';
+            planetNames[galaxy].forEach((name, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'direction-btn';
+                btn.textContent = name;
+                btn.onclick = () => travelTo(index);
+                directionButtons.appendChild(btn);
+                btn.addEventListener('click', () => clickSound.play());
+            });
+
+            gsap.to(cosmoIntro, {
+                opacity: 0,
+                duration: 0.5,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    cosmoIntro.classList.add('hidden');
+                    intro.style.display = 'flex';
+                    intro.classList.remove('hidden');
+                    planets.forEach(p => {
+                        p.planet.visible = p.galaxy === galaxy;
+                        p.ring.visible = p.galaxy === galaxy;
+                        p.fragments.material.opacity = 0;
+                    });
+                    intro.querySelector('h1').textContent = `Explore a Galáxia ELP ${galaxy === 'green' ? 'Green Technology' : 'Move Mobilidade'}`;
+                    gsap.to(intro, {
+                        opacity: 1,
+                        duration: 0.5,
+                        ease: "power2.out"
+                    });
+                }
+            });
+
+            gsap.to(camera.position, {
+                z: window.innerWidth < 768 ? 250 : 200,
+                duration: 1.5,
+                ease: "power2.inOut"
+            });
+            warpSound.play();
+        }
+
+        function explodePlanet(index, callback) {
+            const { planet, ring, fragments, fragmentVelocities, rays } = planets[index];
+            planet.visible = false;
+            ring.visible = false;
+            fragments.material.opacity = 1;
+
+            const positions = fragments.geometry.attributes.position.array;
+            gsap.to(fragments.material, {
+                opacity: 0,
+                duration: 2,
+                ease: "power2.in",
+                onUpdate: () => {
+                    for (let i = 0; i < fragmentVelocities.length / 3; i++) {
+                        positions[i * 3] += fragmentVelocities[i * 3];
+                        positions[i * 3 + 1] += fragmentVelocities[i * 3 + 1];
+                        positions[i * 3 + 2] += fragmentVelocities[i * 3 + 2];
+                    }
+                    fragments.geometry.attributes.position.needsUpdate = true;
+                },
+                onComplete: () => {
+                    fragments.material.opacity = 0;
+                    callback();
+                }
+            });
+
+            rays.children.forEach(ray => {
+                gsap.to(ray.material, {
+                    opacity: 0.8,
+                    duration: 0.5,
+                    ease: "power2.out",
+                    yoyo: true,
+                    repeat: 1,
+                    onComplete: () => ray.material.opacity = 0
+                });
+            });
+        }
+
+        function reconstructPlanet(index, callback) {
+            const { planet, ring, fragments, fragmentVelocities, rays } = planets[index];
+            planet.visible = true;
+            ring.visible = true;
+            fragments.material.opacity = 0;
+
+            const positions = fragments.geometry.attributes.position.array;
+            for (let i = 0; i < fragmentVelocities.length / 3; i++) {
+                positions[i * 3] = planet.position.x;
+                positions[i * 3 + 1] = planet.position.y;
+                positions[i * 3 + 2] = planet.position.z;
+            }
+            fragments.geometry.attributes.position.needsUpdate = true;
+
+            fragments.material.opacity = 1;
+            gsap.to(fragments.material, {
+                opacity: 0,
+                duration: 2,
+                ease: "power2.out",
+                onComplete: callback
+            });
+
+            rays.children.forEach(ray => {
+                gsap.to(ray.material, {
+                    opacity: 0.8,
+                    duration: 0.5,
+                    ease: "power2.out",
+                    yoyo: true,
+                    repeat: 1,
+                    onComplete: () => ray.material.opacity = 0
+                });
+            });
+        }
+
+        function getPlanetGlobalIndex(galaxy, localIndex) {
+            return galaxy === 'green' ? localIndex : localIndex + 5;
+        }
+
+        function travelTo(localIndex) {
+            currentPlanetIndex = getPlanetGlobalIndex(currentGalaxy, localIndex);
+            currentDimensionIndex = -1;
+            const intro = document.getElementById('intro');
+            const targetPlanet = planets[currentPlanetIndex];
+            const scaleFactor = Math.min(window.innerWidth, window.innerHeight) / 800;
+
+            const timeline = gsap.timeline({
+                onComplete: () => {
+                    reconstructPlanet(currentPlanetIndex, () => showStory(localIndex));
+                }
+            });
+
+            timeline.to(intro, {
+                opacity: 0,
+                duration: 0.5,
+                ease: "power2.inOut",
+                onComplete: () => intro.classList.add('hidden')
+            });
+
+            timeline.to(shipGroup.position, {
+                x: targetPlanet.planet.position.x,
+                y: targetPlanet.planet.position.y + 30 * scaleFactor,
+                z: targetPlanet.planet.position.z + 50 * scaleFactor,
+                duration: 1.5,
+                ease: "power...<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore o universo interativo da ELP com soluções inovadoras em sustentabilidade, tecnologia e mobilidade ecológica. Conheça ELP Green Technology e ELP Move Mobilidade, lideradas por Ericson Piccoli, para um futuro sustentável.">
+    <meta name="keywords" content="ELP Move, ELP Green, Ericson Piccoli, sustentabilidade, tecnologia, ecologia, inovação, futuro, mobilidade sustentável, energia limpa, reciclagem, universo interativo, 3D, tecnologia verde">
+    <meta name="author" content="Ericson Piccoli, ELP">
+    <meta name="robots" content="index, follow">
+    <meta name="revisit-after" content="7 days">
+    <meta property="og:title" content="ELP - Universo Interativo de Sustentabilidade e Mobilidade">
+    <meta property="og:description" content="Descubra as galáxias ELP Green Technology e ELP Move Mobilidade, lideradas por Ericson Piccoli, com inovações em ecologia, tecnologia e futuro sustentável.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.elp-universe.com"> <!-- Substitua pelo URL real -->
+    <meta property="og:image" content="https://via.placeholder.com/800x400.png?text=ELP+Universe"> <!-- Substitua por uma imagem real -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ELP - Navegação Interativa pelo Universo">
+    <meta name="twitter:description" content="Explore o futuro da sustentabilidade e mobilidade com ELP Green e ELP Move, sob a visão de Ericson Piccoli.">
+    <meta name="twitter:image" content="https://via.placeholder.com/800x400.png?text=ELP+Universe"> <!-- Substitua por uma imagem real -->
+    <title>ELP - Universo Interativo | Sustentabilidade, Tecnologia e Mobilidade por Ericson Piccoli</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <link rel="canonical" href="https://www.elp-universe.com"> <!-- Substitua pelo URL real -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a23;
+            color: #fff;
+            overflow-y: auto; /* Permitir rolagem no body se necessário */
+            height: auto;
+        }
+        #canvas {
+            width: 100vw;
+            height: 100vh;
+            position: fixed; /* Mantém o fundo fixo para imersão */
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        .overlay, .cosmo-intro {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(10, 10, 35, 0.7), rgba(0, 0, 0, 0.9));
+        }
+        .overlay.hidden, .cosmo-intro.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .overlay {
+            display: none;
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 8vw, 5rem);
+            background: linear-gradient(90deg, #00ffcc, #ff00ff);
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 25px rgba(0, 255, 255, 0.7);
+            margin-bottom: clamp(20px, 5vw, 50px);
+        }
+        .directions, .cosmo-options, .dimension-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: clamp(10px, 2vw, 30px);
+            justify-content: center;
+            padding: 0 10px;
+        }
+        .direction-btn, .cosmo-btn, .dimension-btn {
+            padding: clamp(10px, 2vw, 20px) clamp(20px, 4vw, 40px);
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            background: linear-gradient(135deg, #ff00ff, #00ffcc);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+            transition: transform 0.3s ease;
+        }
+        .direction-btn:hover, .cosmo-btn:hover, .dimension-btn:hover {
+            transform: scale(1.1);
+        }
+        .story-section, .dimension-section {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto; /* Ajustado para crescer com o conteúdo */
+            min-height: 100vh; /* Garante pelo menos a altura da tela */
+            background: linear-gradient(135deg, rgba(10, 10, 35, 0.95), rgba(0, 0, 0, 0.95));
+            z-index: 3;
+            display: none;
+            opacity: 0;
+            padding: clamp(20px, 5vw, 60px);
+            text-align: center;
+            overflow-y: auto; /* Rolagem vertical */
+            box-sizing: border-box;
+        }
+        .story-section.active, .dimension-section.active {
+            display: block;
+        }
+        .story-section h2, .dimension-section h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.5rem, 5vw, 3.5rem);
+            color: #00ffcc;
+            margin-bottom: clamp(20px, 3vw, 40px);
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+        .story-section p, .dimension-section p {
+            font-size: clamp(0.9rem, 2vw, 1.3rem);
+            line-height: 1.8;
+            max-width: 90%;
+            margin: 0 auto clamp(10px, 2vw, 30px);
+        }
+        .story-section img, .dimension-section img {
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+            margin: clamp(10px, 2vw, 30px) auto;
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+        .story-section .btn, .dimension-section .btn {
+            display: inline-block;
+            margin: clamp(10px, 1.5vw, 20px) 10px;
+            padding: clamp(8px, 2vw, 15px) clamp(20px, 4vw, 50px);
+            font-size: clamp(0.9rem, 2vw, 1.3rem);
+            background: linear-gradient(90deg, #ff00ff, #00ffcc);
+            border: none;
+            border-radius: 50px;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            transition: transform 0.3s ease;
+        }
+        .story-section .btn:hover, .dimension-section .btn:hover {
+            transform: scale(1.1);
+        }
+        .story-section .btn-reverse, .dimension-section .btn-reverse {
+            background: linear-gradient(90deg, #00ffcc, #ff00ff);
+        }
+        .product-section {
+            margin: clamp(20px, 3vw, 40px) 0;
+            padding: clamp(10px, 2vw, 20px);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .product-section h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: #ff00ff;
+            margin-bottom: clamp(10px, 2vw, 20px);
+        }
+        .dimension-section {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+            border: 1px solid rgba(0, 255, 255, 0.3);
+        }
+        .btn-back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            background: linear-gradient(90deg, #00ffcc, #ff00ff);
+            border: none;
+            border-radius: 50px;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            display: none;
+            z-index: 4;
+        }
+        .story-section.active .btn-back-to-top,
+        .dimension-section.active .btn-back-to-top {
+            display: block;
+        }
+        @media (max-width: 1024px) {
+            .directions, .cosmo-options, .dimension-options { flex-direction: column; align-items: center; }
+        }
+        @media (max-width: 768px) {
+            .direction-btn, .cosmo-btn, .dimension-btn { width: 80%; max-width: 300px; }
+            .story-section, .dimension-section { padding: 15px; }
+        }
+        @media (max-width: 480px) {
+            .story-section .btn, .dimension-section .btn { width: 80%; max-width: 250px; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+
+    <!-- Tela Inicial - Cosmo -->
+    <div class="cosmo-intro" id="cosmo-intro">
+        <h1>Para onde você deseja viajar?</h1>
+        <div class="cosmo-options">
+            <button class="cosmo-btn" onclick="enterGalaxy('green')">ELP Green Technology</button>
+            <button class="cosmo-btn" onclick="enterGalaxy('move')">ELP Move Mobilidade</button>
+        </div>
+    </div>
+
+    <!-- Overlay da Galáxia -->
+    <div class="overlay" id="intro">
+        <h1>Explore a Galáxia ELP</h1>
+        <div class="directions" id="direction-buttons">
+            <!-- Botões serão inseridos dinamicamente via JS -->
+        </div>
+        <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+    </div>
+
+    <!-- Galáxia Green Technology -->
+    <div class="story-section" id="green-planet-0">
+        <h2>Planeta Verde - Reciclagem Sustentável</h2>
+        <p>Bem-vindo ao Planeta Verde, onde resíduos se tornam recursos com tecnologia inovadora.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Planeta+Verde" alt="Planeta Verde - Reciclagem Sustentável">
+        <div class="product-section">
+            <h3>Reciclagem de Pneus</h3>
+            <p>Transformamos pneus usados em materiais de alta qualidade para um futuro ecológico.</p>
+            <img src="https://via.placeholder.com/600x300.png?text=Reciclagem+Pneus" alt="Reciclagem de Pneus ELP Green">
+            <div class="dimension-options">
+                <button class="dimension-btn" onclick="travelToDimension(0, 0)">Tecnologia</button>
+                <button class="dimension-btn" onclick="travelToDimension(0, 1)">Impacto</button>
+                <button class="dimension-btn" onclick="travelToDimension(0, 2)">Produtos</button>
+            </div>
+        </div>
+        <button class="btn" onclick="travelToNextPlanet(0)">Próximo Planeta</button>
+        <button class="btn btn-reverse" onclick="travelToPreviousPlanet(0)">Planeta Anterior</button>
+        <button class="btn btn-reverse" onclick="travelBack()">Voltar à Galáxia</button>
+        <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        <button class="btn btn-back-to-top" onclick="scrollToTop(this.parentElement)">Voltar ao Topo</button>
+    </div>
+    <div class="dimension-section" id="green-dimension-0-0">
+        <h2>Tecnologia de Reciclagem</h2>
+        <p>Inovações que reciclam mais de 1 milhão de pneus por ano, lideradas por Ericson Piccoli.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Tecnologia+Reciclagem" alt="Tecnologia de Reciclagem ELP Green">
+        <button class="btn btn-reverse" onclick="travelBackToPlanet(0)">Voltar ao Planeta</button>
+        <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        <button class="btn btn-back-to-top" onclick="scrollToTop(this.parentElement)">Voltar ao Topo</button>
+    </div>
+    <!-- Adicione as outras dimensões e planetas conforme necessário -->
+
+    <!-- Galáxia Move Mobilidade -->
+    <div class="story-section" id="move-planet-0">
+        <h2>Planeta Eco-Trans - Mobilidade Verde</h2>
+        <p>Mobilidade sustentável para o dia a dia com inovações da ELP Move.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Planeta+Eco-Trans" alt="Planeta Eco-Trans - Mobilidade Verde">
+        <div class="product-section">
+            <h3>Bicicleta Elétrica ELP-B2</h3>
+            <p>Leve, dobrável e eficiente, projetada para um futuro sustentável.</p>
+            <img src="https://via.placeholder.com/600x300.png?text=Bicicleta+ELP-B2" alt="Bicicleta Elétrica ELP-B2">
+            <div class="dimension-options">
+                <button class="dimension-btn" onclick="travelToDimension(0, 0)">Design</button>
+                <button class="dimension-btn" onclick="travelToDimension(0, 1)">Autonomia</button>
+                <button class="dimension-btn" onclick="travelToDimension(0, 2)">Benefícios</button>
+            </div>
+        </div>
+        <button class="btn" onclick="travelToNextPlanet(0)">Próximo Planeta</button>
+        <button class="btn btn-reverse" onclick="travelToPreviousPlanet(0)">Planeta Anterior</button>
+        <button class="btn btn-reverse" onclick="travelBack()">Voltar à Galáxia</button>
+        <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        <button class="btn btn-back-to-top" onclick="scrollToTop(this.parentElement)">Voltar ao Topo</button>
+    </div>
+    <div class="dimension-section" id="move-dimension-0-0">
+        <h2>Design do Eco-Trans</h2>
+        <p>Leveza e ergonomia para mobilidade urbana ecológica, by Ericson Piccoli.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Design+Bicicleta" alt="Design Bicicleta Elétrica ELP Move">
+        <button class="btn btn-reverse" onclick="travelBackToPlanet(0)">Voltar ao Planeta</button>
+        <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        <button class="btn btn-back-to-top" onclick="scrollToTop(this.parentElement)">Voltar ao Topo</button>
+    </div>
+    <!-- Adicione as outras dimensões e planetas conforme necessário -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas'), alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        scene.fog = new THREE.FogExp2(0x0a0a23, 0.002);
+
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+        scene.add(ambientLight);
+        const pointLight = new THREE.PointLight(0xffffff, 1, 500);
+        pointLight.position.set(50, 50, 50);
+        scene.add(pointLight);
+
+        const galaxyGeometry = new THREE.SphereGeometry(1000, 64, 64);
+        const galaxyMaterial = new THREE.MeshBasicMaterial({
+            color: 0x1a1a3d,
+            side: THREE.BackSide,
+            transparent: true,
+            opacity: 0.8
+        });
+        const galaxy = new THREE.Mesh(galaxyGeometry, galaxyMaterial);
+        scene.add(galaxy);
+
+        const starsGeometry = new THREE.BufferGeometry();
+        const starsCount = 20000;
+        const positions = new Float32Array(starsCount * 3);
+        const sizes = new Float32Array(starsCount);
+        const colors = new Float32Array(starsCount * 3);
+        for (let i = 0; i < starsCount; i++) {
+            positions[i * 3] = (Math.random() - 0.5) * 2000;
+            positions[i * 3 + 1] = (Math.random() - 0.5) * 2000;
+            positions[i * 3 + 2] = (Math.random() - 0.5) * 2000;
+            sizes[i] = Math.random() * 3 + 1;
+            colors[i * 3] = Math.random();
+            colors[i * 3 + 1] = Math.random();
+            colors[i * 3 + 2] = 1;
+        }
+        starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        starsGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+        starsGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        const starsMaterial = new THREE.PointsMaterial({
+            sizeAttenuation: true,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.8
+        });
+        const stars = new THREE.Points(starsGeometry, starsMaterial);
+        scene.add(stars);
+
+        const comets = [];
+        function createComet() {
+            const cometGroup = new THREE.Group();
+            const headGeometry = new THREE.SphereGeometry(2, 16, 16);
+            const headMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8 });
+            const head = new THREE.Mesh(headGeometry, headMaterial);
+            cometGroup.add(head);
+
+            const tailGeometry = new THREE.BufferGeometry();
+            const tailPositions = new Float32Array(30 * 3);
+            for (let i = 0; i < 30; i++) {
+                tailPositions[i * 3] = 0;
+                tailPositions[i * 3 + 1] = 0;
+                tailPositions[i * 3 + 2] = -i * 2;
+            }
+            tailGeometry.setAttribute('position', new THREE.BufferAttribute(tailPositions, 3));
+            const tailMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, transparent: true, opacity: 0.5 });
+            const tail = new THREE.Line(tailGeometry, tailMaterial);
+            cometGroup.add(tail);
+
+            cometGroup.position.set(
+                Math.random() * 2000 - 1000,
+                Math.random() * 2000 - 1000,
+                1000
+            );
+            scene.add(cometGroup);
+            comets.push(cometGroup);
+
+            gsap.to(cometGroup.position, {
+                z: -2000,
+                duration: 5 + Math.random() * 5,
+                ease: "linear",
+                onUpdate: () => {
+                    const positions = tail.geometry.attributes.position.array;
+                    for (let i = 0; i < 30; i++) {
+                        positions[i * 3] = (Math.random() - 0.5) * i * 0.2;
+                        positions[i * 3 + 1] = (Math.random() - 0.5) * i * 0.2;
+                    }
+                    tail.geometry.attributes.position.needsUpdate = true;
+                },
+                onComplete: () => {
+                    scene.remove(cometGroup);
+                    comets.splice(comets.indexOf(cometGroup), 1);
+                    createComet();
+                }
+            });
+        }
+        for (let i = 0; i < 10; i++) createComet();
+
+        const planets = [];
+        const planetData = {
+            green: [
+                { position: { x: -100, y: 50, z: -200 }, color: 0x00ffcc, ringColor: 0xff00ff },
+                { position: { x: 80, y: -30, z: -180 }, color: 0xff00ff, ringColor: 0x00ffcc },
+                { position: { x: -50, y: -80, z: -220 }, color: 0xffff00, ringColor: 0x00ffff },
+                { position: { x: 120, y: 70, z: -190 }, color: 0x00ffff, ringColor: 0xffa500 },
+                { position: { x: 0, y: 100, z: -210 }, color: 0xffa500, ringColor: 0xffff00 }
+            ],
+            move: [
+                { position: { x: -90, y: 60, z: -230 }, color: 0x66ccff, ringColor: 0xff66cc },
+                { position: { x: 70, y: -40, z: -200 }, color: 0xff66cc, ringColor: 0x66ccff },
+                { position: { x: -60, y: -70, z: -240 }, color: 0xccff66, ringColor: 0x66ffcc },
+                { position: { x: 110, y: 80, z: -210 }, color: 0x66ffcc, ringColor: 0xccff66 },
+                { position: { x: 10, y: 90, z: -220 }, color: 0xffcc66, ringColor: 0x66ccff }
+            ]
+        };
+
+        const dimensionPositions = {
+            green: [
+                [{ x: -120, y: 60, z: -250 }, { x: -90, y: 40, z: -230 }, { x: -110, y: 70, z: -240 }],
+                [{ x: 100, y: -20, z: -220 }, { x: 70, y: -40, z: -200 }, { x: 90, y: -10, z: -210 }],
+                [{ x: -70, y: -90, z: -260 }, { x: -40, y: -70, z: -240 }, { x: -60, y: -80, z: -250 }],
+                [{ x: 140, y: 80, z: -230 }, { x: 110, y: 60, z: -210 }, { x: 130, y: 90, z: -220 }],
+                [{ x: 20, y: 110, z: -250 }, { x: -10, y: 90, z: -230 }, { x: 10, y: 120, z: -240 }]
+            ],
+            move: [
+                [{ x: -110, y: 70, z: -260 }, { x: -80, y: 50, z: -240 }, { x: -100, y: 80, z: -250 }],
+                [{ x: 90, y: -30, z: -230 }, { x: 60, y: -50, z: -210 }, { x: 80, y: -20, z: -220 }],
+                [{ x: -80, y: -80, z: -270 }, { x: -50, y: -60, z: -250 }, { x: -70, y: -70, z: -260 }],
+                [{ x: 130, y: 90, z: -240 }, { x: 100, y: 70, z: -220 }, { x: 120, y: 100, z: -230 }],
+                [{ x: 30, y: 100, z: -260 }, { x: 0, y: 80, z: -240 }, { x: 20, y: 110, z: -250 }]
+            ]
+        };
+
+        function adjustPlanetScale() {
+            const scaleFactor = Math.min(window.innerWidth, window.innerHeight) / 800;
+            planets.forEach(({ planet, ring }) => {
+                planet.scale.set(scaleFactor, scaleFactor, scaleFactor);
+                ring.scale.set(scaleFactor, scaleFactor, scaleFactor);
+            });
+            shipGroup.scale.set(scaleFactor, scaleFactor, scaleFactor);
+        }
+
+        function createPlanets(galaxyKey) {
+            const data = planetData[galaxyKey];
+            data.forEach((planetInfo, index) => {
+                const planetGeometry = new THREE.SphereGeometry(15, 64, 64);
+                const planetMaterial = new THREE.MeshPhongMaterial({
+                    color: planetInfo.color,
+                    specular: 0x555555,
+                    shininess: 30
+                });
+                const planet = new THREE.Mesh(planetGeometry, planetMaterial);
+                planet.position.set(planetInfo.position.x, planetInfo.position.y, planetInfo.position.z);
+                planet.visible = false;
+                scene.add(planet);
+
+                const ringGeometry = new THREE.RingGeometry(20, 25, 64);
+                const ringMaterial = new THREE.MeshPhongMaterial({
+                    color: planetInfo.ringColor,
+                    side: THREE.DoubleSide,
+                    transparent: true,
+                    opacity: 0.8
+                });
+                const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+                ring.rotation.x = Math.PI / 2;
+                ring.position.set(planetInfo.position.x, planetInfo.position.y, planetInfo.position.z);
+                ring.visible = false;
+                scene.add(ring);
+
+                const fragmentsGeometry = new THREE.BufferGeometry();
+                const fragmentCount = 200;
+                const fragmentPositions = new Float32Array(fragmentCount * 3);
+                const fragmentVelocities = new Float32Array(fragmentCount * 3);
+                for (let i = 0; i < fragmentCount; i++) {
+                    fragmentPositions[i * 3] = planetInfo.position.x;
+                    fragmentPositions[i * 3 + 1] = planetInfo.position.y;
+                    fragmentPositions[i * 3 + 2] = planetInfo.position.z;
+                    fragmentVelocities[i * 3] = (Math.random() - 0.5) * 5;
+                    fragmentVelocities[i * 3 + 1] = (Math.random() - 0.5) * 5;
+                    fragmentVelocities[i * 3 + 2] = (Math.random() - 0.5) * 5;
+                }
+                fragmentsGeometry.setAttribute('position', new THREE.BufferAttribute(fragmentPositions, 3));
+                const fragmentsMaterial = new THREE.PointsMaterial({
+                    color: planetInfo.color,
+                    size: 2,
+                    transparent: true,
+                    opacity: 0
+                });
+                const fragments = new THREE.Points(fragmentsGeometry, fragmentsMaterial);
+                scene.add(fragments);
+
+                const rays = new THREE.Group();
+                for (let i = 0; i < 5; i++) {
+                    const rayGeometry = new THREE.BufferGeometry();
+                    const rayVertices = new Float32Array([
+                        planetInfo.position.x, planetInfo.position.y, planetInfo.position.z,
+                        planetInfo.position.x + (Math.random() - 0.5) * 30,
+                        planetInfo.position.y + (Math.random() - 0.5) * 30,
+                        planetInfo.position.z + (Math.random() - 0.5) * 30
+                    ]);
+                    rayGeometry.setAttribute('position', new THREE.BufferAttribute(rayVertices, 3));
+                    const rayMaterial = new THREE.LineBasicMaterial({
+                        color: 0x00ffff,
+                        transparent: true,
+                        opacity: 0
+                    });
+                    const ray = new THREE.Line(rayGeometry, rayMaterial);
+                    rays.add(ray);
+                }
+                scene.add(rays);
+
+                planets.push({ planet, ring, fragments, fragmentVelocities, rays, galaxy: galaxyKey });
+            });
+        }
+
+        createPlanets('green');
+        createPlanets('move');
+
+        const shipGroup = new THREE.Group();
+        const shipBody = new THREE.Mesh(
+            new THREE.ConeGeometry(2, 5, 32),
+            new THREE.MeshPhongMaterial({ color: 0x00ffcc, specular: 0xffffff, shininess: 50 })
+        );
+        shipBody.rotation.x = Math.PI / 2;
+        shipGroup.add(shipBody);
+
+        const shipWings = new THREE.Mesh(
+            new THREE.BoxGeometry(6, 0.5, 2),
+            new THREE.MeshPhongMaterial({ color: 0xff00ff })
+        );
+        shipWings.position.set(0, -1, 0);
+        shipGroup.add(shipWings);
+
+        const shipGlow = new THREE.Mesh(
+            new THREE.SphereGeometry(1, 16, 16),
+            new THREE.MeshBasicMaterial({ color: 0x00ffcc, transparent: true, opacity: 0.5 })
+        );
+        shipGlow.position.set(0, 0, -3);
+        shipGroup.add(shipGlow);
+
+        shipGroup.position.set(0, 10, 20);
+        scene.add(shipGroup);
+
+        camera.position.set(0, 0, window.innerWidth < 768 ? 150 : 100);
+
+        const spaceAmbience = new Howl({
+            src: ['https://cdn.freesound.org/previews/242/242999_4486188-lq.mp3'],
+            loop: true,
+            volume: 0.3,
+            autoplay: true
+        });
+
+        const warpSound = new Howl({
+            src: ['https://cdn.freesound.org/previews/120/120859_649468-lq.mp3'],
+            volume: 0.7
+        });
+
+        const clickSound = new Howl({
+            src: ['https://cdn.freesound.org/previews/242/242934_71257-lq.mp3'],
+            volume: 0.5
+        });
+
+        gsap.from("#cosmo-intro h1", {
+            opacity: 0,
+            y: 50,
+            duration: 1.5,
+            ease: "elastic.out(1, 0.3)"
+        });
+
+        gsap.from(".cosmo-btn", {
+            opacity: 0,
+            y: 20,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power2.out",
+            delay: 0.5
+        });
+
+        document.querySelectorAll('.direction-btn, .cosmo-btn, .dimension-btn, .btn, .btn-reverse, .btn-back-to-top').forEach(button => {
+            button.addEventListener('click', () => clickSound.play());
+        });
+
+        gsap.to(stars.rotation, {
+            y: "+=6.28",
+            duration: 20,
+            ease: "linear",
+            repeat: -1
+        });
+
+        planets.forEach(({ planet, ring }) => {
+            gsap.to(planet.rotation, {
+                y: "+=6.28",
+                duration: 10,
+                ease: "linear",
+                repeat: -1
+            });
+            gsap.to(ring.rotation, {
+                z: "+=6.28",
+                duration: 15,
+                ease: "linear",
+                repeat: -1
+            });
+        });
+
+        gsap.to(shipGroup.rotation, {
+            y: "+=6.28",
+            duration: 10,
+            ease: "linear",
+            repeat: -1
+        });
+
+        gsap.to(shipGlow.scale, {
+            x: 1.2,
+            y: 1.2,
+            z: 1.2,
+            duration: 1,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true
+        });
+
+        gsap.to(starsMaterial, {
+            opacity: 0.6,
+            duration: 2,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true
+        });
+
+        let currentPlanetIndex = -1;
+        let currentDimensionIndex = -1;
+        let currentGalaxy = null;
+
+        function enterGalaxy(galaxy) {
+            currentGalaxy = galaxy;
+            const cosmoIntro = document.getElementById('cosmo-intro');
+            const intro = document.getElementById('intro');
+            const directionButtons = document.getElementById('direction-buttons');
+
+            const planetNames = {
+                green: ['Planeta Verde', 'Planeta Elétrico', 'Planeta Futura', 'Planeta Inovação', 'Planeta Harmonia'],
+                move: ['Planeta Eco-Trans', 'Planeta Volt-Way', 'Planeta Neo-Route', 'Planeta Charge-Nex', 'Planeta Share-Move']
+            };
+
+            directionButtons.innerHTML = '';
+            planetNames[galaxy].forEach((name, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'direction-btn';
+                btn.textContent = name;
+                btn.onclick = () => travelTo(index);
+                directionButtons.appendChild(btn);
+                btn.addEventListener('click', () => clickSound.play());
+            });
+
+            gsap.to(cosmoIntro, {
+                opacity: 0,
+                duration: 0.5,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    cosmoIntro.classList.add('hidden');
+                    intro.style.display = 'flex';
+                    intro.classList.remove('hidden');
+                    planets.forEach(p => {
+                        p.planet.visible = p.galaxy === galaxy;
+                        p.ring.visible = p.galaxy === galaxy;
+                        p.fragments.material.opacity = 0;
+                    });
+                    intro.querySelector('h1').textContent = `Explore a Galáxia ELP ${galaxy === 'green' ? 'Green Technology' : 'Move Mobilidade'}`;
+                    gsap.to(intro, {
+                        opacity: 1,
+                        duration: 0.5,
+                        ease: "power2.out"
+                    });
+                }
+            });
+
+            gsap.to(camera.position, {
+                z: window.innerWidth < 768 ? 250 : 200,
+                duration: 1.5,
+                ease: "power2.inOut"
+            });
+            warpSound.play();
+        }
+
+        function explodePlanet(index, callback) {
+            const { planet, ring, fragments, fragmentVelocities, rays } = planets[index];
+            planet.visible = false;
+            ring.visible = false;
+            fragments.material.opacity = 1;
+
+            const positions = fragments.geometry.attributes.position.array;
+            gsap.to(fragments.material, {
+                opacity: 0,
+                duration: 2,
+                ease: "power2.in",
+                onUpdate: () => {
+                    for (let i = 0; i < fragmentVelocities.length / 3; i++) {
+                        positions[i * 3] += fragmentVelocities[i * 3];
+                        positions[i * 3 + 1] += fragmentVelocities[i * 3 + 1];
+                        positions[i * 3 + 2] += fragmentVelocities[i * 3 + 2];
+                    }
+                    fragments.geometry.attributes.position.needsUpdate = true;
+                },
+                onComplete: () => {
+                    fragments.material.opacity = 0;
+                    callback();
+                }
+            });
+
+            rays.children.forEach(ray => {
+                gsap.to(ray.material, {
+                    opacity: 0.8,
+                    duration: 0.5,
+                    ease: "power2.out",
+                    yoyo: true,
+                    repeat: 1,
+                    onComplete: () => ray.material.opacity = 0
+                });
+            });
+        }
+
+        function reconstructPlanet(index, callback) {
+            const { planet, ring, fragments, fragmentVelocities, rays } = planets[index];
+            planet.visible = true;
+            ring.visible = true;
+            fragments.material.opacity = 0;
+
+            const positions = fragments.geometry.attributes.position.array;
+            for (let i = 0; i < fragmentVelocities.length / 3; i++) {
+                positions[i * 3] = planet.position.x;
+                positions[i * 3 + 1] = planet.position.y;
+                positions[i * 3 + 2] = planet.position.z;
+            }
+            fragments.geometry.attributes.position.needsUpdate = true;
+
+            fragments.material.opacity = 1;
+            gsap.to(fragments.material, {
+                opacity: 0,
+                duration: 2,
+                ease: "power2.out",
+                onComplete: callback
+            });
+
+            rays.children.forEach(ray => {
+                gsap.to(ray.material, {
+                    opacity: 0.8,
+                    duration: 0.5,
+                    ease: "power2.out",
+                    yoyo: true,
+                    repeat: 1,
+                    onComplete: () => ray.material.opacity = 0
+                });
+            });
+        }
+
+        function getPlanetGlobalIndex(galaxy, localIndex) {
+            return galaxy === 'green' ? localIndex : localIndex + 5;
+        }
+
+        function travelTo(localIndex) {
+            currentPlanetIndex = getPlanetGlobalIndex(currentGalaxy, localIndex);
+            currentDimensionIndex = -1;
+            const intro = document.getElementById('intro');
+            const targetPlanet = planets[currentPlanetIndex];
+            const scaleFactor = Math.min(window.innerWidth, window.innerHeight) / 800;
+
+            const timeline = gsap.timeline({
+                onComplete: () => {
+                    reconstructPlanet(currentPlanetIndex, () => showStory(localIndex));
+                }
+            });
+
+            timeline.to(intro, {
+                opacity: 0,
+                duration: 0.5,
+                ease: "power2.inOut",
+                onComplete: () => intro.classList.add('hidden')
+            });
+
+            timeline.to(shipGroup.position, {
+                x: targetPlanet.planet.position.x,
+                y: targetPlanet.planet.position.y + 30 * scaleFactor,
+                z: targetPlanet.planet.position.z + 50 * scaleFactor,
+                duration: 1.5,
+                ease: "power...
+    <canvas id="canvas"></canvas>
+
+    <!-- Tela Inicial - Cosmo -->
+    <div class="cosmo-intro" id="cosmo-intro">
+        <h1>Para onde você deseja viajar?</h1>
+        <div class="cosmo-options">
+            <button class="cosmo-btn" onclick="enterGalaxy('green')">ELP Green Technology</button>
+            <button class="cosmo-btn" onclick="enterGalaxy('move')">ELP Move Mobilidade</button>
+        </div>
+    </div>
+
+    <!-- Overlay da Galáxia -->
+    <div class="overlay" id="intro">
+        <h1>Explore a Galáxia ELP</h1>
+        <div class="directions" id="direction-buttons">
+            <!-- Botões serão inseridos dinamicamente via JS -->
+        </div>
+        <button class="btn btn-reverse" onclick="travel
+    <canvas id="canvas"></canvas>
+
+    <!-- Tela Inicial - Cosmo -->
+    <div class="cosmo-intro" id="cosmo-intro">
+        <h1>Para onde você deseja viajar?</h1>
+        <div class="cosmo-options">
+            <button class="cosmo-btn" onclick="enterGalaxy('green')">ELP Green Technology</button>
+            <button class="cosmo-btn" onclick="enterGalaxy('move')">ELP Move Mobilidade</button>
+        </div>
+    </div>
+
+    <!-- Overlay da Galáxia -->
+    <div class="overlay" id="intro">
+        <h1>Explore a Galáxia ELP</h1>
+        <div class="directions" id="direction-buttons">
+            <!-- Botões serão inseridos dinamicamente via JS -->
+        </div>
+        <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+    </div>
+
+    <!-- Galáxia Green Technology -->
+    <div class="story-section" id="green-planet-0">
+        <h2>Planeta Verde - Reciclagem Sustentável</h2>
+        <p>Bem-vindo ao Planeta Verde, onde resíduos se tornam recursos com tecnologia inovadora.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Planeta+Verde" alt="Planeta Verde - Reciclagem Sustentável">
+        <div class="product-section">
+            <h3>Reciclagem de Pneus</h3>
+            <p>Transformamos pneus usados em materiais de alta qualidade para um futuro ecológico.</p>
+            <img src="https://via.placeholder.com/600x300.png?text=Reciclagem+Pneus" alt="Reciclagem de Pneus ELP Green">
+            <div class="dimension-options">
+                <button class="dimension-btn" onclick="travelToDimension(0, 0)">Tecnologia</button>
+                <button class="dimension-btn" onclick="travelToDimension(0, 1)">Impacto</button>
+                <button class="dimension-btn" onclick="travelToDimension(0, 2)">Produtos</button>
+            </div>
+        </div>
+        <button class="btn" onclick="travelToNextPlanet(0)">Próximo Planeta</button>
+        <button class="btn btn-reverse" onclick="travelToPreviousPlanet(0)">Planeta Anterior</button>
+        <button class="btn btn-reverse" onclick="travelBack()">Voltar à Galáxia</button>
+        <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        <button class="btn btn-back-to-top" onclick="scrollToTop(this.parentElement)">Voltar ao Topo</button>
+    </div>
+    <div class="dimension-section" id="green-dimension-0-0">
+        <h2>Tecnologia de Reciclagem</h2>
+        <p>Inovações que reciclam mais de 1 milhão de pneus por ano, lideradas por Ericson Piccoli.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Tecnologia+Reciclagem" alt="Tecnologia de Reciclagem ELP Green">
+        <button class="btn btn-reverse" onclick="travelBackToPlanet(0)">Voltar ao Planeta</button>
+        <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        <button class="btn btn-back-to-top" onclick="scrollToTop(this.parentElement)">Voltar ao Topo</button>
+    </div>
+    <!-- Adicione as outras dimensões e planetas conforme necessário -->
+
+    <!-- Galáxia Move Mobilidade -->
+    <div class="story-section" id="move-planet-0">
+        <h2>Planeta Eco-Trans - Mobilidade Verde</h2>
+        <p>Mobilidade sustentável para o dia a dia com inovações da ELP Move.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Planeta+Eco-Trans" alt="Planeta Eco-Trans - Mobilidade Verde">
+        <div class="product-section">
+            <h3>Bicicleta Elétrica ELP-B2</h3>
+            <p>Leve, dobrável e eficiente, projetada para um futuro sustentável.</p>
+            <img src="https://via.placeholder.com/600x300.png?text=Bicicleta+ELP-B2" alt="Bicicleta Elétrica ELP-B2">
+            <div class="dimension-options">
+                <button class="dimension-btn" onclick="travelToDimension(0, 0)">Design</button>
+                <button class="dimension-btn" onclick="travelToDimension(0, 1)">Autonomia</button>
+                <button class="dimension-btn" onclick="travelToDimension(0, 2)">Benefícios</button>
+            </div>
+        </div>
+        <button class="btn" onclick="travelToNextPlanet(0)">Próximo Planeta</button>
+        <button class="btn btn-reverse" onclick="travelToPreviousPlanet(0)">Planeta Anterior</button>
+        <button class="btn btn-reverse" onclick="travelBack()">Voltar à Galáxia</button>
+        <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        <button class="btn btn-back-to-top" onclick="scrollToTop(this.parentElement)">Voltar ao Topo</button>
+    </div>
+    <div class="dimension-section" id="move-dimension-0-0">
+        <h2>Design do Eco-Trans</h2>
+        <p>Leveza e ergonomia para mobilidade urbana ecológica, by Ericson Piccoli.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Design+Bicicleta" alt="Design Bicicleta Elétrica ELP Move">
+        <button class="btn btn-reverse" onclick="travelBackToPlanet(0)">Voltar ao Planeta</button>
+        <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        <button class="btn btn-back-to-top" onclick="scrollToTop(this.parentElement)">Voltar ao Topo</button>
+    </div>
+    <!-- Adicione as outras dimensões e planetas conforme necessário -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas'), alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        scene.fog = new THREE.FogExp2(0x0a0f1a, 0.002);
+
+        const ambientLight = new THREE.AmbientLight(0x1a2a3d, 0.5);
+        scene.add(ambientLight);
+        const pointLight = new THREE.PointLight(0xff8c66, 1, 500);
+        pointLight.position.set(50, 50, 50);
+        scene.add(pointLight);
+
+        const galaxyGeometry = new THREE.SphereGeometry(1000, 64, 64);
+        const galaxyMaterial = new THREE.MeshBasicMaterial({
+            color: 0x0a0f1a,
+            side: THREE.BackSide,
+            transparent: true,
+            opacity: 0.9
+        });
+        const galaxy = new THREE.Mesh(galaxyGeometry, galaxyMaterial);
+        scene.add(galaxy);
+
+        const starsGeometry = new THREE.BufferGeometry();
+        const starsCount = 20000;
+        const positions = new Float32Array(starsCount * 3);
+        const sizes = new Float32Array(starsCount);
+        const colors = new Float32Array(starsCount * 3);
+        for (let i = 0; i < starsCount; i++) {
+            positions[i * 3] = (Math.random() - 0.5) * 2000;
+            positions[i * 3 + 1] = (Math.random() - 0.5) * 2000;
+            positions[i * 3 + 2] = (Math.random() - 0.5) * 2000;
+            sizes[i] = Math.random() * 3 + 1;
+            colors[i * 3] = Math.random() * 0.5 + 0.5;
+            colors[i * 3 + 1] = Math.random() * 0.5 + 0.5;
+            colors[i * 3 + 2] = Math.random() * 0.5 + 0.8;
+        }
+        starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        starsGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+        starsGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        const starsMaterial = new THREE.PointsMaterial({
+            sizeAttenuation: true,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.8
+        });
+        const stars = new THREE.Points(starsGeometry, starsMaterial);
+        scene.add(stars);
+
+        const comets = [];
+        function createComet() {
+            const cometGroup = new THREE.Group();
+            const headGeometry = new THREE.SphereGeometry(2, 16, 16);
+            const headMaterial = new THREE.MeshBasicMaterial({ color: 0xff8c66, transparent: true, opacity: 0.8 });
+            const head = new THREE.Mesh(headGeometry, headMaterial);
+            cometGroup.add(head);
+
+            const tailGeometry = new THREE.BufferGeometry();
+            const tailPositions = new Float32Array(30 * 3);
+            for (let i = 0; i < 30; i++) {
+                tailPositions[i * 3] = 0;
+                tailPositions[i * 3 + 1] = 0;
+                tailPositions[i * 3 + 2] = -i * 2;
+            }
+            tailGeometry.setAttribute('position', new THREE.BufferAttribute(tailPositions, 3));
+            const tailMaterial = new THREE.LineBasicMaterial({ color: 0xff4d4d, transparent: true, opacity: 0.5 });
+            const tail = new THREE.Line(tailGeometry, tailMaterial);
+            cometGroup.add(tail);
+
+            cometGroup.position.set(
+                Math.random() * 2000 - 1000,
+                Math.random() * 2000 - 1000,
+                1000
+            );
+            scene.add(cometGroup);
+            comets.push(cometGroup);
+
+            gsap.to(cometGroup.position, {
+                z: -2000,
+                duration: 5 + Math.random() * 5,
+                ease: "linear",
+                onUpdate: () => {
+                    const positions = tail.geometry.attributes.position.array;
+                    for (let i = 0; i < 30; i++) {
+                        positions[i * 3] = (Math.random() - 0.5) * i * 0.2;
+                        positions[i * 3 + 1] = (Math.random() - 0.5) * i * 0.2;
+                    }
+                    tail.geometry.attributes.position.needsUpdate = true;
+                },
+                onComplete: () => {
+                    scene.remove(cometGroup);
+                    comets.splice(comets.indexOf(cometGroup), 1);
+                    createComet();
+                }
+            });
+        }
+        for (let i = 0; i < 10; i++) createComet();
+
+        const planets = [];
+        const planetData = {
+            green: [
+                { position: { x: -100, y: 50, z: -200 }, color: 0xff8c66, ringColor: 0xff4d4d },
+                { position: { x: 80, y: -30, z: -180 }, color: 0xff4d4d, ringColor: 0xff8c66 },
+                { position: { x: -50, y: -80, z: -220 }, color: 0xe0e6ff, ringColor: 0xff4d4d },
+                { position: { x: 120, y: 70, z: -190 }, color: 0xe0e6ff, ringColor: 0xff8c66 },
+                { position: { x: 0, y: 100, z: -210 }, color: 0xff8c66, ringColor: 0xe0e6ff }
+            ],
+            move: [
+                { position: { x: -90, y: 60, z: -230 }, color: 0xff4d4d, ringColor: 0xff8c66 },
+                { position: { x: 70, y: -40, z: -200 }, color: 0xff8c66, ringColor: 0xff4d4d },
+                { position: { x: -60, y: -70, z: -240 }, color: 0xe0e6ff, ringColor: 0xff4d4d },
+                { position: { x: 110, y: 80, z: -210 }, color: 0xe0e6ff, ringColor: 0xff8c66 },
+                { position: { x: 10, y: 90, z: -220 }, color: 0xff8c66, ringColor: 0xe0e6ff }
+            ]
+        };
+
+        const dimensionPositions = {
+            green: [
+                [{ x: -120, y: 60, z: -250 }, { x: -90, y: 40, z: -230 }, { x: -110, y: 70, z: -240 }],
+                [{ x: 100, y: -20, z: -220 }, { x: 70, y: -40, z: -200 }, { x: 90, y: -10, z: -210 }],
+                [{ x: -70, y: -90, z: -260 }, { x: -40, y: -70, z: -240 }, { x: -60, y: -80, z: -250 }],
+                [{ x: 140, y: 80, z: -230 }, { x: 110, y: 60, z: -210 }, { x: 130, y: 90, z: -220 }],
+                [{ x: 20, y: 110, z: -250 }, { x: -10, y: 90, z: -230 }, { x: 10, y: 120, z: -240 }]
+            ],
+            move: [
+                [{ x: -110, y: 70, z: -260 }, { x: -80, y: 50, z: -240 }, { x: -100, y: 80, z: -250 }],
+                [{ x: 90, y: -30, z: -230 }, { x: 60, y: -50, z: -210 }, { x: 80, y: -20, z: -220 }],
+                [{ x: -80, y: -80, z: -270 }, { x: -50, y: -60, z: -250 }, { x: -70, y: -70, z: -260 }],
+                [{ x: 130, y: 90, z: -240 }, { x: 110, y: 70, z: -220 }, { x: 120, y: 100, z: -230 }],
+                [{ x: 30, y: 100, z: -260 }, { x: 0, y: 80, z: -240 }, { x: 20, y: 110, z: -250 }]
+            ]
+        };
+
+        function adjustPlanetScale() {
+            const scaleFactor = Math.min(window.innerWidth, window.innerHeight) / 800;
+            planets.forEach(({ planet, ring }) => {
+                planet.scale.set(scaleFactor, scaleFactor, scaleFactor);
+                ring.scale.set(scaleFactor, scaleFactor, scaleFactor);
+            });
+            shipGroup.scale.set(scaleFactor, scaleFactor, scaleFactor);
+        }
+
+        function createPlanets(galaxyKey) {
+            const data = planetData[galaxyKey];
+            data.forEach((planetInfo, index) => {
+                const planetGeometry = new THREE.SphereGeometry(15, 64, 64);
+                const planetMaterial = new THREE.MeshPhongMaterial({
+                    color: planetInfo.color,
+                    specular: 0x1a2a3d,
+                    shininess: 30
+                });
+                const planet = new THREE.Mesh(planetGeometry, planetMaterial);
+                planet.position.set(planetInfo.position.x, planetInfo.position.y, planetInfo.position.z);
+                planet.visible = false;
+                scene.add(planet);
+
+                const ringGeometry = new THREE.RingGeometry(20, 25, 64);
+                const ringMaterial = new THREE.MeshPhongMaterial({
+                    color: planetInfo.ringColor,
+                    side: THREE.DoubleSide,
+                    transparent: true,
+                    opacity: 0.8
+                });
+                const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+                ring.rotation.x = Math.PI / 2;
+                ring.position.set(planetInfo.position.x, planetInfo.position.y, planetInfo.position.z);
+                ring.visible = false;
+                scene.add(ring);
+
+                const fragmentsGeometry = new THREE.BufferGeometry();
+                const fragmentCount = 200;
+                const fragmentPositions = new Float32Array(fragmentCount * 3);
+                const fragmentVelocities = new Float32Array(fragmentCount * 3);
+                for (let i = 0; i < fragmentCount; i++) {
+                    fragmentPositions[i * 3] = planetInfo.position.x;
+                    fragmentPositions[i * 3 + 1] = planetInfo.position.y;
+                    fragmentPositions[i * 3 + 2] = planetInfo.position.z;
+                    fragmentVelocities[i * 3] = (Math.random() - 0.5) * 5;
+                    fragmentVelocities[i * 3 + 1] = (Math.random() - 0.5) * 5;
+                    fragmentVelocities[i * 3 + 2] = (Math.random() - 0.5) * 5;
+                }
+                fragmentsGeometry.setAttribute('position', new THREE.BufferAttribute(fragmentPositions, 3));
+                const fragmentsMaterial = new THREE.PointsMaterial({
+                    color: planetInfo.color,
+                    size: 2,
+                    transparent: true,
+                    opacity: 0
+                });
+                const fragments = new THREE.Points(fragmentsGeometry, fragmentsMaterial);
+                scene.add(fragments);
+
+                const rays = new THREE.Group();
+                for (let i = 0; i < 5; i++) {
+                    const rayGeometry = new THREE.BufferGeometry();
+                    const rayVertices = new Float32Array([
+                        planetInfo.position.x, planetInfo.position.y, planetInfo.position.z,
+                        planetInfo.position.x + (Math.random() - 0.5) * 30,
+                        planetInfo.position.y + (Math.random() - 0.5) * 30,
+                        planetInfo.position.z + (Math.random() - 0.5) * 30
+                    ]);
+                    rayGeometry.setAttribute('position', new THREE.BufferAttribute(rayVertices, 3));
+                    const rayMaterial = new THREE.LineBasicMaterial({
+                        color: 0xff4d4d,
+                        transparent: true,
+                        opacity: 0
+                    });
+                    const ray = new THREE.Line(rayGeometry, rayMaterial);
+                    rays.add(ray);
+                }
+                scene.add(rays);
+
+                planets.push({ planet, ring, fragments, fragmentVelocities, rays, galaxy: galaxyKey });
+            });
+        }
+
+        createPlanets('green');
+        createPlanets('move');
+
+        const shipGroup = new THREE.Group();
+        const shipBody = new THREE.Mesh(
+            new THREE.ConeGeometry(2, 5, 32),
+            new THREE.MeshPhongMaterial({ color: 0xff8c66, specular: 0xffffff, shininess: 50 })
+        );
+        shipBody.rotation.x = Math.PI / 2;
+        shipGroup.add(shipBody);
+
+        const shipWings = new THREE.Mesh(
+            new THREE.BoxGeometry(6, 0.5, 2),
+            new THREE.MeshPhongMaterial({ color: 0xff4d4d })
+        );
+        shipWings.position.set(0, -1, 0);
+        shipGroup.add(shipWings);
+
+        const shipGlow = new THREE.Mesh(
+            new THREE.SphereGeometry(1, 16, 16),
+            new THREE.MeshBasicMaterial({ color: 0xff8c66, transparent: true, opacity: 0.5 })
+        );
+        shipGlow.position.set(0, 0, -3);
+        shipGroup.add(shipGlow);
+
+        shipGroup.position.set(0, 10, 20);
+        scene.add(shipGroup);
+
+        camera.position.set(0, 0, window.innerWidth < 768 ? 150 : 100);
+
+        const spaceAmbience = new Howl({
+            src: ['https://cdn.freesound.org/previews/242/242999_4486188-lq.mp3'],
+            loop: true,
+            volume: 0.3,
+            autoplay: true
+        });
+
+        const warpSound = new Howl({
+            src: ['https://cdn.freesound.org/previews/120/120859_649468-lq.mp3'],
+            volume: 0.7
+        });
+
+        const clickSound = new Howl({
+            src: ['https://cdn.freesound.org/previews/242/242934_71257-lq.mp3'],
+            volume: 0.5
+        });
+
+        gsap.from("#cosmo-intro h1", {
+            opacity: 0,
+            y: 50,
+            duration: 1.5,
+            ease: "elastic.out(1, 0.3)"
+        });
+
+        gsap.from(".cosmo-btn", {
+            opacity: 0,
+            y: 20,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power2.out",
+            delay: 0.5
+        });
+
+        document.querySelectorAll('.direction-btn, .cosmo-btn, .dimension-btn, .btn, .btn-reverse, .btn-back-to-top').forEach(button => {
+            button.addEventListener('click', () => clickSound.play());
+        });
+
+        gsap.to(stars.rotation, {
+            y: "+=6.28",
+            duration: 20,
+            ease: "linear",
+            repeat: -1
+        });
+
+        planets.forEach(({ planet, ring }) => {
+            gsap.to(planet.rotation, {
+                y: "+=6.28",
+                duration: 10,
+                ease: "linear",
+                repeat: -1
+            });
+            gsap.to(ring.rotation, {
+                z: "+=6.28",
+                duration: 15,
+                ease: "linear",
+                repeat: -1
+            });
+        });
+
+        gsap.to(shipGroup.rotation, {
+            y: "+=6.28",
+            duration: 10,
+            ease: "linear",
+            repeat: -1
+        });
+
+        gsap.to(shipGlow.scale, {
+            x: 1.2,
+            y: 1.2,
+            z: 1.2,
+            duration: 1,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true
+        });
+
+        gsap.to(starsMaterial, {
+            opacity: 0.6,
+            duration: 2,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true
+        });
+
+        let currentPlanetIndex = -1;
+        let currentDimensionIndex = -1;
+        let currentGalaxy = null;
+
+        function enterGalaxy(galaxy) {
+            currentGalaxy = galaxy;
+            const cosmoIntro = document.getElementById('cosmo-intro');
+            const intro = document.getElementById('intro');
+            const directionButtons = document.getElementById('direction-buttons');
+
+            const planetNames = {
+                green: ['Planeta Verde', 'Planeta Elétrico', 'Planeta Futura', 'Plan

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Meta Tags para SEO -->
+    <meta name="description" content="Saiba mais sobre a economia circular e como a ELP Move aplica esse conceito em soluções de mobilidade sustentável na Europa.">
+    <meta name="keywords" content="economia circular, sustentabilidade, mobilidade sustentável, reciclagem, ELP Move">
+    <meta name="author" content="ELP Move">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Economia Circular - ELP Move">
+    <meta property="og:description" content="Descubra como a economia circular transforma a mobilidade sustentável com a ELP Move.">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630.png?text=Economia+Circular">
+    <meta property="og:url" content="https://www.elpmove.it/economia-circular">
+    <meta property="og:type" content="website">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Economia Circular - ELP Move">
+    <meta name="twitter:description" content="Conheça o conceito de economia circular e o compromisso da ELP Move com a sustentabilidade.">
+    <meta name="twitter:image" content="https://via.placeholder.com/1200x630.png?text=Economia+Circular">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>Economia Circular - ELP Move</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: #ff6f61 !important;
+            transition: color 0.3s;
+        }
+        .navbar-brand:hover {
+            color: #ff4b3a !important;
+        }
+        .nav-link {
+            font-size: 1.1rem;
+            color: #333 !important;
+            margin-left: 20px;
+            transition: color 0.3s;
+        }
+        .nav-link:hover {
+            color: #ff6f61 !important;
+        }
+        .nav-link i {
+            margin-left: 5px;
+        }
+        .circular-economy-section {
+            padding: 80px 0;
+            background-color: #ffffff;
+        }
+        .circular-economy-section h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .circular-economy-section h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #ff6f61;
+            margin-top: 40px;
+            margin-bottom: 15px;
+        }
+        .circular-economy-section p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .circular-economy-section ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        .circular-economy-section ul li {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .circular-economy-section ul li:before {
+            content: "✓ ";
+            color: #28a745;
+        }
+        .circular-economy-section .btn {
+            font-size: 1.2rem;
+            padding: 12px 30px;
+            border-radius: 25px;
+            background-color: #007bff;
+            border: none;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .circular-economy-section .btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        footer {
+            background: linear-gradient(145deg, #343a40, #2c3136);
+            color: white;
+            padding: 60px 0;
+        }
+        footer h5 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        footer p, footer a {
+            font-size: 1rem;
+            color: #d1d1d1;
+            margin-bottom: 10px;
+        }
+        footer a {
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        footer a:hover {
+            color: #ff6f61;
+        }
+        footer .social-icons a {
+            font-size: 1.8rem;
+            margin: 0 15px;
+            color: #d1d1d1;
+            transition: color 0.3s;
+        }
+        footer .social-icons a:hover {
+            color: #ff6f61;
+        }
+        @keyframes fadeInDown {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">ELP Move</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.elpmove.it/produtos">Produtos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.elpmove.it/sobre-nos">Sobre Nós</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.elpmove.it/sustentabilidade">Sustentabilidade</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="https://www.elpmove.it/economia-circular">Economia Circular</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.elpmove.it/contato">Contato</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.elpmove.it/carrinho">Carrinho <i class="fas fa-shopping-cart"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="circular-economy-section">
+        <div class="container">
+            <h1>Economia Circular</h1>
+            <p>A economia circular é um modelo econômico que busca redefinir o conceito de crescimento, focando na reutilização, reciclagem e regeneração de recursos, em oposição ao modelo linear tradicional de "extrair, produzir, descartar". Na ELP Move, aplicamos esses princípios para criar um futuro mais sustentável.</p>
+
+            <h2>O que é Economia Circular?</h2>
+            <p>A economia circular propõe um sistema onde os produtos, materiais e recursos são mantidos em uso pelo maior tempo possível. Inspirada pelos ciclos da natureza, ela visa minimizar o desperdício e maximizar o valor, promovendo benefícios ambientais, sociais e econômicos. Diferente da economia linear, que gera resíduos, a economia circular fecha o ciclo através de estratégias como:</p>
+            <ul>
+                <li>Design de produtos duráveis e reparáveis.</li>
+                <li>Reutilização e reciclagem de materiais.</li>
+                <li>Uso de energias renováveis.</li>
+                <li>Modelos de negócios baseados em compartilhamento e aluguel.</li>
+            </ul>
+
+            <h2>História e Evolução</h2>
+            <p>O conceito de economia circular ganhou força no final do século XX, com pensadores como Walter Stahel, que nos anos 1970 introduziu a ideia de "economia em loops". Organizações como a Ellen MacArthur Foundation popularizaram o termo na década de 2010, promovendo-o como uma solução para os desafios ambientais globais. Hoje, a União Europeia adota a economia circular como pilar de sua estratégia de sustentabilidade, com metas ambiciosas para reciclagem e redução de resíduos até 2030.</p>
+
+            <h2>Benefícios da Economia Circular</h2>
+            <p>Adotar a economia circular traz vantagens significativas:</p>
+            <ul>
+                <li><strong>Redução de Resíduos:</strong> Menos lixo em aterros e oceanos.</li>
+                <li><strong>Preservação de Recursos:</strong> Uso eficiente de matérias-primas finitas.</li>
+                <li><strong>Combate às Mudanças Climáticas:</strong> Menor emissão de gases de efeito estufa.</li>
+                <li><strong>Inovação:</strong> Estímulo a novos modelos de negócios e tecnologias.</li>
+            </ul>
+
+            <h2>A Economia Circular na ELP Move</h2>
+            <p>Na ELP Move, a economia circular está no cerne de nossa operação. Como parte da ELP Green Technology e do Tops Recycling Group, trazemos uma expertise única em reciclagem e reutilização. Nossos produtos e serviços refletem esse compromisso:</p>
+            <ul>
+                <li><strong>Reciclagem de Pneus:</strong> A ELP Green Technology transforma pneus usados em goma regenerada, utilizada em novos produtos, reduzindo o desperdício.</li>
+                <li><strong>Veículos Elétricos:</strong> Nossos scooters e bicicletas elétricas (X6 a X11, H1, Q3) são projetados para durabilidade e eficiência energética, com baterias recicláveis.</li>
+                <li><strong>Modelo de Aluguel:</strong> A franquia ELP Move oferece aluguel de veículos elétricos, promovendo o uso compartilhado e reduzindo a necessidade de posse individual.</li>
+                <li><strong>Parcerias Sustentáveis:</strong> Buscamos colaborar com empresas como a Ebroh para integrar materiais e processos circulares em nosso portfólio.</li>
+            </ul>
+            <p>Com sede em Verona, Itália, nosso objetivo é liderar a micromobilidade circular na Europa, alinhando inovação tecnológica com responsabilidade ambiental.</p>
+
+            <div class="text-center mt-5">
+                <a href="https://www.elpmove.it/sustentabilidade" class="btn btn-primary">Saiba Mais Sobre Sustentabilidade</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>Sobre a ELP Move</h5>
+                    <p>Fundada em 2021, a ELP Move é uma extensão da ELP Green Technology, sediada em Verona, Itália. Somos especializados em scooters elétricos, bicicletas elétricas e tecnologia de mobilidade, oferecendo produtos ecológicos de alta qualidade com entrega rápida em toda a Europa.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Links Úteis</h5>
+                    <p><a href="https://www.elpmove.it/politica-privacidade">Política de Privacidade</a></p>
+                    <p><a href="https://www.elpmove.it/termos-uso">Termos de Uso</a></p>
+                    <p><a href="https://www.elpmove.it/contato">Contato</a></p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Siga-nos</h5>
+                    <div class="social-icons">
+                        <a href="https://facebook.com/elpmove" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://instagram.com/elpmove" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://twitter.com/elpmove" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://wa.me/+393501021359" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr style="border-color: #666; margin: 30px 0;">
+            <p class="text-center mb-0">© 2025 ELP Move. Todos os direitos reservados. | <a href="/sitemap.xml">Mapa do Site</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" async></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" async></script>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Economia Circular",
+            "url": "https://www.elpmove.it/economia-circular",
+            "description": "Detalhes sobre a economia circular e como a ELP Move a aplica em soluções de mobilidade sustentável.",
+            "publisher": {
+                "@type": "Organization",
+                "name": "ELP Move",
+                "url": "https://www.elpmove.it"
+            }
+        }
+    </script>
+</body>
+</html>
