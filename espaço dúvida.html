@@ -3,12 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Embarque em uma jornada espacial com a Nave Invest e receba orientações personalizadas para seus investimentos!">
-    <meta name="keywords" content="investimentos, IA, Grok 3, nave espacial, finanças, pagamento">
-    <meta name="author" content="Nave Invest">
+    <meta name="description" content="Explore o universo interativo da ELP com soluções inovadoras em sustentabilidade, tecnologia e mobilidade ecológica. Conheça ELP Green Technology e ELP Move Mobilidade, lideradas por Ericson Piccoli, para um futuro sustentável.">
+    <meta name="keywords" content="ELP Move, ELP Green, Ericson Piccoli, sustentabilidade, tecnologia, ecologia, inovação, futuro, mobilidade sustentável, energia limpa, reciclagem, universo interativo, 3D, tecnologia verde">
+    <meta name="author" content="Ericson Piccoli, ELP">
     <meta name="robots" content="index, follow">
-    <title>Nave Invest - Jornada Espacial de Investimentos</title>
+    <meta name="revisit-after" content="7 days">
+    <meta property="og:title" content="ELP - Universo Interativo de Sustentabilidade e Mobilidade">
+    <meta property="og:description" content="Descubra as galáxias ELP Green Technology e ELP Move Mobilidade, lideradas por Ericson Piccoli, com inovações em ecologia, tecnologia e futuro sustentável.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.elp-universe.com">
+    <meta property="og:image" content="https://via.placeholder.com/800x400.png?text=ELP+Universe">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ELP - Navegação Interativa pelo Universo">
+    <meta name="twitter:description" content="Explore o futuro da sustentabilidade e mobilidade com ELP Green e ELP Move, sob a visão de Ericson Piccoli.">
+    <meta name="twitter:image" content="https://via.placeholder.com/800x400.png?text=ELP+Universe">
+    <title>ELP - Universo Interativo | Sustentabilidade, Tecnologia e Mobilidade por Ericson Piccoli</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <link rel="canonical" href="https://www.elp-universe.com">
+   
     <style>
         body {
             margin: 0;
@@ -17,350 +29,1735 @@
             background: #0a0a23;
             color: #fff;
             overflow: hidden;
+            height: 100vh;
         }
         #canvas {
+            width: 100vw;
+            height: 100vh;
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
             z-index: 1;
         }
-        .interface {
+        .overlay, .cosmo-intro {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100vh;
+            height: 100%;
             z-index: 2;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(10, 10, 35, 0.7), rgba(0, 0, 0, 0.9));
         }
-        #chat-container {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            border-radius: 10px;
-            width: 400px;
-            max-height: 500px;
-            overflow-y: auto;
-            margin-bottom: 20px;
+        .overlay.hidden, .cosmo-intro.hidden {
+            opacity: 0;
+            pointer-events: none;
         }
-        #chat-messages {
-            max-height: 400px;
-            overflow-y: auto;
-            margin-bottom: 10px;
-        }
-        #chat-messages p {
-            margin: 5px 0;
-            font-size: 1rem;
-        }
-        #chat-messages .user {
-            color: #00ffcc;
-        }
-        #chat-messages .grok {
-            color: #ff00ff;
-        }
-        #chat-input {
-            width: 100%;
-            padding: 10px;
-            background: #1a1a33;
-            border: none;
-            color: #fff;
-            border-radius: 5px;
-        }
-        #send-btn {
-            margin-top: 10px;
-            padding: 10px 20px;
-            background: linear-gradient(90deg, #ff00ff, #00ffcc);
-            border: none;
-            border-radius: 5px;
-            color: #fff;
-            cursor: pointer;
-        }
-        #galaxy-section {
+        .overlay {
             display: none;
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 8vw, 5rem);
+            background: linear-gradient(90deg, #00ffcc, #ff00ff);
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 25px rgba(0, 255, 255, 0.7);
+            margin-bottom: clamp(20px, 5vw, 50px);
+        }
+        .directions, .cosmo-options, .dimension-options, .btn-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: clamp(10px, 2vw, 30px);
+            justify-content: center;
+            padding: 0 10px;
+        }
+        .direction-btn, .cosmo-btn, .dimension-btn, .btn, .btn-reverse {
+            padding: clamp(10px, 2vw, 20px) clamp(20px, 4vw, 40px);
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            background: linear-gradient(135deg, #ff00ff, #00ffcc);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+            transition: transform 0.3s ease;
+        }
+        .btn-reverse {
+            background: linear-gradient(90deg, #00ffcc, #ff00ff);
+        }
+        .direction-btn:hover, .cosmo-btn:hover, .dimension-btn:hover, .btn:hover, .btn-reverse:hover {
+            transform: scale(1.1);
+        }
+        .story-section, .dimension-section {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100vh;
-            z-index: 3;
+            height: 100%;
             background: linear-gradient(135deg, rgba(10, 10, 35, 0.95), rgba(0, 0, 0, 0.95));
+            z-index: 3;
+            display: none;
+            opacity: 0;
+            padding: clamp(20px, 5vw, 60px);
+            text-align: center;
+            overflow-y: auto;
+        }
+        .story-section.active, .dimension-section.active {
+            display: block;
+        }
+        .story-section h2, .dimension-section h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.5rem, 5vw, 3.5rem);
+            color: #00ffcc;
+            margin-bottom: clamp(20px, 3vw, 40px);
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+        .story-section p, .dimension-section p {
+            font-size: clamp(0.9rem, 2vw, 1.3rem);
+            line-height: 1.8;
+            max-width: 90%;
+            margin: 0 auto clamp(10px, 2vw, 30px);
+        }
+        .story-section img, .dimension-section img {
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+            margin: clamp(10px, 2vw, 30px) auto;
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+        .product-section {
+            margin: clamp(20px, 3vw, 40px) 0;
+            padding: clamp(10px, 2vw, 20px);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .product-section h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: #ff00ff;
+            margin-bottom: clamp(10px, 2vw, 20px);
+        }
+        .more-info {
+            margin-top: clamp(15px, 2vw, 25px);
+            padding: clamp(10px, 2vw, 20px);
+            background: rgba(0, 255, 255, 0.1);
+            border-radius: 10px;
+            text-align: left;
+        }
+        .more-info h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            color: #00ffcc;
+            margin-bottom: 5px;
+        }
+        .more-info h5 {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            color: #ff00ff;
+            margin-bottom: 10px;
+        }
+        .more-info p {
+            font-size: clamp(0.8rem, 1.8vw, 1rem);
+            margin-bottom: 15px;
+        }
+        .more-info video {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        }
+        .dimension-section {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+            border: 1px solid rgba(0, 255, 255, 0.3);
+        }
+          .story-section {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 10, 35, 0.95), rgba(0, 0, 0, 0.95));
+            z-index: 3;
+            display: none;
+            opacity: 0;
             padding: 60px;
             overflow-y: auto;
         }
-        .galaxy-content {
-            min-height: 200vh;
-            padding-bottom: 100px;
+        .story-section.active {
+            display: block;
         }
-        #galaxy-section h2 {
+        .story-section h2 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 3rem;
+            font-size: 3.5rem;
             color: #00ffcc;
+            margin-bottom: 40px;
             text-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
         }
-        #galaxy-section p {
-            font-size: 1.2rem;
+        .story-section p {
+            font-size: 1.3rem;
             line-height: 1.8;
             max-width: 900px;
             margin: 0 auto 30px;
         }
-        #payment-portal {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            z-index: 4;
-            background: radial-gradient(circle, #000, #ff00ff);
-            text-align: center;
-            padding-top: 20%;
+        .story-section img {
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+            margin: 30px auto;
+            display: block;
+            max-width: 100%;
         }
-        #payment-portal h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3rem;
-            color: #00ffcc;
-        }
-        #payment-portal button {
+        .story-section .btn {
+            display: inline-block;
+            margin: 20px 10px;
             padding: 15px 50px;
+            font-size: 1.3rem;
             background: linear-gradient(90deg, #ff00ff, #00ffcc);
             border: none;
             border-radius: 50px;
             color: #fff;
-            font-size: 1.5rem;
             cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
         }
-        .scroll-element {
-            opacity: 0;
+        .story-section .btn-reverse {
+            background: linear-gradient(90deg, #00ffcc, #ff00ff);
+        }
+        @media (max-width: 1024px) {
+            .directions, .cosmo-options, .dimension-options, .btn-container { flex-direction: column; align-items: center; }
+        }
+        @media (max-width: 768px) {
+            .direction-btn, .cosmo-btn, .dimension-btn, .btn, .btn-reverse { width: 80%; max-width: 300px; }
+            .story-section, .dimension-section { padding: 15px; }
+            .more-info video { max-width: 100%; }
+        }
+        @media (max-width: 480px) {
+            .story-section .btn, .dimension-section .btn { width: 80%; max-width: 250px; }
         }
     </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
-    <div class="interface" id="interface">
-        <div id="chat-container">
-            <div id="chat-messages">
-                <p class="grok">Bem-vindo à Nave Invest! Sou Grok 3, sua IA guia. Pergunte sobre investimentos e te levarei a uma jornada espacial até o melhor plano para você!</p>
+
+    <!-- Tela Inicial - Cosmo -->
+    <div class="cosmo-intro" id="cosmo-intro">
+        <h1>Para onde você deseja viajar?</h1>
+        <div class="cosmo-options">
+          
+            <button class="cosmo-btn" onclick="enterGalaxy('green')">ELP Green Technology</button>
+            <button class="cosmo-btn" onclick="enterGalaxy('move')">ELP Move Mobilidade</button>
+        </div>
+    </div>
+
+    <!-- Overlay da Galáxia -->
+    <div class="overlay" id="intro">
+        <h1>Explore a Galáxia ELP</h1>
+        <div class="directions" id="direction-buttons">
+            <!-- Botões serão inseridos dinamicamente via JS -->
+        </div>
+        <br />
+        <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+    </div>
+
+    <!-- Galáxia Green Technology -->
+    <div class="story-section" id="green-planet-0">
+       
+  
+  <h2>ELP Move Mobilidade Urbana</h2>
+  <p>Você deixou o vazio estelar para trás, navegando por campos de asteroides até pousar em Verona, Itália, em 2021. Bem-vindo à sede da ELP Move Mobilidade Urbana, onde o futuro da locomoção ganha vida.</p>
+  <img src="https://via.placeholder.com/800x400.png?text=Verona+Mobility" alt="ELP Move Verona">
+  <p>A ELP Move surgiu como uma extensão da visão sustentável da ELP, trazendo scooters elétricas, bicicletas elétricas e patinetes elétricos para as ruas. Nosso modelo de franquia permite que empreendedores ao redor do mundo ofereçam venda e aluguel desses veículos, promovendo uma mobilidade urbana ágil, silenciosa e sem carbono.</p>
+  <p>Com tecnologia avançada e design inovador, conectamos cidades e reduzimos a dependência de combustíveis fósseis. Verona é nosso ponto de partida, mas nosso destino é global: uma revolução elétrica para todos.</p>
+<button class="btn" onclick="travelToDimension(0, 1)">Impacto</button>
+  <button class="btn btn-reverse" onclick="travelToDimension(0, 0)">Tecnologia</button>
+                <button class="btn" onclick="travelToDimension(0, 2)">Produtos</button>
+    <a href="https://www.elpmove.it/green-technology" class="btn">Explorar Green Technology</a>
+        <div class="product-section">
+            <h3>Reciclagem de Pneus</h3>
+            <p>Transformamos pneus usados em materiais de alta qualidade.</p>
+            <img src="https://via.placeholder.com/600x300.png?text=Reciclagem+Pneus" alt="Reciclagem de Pneus">
+            <div class="dimension-options">
+             
+                <button class="btn" onclick="travelToDimension(0, 1)">Impacto</button>
+            
             </div>
-            <input type="text" id="chat-input" placeholder="Digite sua dúvida sobre investimentos...">
-            <button id="send-btn" onclick="sendMessage()">Enviar</button>
+            <div class="more-info">
+                <h4>Detalhes da Tecnologia</h4>
+                <h5>Processo Inovador</h5>
+                <p>Explore como nossa tecnologia avançada transforma resíduos em recursos valiosos para o meio ambiente.</p>
+                <video autoplay muted loop>
+                    <source src="https://via.placeholder.com/600x300.mp4?text=Video+Reciclagem" type="video/mp4">
+                    Seu navegador não suporta vídeo.
+                </video>
+                
+            </div>
+        </div>
+        <div class="btn-containe">
+            <button class="btn" onclick="travelToNextPlanet(0)">Próximo Planeta</button>
+            <button class="btn btn-reverse" onclick="travelToPreviousPlanet(0)">Planeta Anterior</button>
+            <button class="btn btn-reverse" onclick="travelBack()">Voltar à Galáxia</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
         </div>
     </div>
-    <div id="galaxy-section">
-        <div class="galaxy-content">
-            <h2 id="galaxy-title" class="scroll-element"></h2>
-            <p id="galaxy-content" class="scroll-element"></p>
-            <button onclick="proceedToPayment()" class="scroll-element">Prosseguir para o Portal de Pagamento</button>
+    <div class="dimension-section" id="green-dimension-0-0">
+       <h2>ELP Move Mobilidade Urbana</h2>
+<p>Você deixou o vazio estelar para trás, navegando por campos de asteroides até pousar em Verona, Itália, em 2021. Bem-vindo à sede da ELP Move Mobilidade Urbana, onde o futuro da locomoção ganha vida.</p>
+<img src="https://via.placeholder.com/800x400.png?text=Verona+Mobility" alt="ELP Move Verona">
+<p>A ELP Move surgiu como uma extensão da visão sustentável da ELP, trazendo scooters elétricas, bicicletas elétricas e patinetes elétricos para as ruas. Nosso modelo de franquia permite que empreendedores ao redor do mundo ofereçam venda e aluguel desses veículos, promovendo uma mobilidade urbana ágil, silenciosa e sem carbono.</p>
+<p>Com tecnologia avançada e design inovador, conectamos cidades e reduzimos a dependência de combustíveis fósseis. Verona é nosso ponto de partida, mas nosso destino é global: uma revolução elétrica para todos.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Tecnologia+Reciclagem" alt="Tecnologia">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(0)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
         </div>
     </div>
-    <div id="payment-portal">
-        <h2>Buraco de Minhoca - Pagamento</h2>
-        <p>Finalize sua jornada investindo agora!</p>
-        <button onclick="processPayment()">Pagar Agora</button>
+    <div class="dimension-section" id="green-dimension-0-1">
+       <h2>ELP Move Mobilidade Urbana</h2>
+<p>Você deixou o vazio estelar para trás, navegando por campos de asteroides até pousar em Verona, Itália, em 2021. Bem-vindo à sede da ELP Move Mobilidade Urbana, onde o futuro da locomoção ganha vida.</p>
+<img src="https://via.placeholder.com/800x400.png?text=Verona+Mobility" alt="ELP Move Verona">
+<p>A ELP Move surgiu como uma extensão da visão sustentável da ELP, trazendo scooters elétricas, bicicletas elétricas e patinetes elétricos para as ruas. Nosso modelo de franquia permite que empreendedores ao redor do mundo ofereçam venda e aluguel desses veículos, promovendo uma mobilidade urbana ágil, silenciosa e sem carbono.</p>
+<p>Com tecnologia avançada e design inovador, conectamos cidades e reduzimos a dependência de combustíveis fósseis. Verona é nosso ponto de partida, mas nosso destino é global: uma revolução elétrica para todos.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Impacto+Ambiental" alt="Impacto">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(0)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="green-dimension-0-2">
+     <h2>ELP Move Mobilidade Urbana</h2>
+<p>Você deixou o vazio estelar para trás, navegando por campos de asteroides até pousar em Verona, Itália, em 2021. Bem-vindo à sede da ELP Move Mobilidade Urbana, onde o futuro da locomoção ganha vida.</p>
+<img src="https://via.placeholder.com/800x400.png?text=Verona+Mobility" alt="ELP Move Verona">
+<p>A ELP Move surgiu como uma extensão da visão sustentável da ELP, trazendo scooters elétricas, bicicletas elétricas e patinetes elétricos para as ruas. Nosso modelo de franquia permite que empreendedores ao redor do mundo ofereçam venda e aluguel desses veículos, promovendo uma mobilidade urbana ágil, silenciosa e sem carbono.</p>
+<p>Com tecnologia avançada e design inovador, conectamos cidades e reduzimos a dependência de combustíveis fósseis. Verona é nosso ponto de partida, mas nosso destino é global: uma revolução elétrica para todos.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Produtos+Reciclados" alt="Produtos">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(0)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+
+    <div class="story-section" id="green-planet-1">
+      <h2>ELP Move Mobilidade Urbana</h2>
+<p>Você deixou o vazio estelar para trás, navegando por campos de asteroides até pousar em Verona, Itália, em 2021. Bem-vindo à sede da ELP Move Mobilidade Urbana, onde o futuro da locomoção ganha vida.</p>
+<img src="https://via.placeholder.com/800x400.png?text=Verona+Mobility" alt="ELP Move Verona">
+<p>A ELP Move surgiu como uma extensão da visão sustentável da ELP, trazendo scooters elétricas, bicicletas elétricas e patinetes elétricos para as ruas. Nosso modelo de franquia permite que empreendedores ao redor do mundo ofereçam venda e aluguel desses veículos, promovendo uma mobilidade urbana ágil, silenciosa e sem carbono.</p>
+<p>Com tecnologia avançada e design inovador, conectamos cidades e reduzimos a dependência de combustíveis fósseis. Verona é nosso ponto de partida, mas nosso destino é global: uma revolução elétrica para todos.</p>
+<button class="btn" onclick="travelToDimension(1, 0)">Processo</button>
+<button class="btn" onclick="travelToDimension(1, 1)">Eficiência</button>
+              <button class="btn" onclick="travelToDimension(1, 2)">Benefícios</button>
+    <a href="https://www.elpmove.it/green-technology" class="btn">Explorar Green Technology</a>
+        <h2>Planeta Elétrico - Energia Limpa</h2>
+        <p>O núcleo da geração de energia sustentável.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Planeta+Elétrico" alt="Planeta Elétrico">
+        <div class="product-section">
+            <h3>Energia a Partir de Resíduos</h3>
+            <p>Geramos energia limpa com resíduos industriais.</p>
+            <img src="https://via.placeholder.com/600x300.png?text=Energia+Resíduos" alt="Energia">
+            <div class="dimension-options">
+            
+               
+               
+            </div>
+                      <div class="more-info">
+              <h4>Detalhes da Tecnologia</h4>
+              <h5>Processo Inovador</h5>
+              <p>Explore como nossa tecnologia avançada transforma resíduos em recursos valiosos para o meio ambiente.</p>
+              <video autoplay muted loop>
+                <source src="https://via.placeholder.com/600x300.mp4?text=Video+Reciclagem" type="video/mp4">
+                Seu navegador não suporta vídeo.
+              </video>
+              
+            </div>
+            </div>
+      <div class="btn-containe">
+            <button class="btn" onclick="travelToNextPlanet(1)">Próximo Planeta</button>
+            <button class="btn-reverse" onclick="travelToPreviousPlanet(1)">Planeta Anterior</button>
+            <button class="btn-reverse" onclick="travelBack()">Voltar à Galáxia</button>
+            <button class="bbtn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="green-dimension-1-0">
+      
+        <h2>Processo de Energia</h2>
+        <p>Como transformamos resíduos em energia.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Processo+Energia" alt="Processo">
+        <div class="btn-container">
+           <h2>ELP Move Mobilidade Urbana</h2>
+ <p>Você deixou o vazio estelar para trás, navegando por campos de asteroides até pousar em Verona, Itália, em 2021. Bem-vindo à sede da ELP Move Mobilidade Urbana, onde o futuro da locomoção ganha vida.</p>
+ <img src="https://via.placeholder.com/800x400.png?text=Verona+Mobility" alt="ELP Move Verona">
+ <p>A ELP Move surgiu como uma extensão da visão sustentável da ELP, trazendo scooters elétricas, bicicletas elétricas e patinetes elétricos para as ruas. Nosso modelo de franquia permite que empreendedores ao redor do mundo ofereçam venda e aluguel desses veículos, promovendo uma mobilidade urbana ágil, silenciosa e sem carbono.</p>
+ <p>Com tecnologia avançada e design inovador, conectamos cidades e reduzimos a dependência de combustíveis fósseis. Verona é nosso ponto de partida, mas nosso destino é global: uma revolução elétrica para todos.</p>
+ <img src="https://via.placeholder.com/800x400.png?text=Tecnologia+Reciclagem" alt="Tecnologia">
+ 
+            <button class="btn-reverse" onclick="travelBackToPlanet(1)">Voltar ao Planeta</button>
+            <button class="btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="green-dimension-1-1">
+        <h2>Eficiência Energética</h2>
+        <p>Produzimos até 500 MW por ano.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Eficiência+Energética" alt="Eficiência">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(1)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="green-dimension-1-2">
+        <h2>Benefícios Sustentáveis</h2>
+        <p>Redução de 40% nas emissões de carbono.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Benefícios+Sustentáveis" alt="Benefícios">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(1)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+
+    <div class="story-section" id="green-planet-2">
+        <h2>Planeta Futura - Soluções Renováveis</h2>
+        <p>Tecnologias para um futuro sustentável.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Planeta+Futura" alt="Planeta Futura">
+        <div class="product-section">
+            <h3>Painel Solar ELP-S500</h3>
+            <p>Alta eficiência para residências e empresas.</p>
+            <img src="https://via.placeholder.com/600x300.png?text=Painel+Solar" alt="Painel Solar">
+            <div class="dimension-options">
+                <button class="dimension-btn" onclick="travelToDimension(2, 0)">Design</button>
+                <button class="dimension-btn" onclick="travelToDimension(2, 1)">Eficiência</button>
+                <button class="dimension-btn" onclick="travelToDimension(2, 2)">Aplicações</button>
+            </div>
+            <div class="more-info">
+                <h4>Inovação em Energia</h4>
+                <h5>Painéis de Alta Performance</h5>
+                <p>Descubra como nossos painéis solares revolucionam a energia renovável.</p>
+                <video autoplay muted loop>
+                    <source src="https://via.placeholder.com/600x300.mp4?text=Video+Painel+Solar" type="video/mp4">
+                    Seu navegador não suporta vídeo.
+                </video>
+            </div>
+        </div>
+        <div class="btn-container">
+            <button class="btn" onclick="travelToNextPlanet(2)">Próximo Planeta</button>
+            <button class="btn btn-reverse" onclick="travelToPreviousPlanet(2)">Planeta Anterior</button>
+            <button class="btn btn-reverse" onclick="travelBack()">Voltar à Galáxia</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="green-dimension-2-0">
+        <h2>Design do Painel</h2>
+        <p>Leve e compacto para fácil instalação.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Design+Painel" alt="Design">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(2)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="green-dimension-2-1">
+        <h2>Eficiência do Painel</h2>
+        <p>22% de eficiência, garantia de 25 anos.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Eficiência+Painel" alt="Eficiência">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(2)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="green-dimension-2-2">
+        <h2>Aplicações do Painel</h2>
+        <p>Ideal para residências e indústrias.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Aplicações+Painel" alt="Aplicações">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(2)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+
+    <div class="story-section" id="green-planet-3">
+        <h2>Planeta Inovação - Tecnologia Verde</h2>
+        <p>Soluções avançadas para sustentabilidade.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Planeta+Inovação" alt="Planeta Inovação">
+        <div class="product-section">
+            <h3>Robô Industrial ELP-RX</h3>
+            <p>Automação para triagem e reciclagem.</p>
+            <img src="https://via.placeholder.com/600x300.png?text=Robô+Industrial" alt="Robô Industrial">
+            <div class="dimension-options">
+                <button class="dimension-btn" onclick="travelToDimension(3, 0)">Funcionamento</button>
+                <button class="dimension-btn" onclick="travelToDimension(3, 1)">Capacidade</button>
+                <button class="dimension-btn" onclick="travelToDimension(3, 2)">Impacto</button>
+            </div>
+            <div class="more-info">
+                <h4>Automação Sustentável</h4>
+                <h5>Robótica Avançada</h5>
+                <p>Conheça o funcionamento inovador do nosso robô industrial para reciclagem.</p>
+                <video autoplay muted loop>
+                    <source src="https://via.placeholder.com/600x300.mp4?text=Video+Robô" type="video/mp4">
+                    Seu navegador não suporta vídeo.
+                </video>
+            </div>
+        </div>
+        <div class="btn-container">
+            <button class="btn" onclick="travelToNextPlanet(3)">Próximo Planeta</button>
+            <button class="btn btn-reverse" onclick="travelToPreviousPlanet(3)">Planeta Anterior</button>
+            <button class="btn btn-reverse" onclick="travelBack()">Voltar à Galáxia</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="green-dimension-3-0">
+        <h2>Funcionamento do Robô</h2>
+        <p>Tecnologia de ponta para triagem automática.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Funcionamento+Robô" alt="Funcionamento">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(3)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="green-dimension-3-1">
+        <h2>Capacidade do Robô</h2>
+        <p>Processa 10 toneladas de resíduos por hora.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Capacidade+Robô" alt="Capacidade">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(3)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="green-dimension-3-2">
+        <h2>Impacto do Robô</h2>
+        <p>Aumenta a eficiência da reciclagem em 50%.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Impacto+Robô" alt="Impacto">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(3)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+
+    <div class="story-section" id="green-planet-4">
+        <h2>Planeta Harmonia - Comunidades Verdes</h2>
+        <p>Promovemos sustentabilidade comunitária.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Planeta+Harmonia" alt="Planeta Harmonia">
+        <div class="product-section">
+            <h3>Horta Comunitária Modular</h3>
+            <p>Solução para cultivo local sustentável.</p>
+            <img src="https://via.placeholder.com/600x300.png?text=Horta+Comunitária" alt="Horta Comunitária">
+            <div class="dimension-options">
+                <button class="dimension-btn" onclick="travelToDimension(4, 0)">Estrutura</button>
+                <button class="dimension-btn" onclick="travelToDimension(4, 1)">Benefícios</button>
+                <button class="dimension-btn" onclick="travelToDimension(4, 2)">Implementação</button>
+            </div>
+            <div class="more-info">
+                <h4>Cultivo Sustentável</h4>
+                <h5>Comunidades Verdes</h5>
+                <p>Veja como nossas hortas modulares promovem a sustentabilidade local.</p>
+                <video autoplay muted loop>
+                    <source src="https://via.placeholder.com/600x300.mp4?text=Video+Horta" type="video/mp4">
+                    Seu navegador não suporta vídeo.
+                </video>
+            </div>
+        </div>
+        <div class="btn-container">
+            <button class="btn" onclick="travelToNextPlanet(4)">Próximo Planeta</button>
+            <button class="btn btn-reverse" onclick="travelToPreviousPlanet(4)">Planeta Anterior</button>
+            <button class="btn btn-reverse" onclick="travelBack()">Voltar à Galáxia</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="green-dimension-4-0">
+        <h2>Estrutura da Horta</h2>
+        <p>Modular e adaptável a pequenos espaços.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Estrutura+Horta" alt="Estrutura">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(4)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="green-dimension-4-1">
+        <h2>Benefícios da Horta</h2>
+        <p>Produção local reduz pegada de carbono.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Benefícios+Horta" alt="Benefícios">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(4)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="green-dimension-4-2">
+        <h2>Implementação da Horta</h2>
+        <p>Instalada em mais de 20 comunidades.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Implementação+Horta" alt="Implementação">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(4)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+
+    <!-- Galáxia Move Mobilidade -->
+    <div class="story-section" id="move-planet-0">
+        <h2>Planeta Eco-Trans - Mobilidade Verde</h2>
+        <p>Mobilidade sustentável para o dia a dia.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Planeta+Eco-Trans" alt="Planeta Eco-Trans">
+        <div class="product-section">
+            <h3>Bicicleta Elétrica ELP-B2</h3>
+            <p>Leve, dobrável e eficiente.</p>
+            <img src="https://via.placeholder.com/600x300.png?text=Bicicleta+ELP-B2" alt="Bicicleta Elétrica">
+            <div class="dimension-options">
+                <button class="dimension-btn" onclick="travelToDimension(0, 0)">Design</button>
+                <button class="dimension-btn" onclick="travelToDimension(0, 1)">Autonomia</button>
+                <button class="dimension-btn" onclick="travelToDimension(0, 2)">Benefícios</button>
+            </div>
+            <div class="more-info">
+                <h4>Mobilidade Ecológica</h4>
+                <h5>Bicicleta Inovadora</h5>
+                <p>Conheça os detalhes da nossa bicicleta elétrica dobrável.</p>
+                <video autoplay muted loop>
+                    <source src="https://via.placeholder.com/600x300.mp4?text=Video+Bicicleta" type="video/mp4">
+                    Seu navegador não suporta vídeo.
+                </video>
+            </div>
+        </div>
+        <div class="btn-container">
+            <button class="btn" onclick="travelToNextPlanet(0)">Próximo Planeta</button>
+            <button class="btn btn-reverse" onclick="travelToPreviousPlanet(0)">Planeta Anterior</button>
+            <button class="btn btn-reverse" onclick="travelBack()">Voltar à Galáxia</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="move-dimension-0-0">
+        <h2>Design do Eco-Trans</h2>
+        <p>Leveza e ergonomia para uso urbano.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Design+Bicicleta" alt="Design">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(0)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="move-dimension-0-1">
+        <h2>Autonomia do Eco-Trans</h2>
+        <p>60 km com uma única carga.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Autonomia+Bicicleta" alt="Autonomia">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(0)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="move-dimension-0-2">
+        <h2>Benefícios do Eco-Trans</h2>
+        <p>Mobilidade prática e ecológica.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Benefícios+Bicicleta" alt="Benefícios">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(0)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+
+    <div class="story-section" id="move-planet-1">
+        <h2>Planeta Volt-Way - Mobilidade Elétrica</h2>
+        <p>O coração da mobilidade elétrica.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Planeta+Volt-Way" alt="Planeta Volt-Way">
+        <div class="product-section">
+            <h3>Scooter Elétrica ELP-X1</h3>
+            <p>Autonomia e design futurista.</p>
+            <img src="https://via.placeholder.com/600x300.png?text=Scooter+ELP-X1" alt="Scooter Elétrica">
+            <div class="dimension-options">
+                <button class="dimension-btn" onclick="travelToDimension(1, 0)">Estrutura</button>
+                <button class="dimension-btn" onclick="travelToDimension(1, 1)">Performance</button>
+                <button class="dimension-btn" onclick="travelToDimension(1, 2)">Vantagens</button>
+            </div>
+            <div class="more-info">
+                <h4>Design Futurista</h4>
+                <h5>Scooter Elétrica</h5>
+                <p>Explore o design e a funcionalidade da nossa scooter elétrica.</p>
+                <video autoplay muted loop>
+                    <source src="https://via.placeholder.com/600x300.mp4?text=Video+Scooter" type="video/mp4">
+                    Seu navegador não suporta vídeo.
+                </video>
+            </div>
+        </div>
+        <div class="btn-container">
+            <button class="btn" onclick="travelToNextPlanet(1)">Próximo Planeta</button>
+            <button class="btn btn-reverse" onclick="travelToPreviousPlanet(1)">Planeta Anterior</button>
+            <button class="btn btn-reverse" onclick="travelBack()">Voltar à Galáxia</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="move-dimension-1-0">
+        <h2>Estrutura do Volt-Way</h2>
+        <p>Design leve com bateria removível.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Estrutura+Scooter" alt="Estrutura">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(1)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="move-dimension-1-1">
+        <h2>Performance do Volt-Way</h2>
+        <p>100 km de autonomia, 45 km/h.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Performance+Scooter" alt="Performance">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(1)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="move-dimension-1-2">
+        <h2>Vantagens do Volt-Way</h2>
+        <p>Prática e ecológica para cidades.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Vantagens+Scooter" alt="Vantagens">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(1)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+
+    <div class="story-section" id="move-planet-2">
+        <h2>Planeta Neo-Route - Transporte do Futuro</h2>
+        <p>O futuro da mobilidade está aqui.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Planeta+Neo-Route" alt="Planeta Neo-Route">
+        <div class="product-section">
+            <h3>Veículo Autônomo ELP-A1</h3>
+            <p>Transporte inteligente e sustentável.</p>
+            <img src="https://via.placeholder.com/600x300.png?text=Veículo+Autônomo" alt="Veículo Autônomo">
+            <div class="dimension-options">
+                <button class="dimension-btn" onclick="travelToDimension(2, 0)">Tecnologia</button>
+                <button class="dimension-btn" onclick="travelToDimension(2, 1)">Segurança</button>
+                <button class="dimension-btn" onclick="travelToDimension(2, 2)">Sustentabilidade</button>
+            </div>
+            <div class="more-info">
+                <h4>Transporte Inteligente</h4>
+                <h5>Veículo Autônomo</h5>
+                <p>Veja como nosso veículo autônomo redefine o transporte sustentável.</p>
+                <video autoplay muted loop>
+                    <source src="https://via.placeholder.com/600x300.mp4?text=Video+Veículo" type="video/mp4">
+                    Seu navegador não suporta vídeo.
+                </video>
+            </div>
+        </div>
+        <div class="btn-container">
+            <button class="btn" onclick="travelToNextPlanet(2)">Próximo Planeta</button>
+            <button class="btn btn-reverse" onclick="travelToPreviousPlanet(2)">Planeta Anterior</button>
+            <button class="btn btn-reverse" onclick="travelBack()">Voltar à Galáxia</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="move-dimension-2-0">
+        <h2>Tecnologia do Neo-Route</h2>
+        <p>Equipado com IA avançada.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Tecnologia+Veículo" alt="Tecnologia">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(2)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="move-dimension-2-1">
+        <h2>Segurança do Neo-Route</h2>
+        <p>Sensores para navegação segura.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Segurança+Veículo" alt="Segurança">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(2)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="move-dimension-2-2">
+        <h2>Sustentabilidade do Neo-Route</h2>
+        <p>Emissões zero para o futuro.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Sustentabilidade+Veículo" alt="Sustentabilidade">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(2)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+
+    <div class="story-section" id="move-planet-3">
+        <h2>Planeta Charge-Nex - Tecnologia de Mobilidade</h2>
+        <p>Inovações para transporte eficiente.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Planeta+Charge-Nex" alt="Planeta Charge-Nex">
+        <div class="product-section">
+            <h3>Sistema de Carregamento Rápido</h3>
+            <p>Carrega veículos em minutos.</p>
+            <img src="https://via.placeholder.com/600x300.png?text=Carregamento+Rápido" alt="Carregamento Rápido">
+            <div class="dimension-options">
+                <button class="dimension-btn" onclick="travelToDimension(3, 0)">Mecanismo</button>
+                <button class="dimension-btn" onclick="travelToDimension(3, 1)">Compatibilidade</button>
+                <button class="dimension-btn" onclick="travelToDimension(3, 2)">Benefícios</button>
+            </div>
+            <div class="more-info">
+                <h4>Carregamento Rápido</h4>
+                <h5>Tecnologia de Ponta</h5>
+                <p>Descubra como nosso sistema de carregamento rápido funciona.</p>
+                <video autoplay muted loop>
+                    <source src="https://via.placeholder.com/600x300.mp4?text=Video+Carregamento" type="video/mp4">
+                    Seu navegador não suporta vídeo.
+                </video>
+            </div>
+        </div>
+        <div class="btn-container">
+            <button class="btn" onclick="travelToNextPlanet(3)">Próximo Planeta</button>
+            <button class="btn btn-reverse" onclick="travelToPreviousPlanet(3)">Planeta Anterior</button>
+            <button class="btn btn-reverse" onclick="travelBack()">Voltar à Galáxia</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="move-dimension-3-0">
+        <h2>Mecanismo do Charge-Nex</h2>
+        <p>Tecnologia de alta potência.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Mecanismo+Carregamento" alt="Mecanismo">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(3)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="move-dimension-3-1">
+        <h2>Compatibilidade do Charge-Nex</h2>
+        <p>Funciona com todos os modelos ELP.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Compatibilidade+Carregamento" alt="Compatibilidade">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(3)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="move-dimension-3-2">
+        <h2>Benefícios do Charge-Nex</h2>
+        <p>Carga completa em 15 minutos.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Benefícios+Carregamento" alt="Benefícios">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(3)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+
+    <div class="story-section" id="move-planet-4">
+        <h2>Planeta Share-Move - Mobilidade Comunitária</h2>
+        <p>Mobilidade acessível para todos.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Planeta+Share-Move" alt="Planeta Share-Move">
+        <div class="product-section">
+            <h3>Compartilhamento de Scooters</h3>
+            <p>Sistema de scooters compartilhadas.</p>
+            <img src="https://via.placeholder.com/600x300.png?text=Scooters+Compartilhadas" alt="Scooters">
+            <div class="dimension-options">
+                <button class="dimension-btn" onclick="travelToDimension(4, 0)">Funcionamento</button>
+                <button class="dimension-btn" onclick="travelToDimension(4, 1)">Cobertura</button>
+                <button class="dimension-btn" onclick="travelToDimension(4, 2)">Impacto</button>
+            </div>
+            <div class="more-info">
+                <h4>Mobilidade Compartilhada</h4>
+                <h5>Scooters para Todos</h5>
+                <p>Conheça o sistema de compartilhamento de scooters e seu impacto.</p>
+                <video autoplay muted loop>
+                    <source src="https://via.placeholder.com/600x300.mp4?text=Video+Scooters" type="video/mp4">
+                    Seu navegador não suporta vídeo.
+                </video>
+            </div>
+        </div>
+        <div class="btn-container">
+            <button class="btn" onclick="travelToNextPlanet(4)">Próximo Planeta</button>
+            <button class="btn btn-reverse" onclick="travelToPreviousPlanet(4)">Planeta Anterior</button>
+            <button class="btn btn-reverse" onclick="travelBack()">Voltar à Galáxia</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="move-dimension-4-0">
+        <h2>Funcionamento do Share-Move</h2>
+        <p>Aplicativo para locação fácil.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Funcionamento+Scooters" alt="Funcionamento">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(4)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="move-dimension-4-1">
+        <h2>Cobertura do Share-Move</h2>
+        <p>Disponível em 50+ cidades.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Cobertura+Scooters" alt="Cobertura">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(4)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
+    </div>
+    <div class="dimension-section" id="move-dimension-4-2">
+        <h2>Impacto do Share-Move</h2>
+        <p>Reduz emissões urbanas.</p>
+        <img src="https://via.placeholder.com/800x400.png?text=Impacto+Scooters" alt="Impacto">
+        <div class="btn-container">
+            <button class="btn btn-reverse" onclick="travelBackToPlanet(4)">Voltar ao Planeta</button>
+            <button class="btn btn-reverse" onclick="travelBackToCosmo()">Voltar ao Cosmo</button>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://js.stripe.com/v3/"></script>
     <script>
-        // Configuração Three.js
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas'), alpha: true });
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas'), alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    scene.fog = new THREE.FogExp2(0x0a0a23, 0.002);
+
+    const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+    scene.add(ambientLight);
+    const pointLight = new THREE.PointLight(0xffffff, 1, 500);
+    pointLight.position.set(50, 50, 50);
+    scene.add(pointLight);
+
+    const galaxyGeometry = new THREE.SphereGeometry(1000, 64, 64);
+    const galaxyMaterial = new THREE.MeshBasicMaterial({
+        color: 0x1a1a3d,
+        side: THREE.BackSide,
+        transparent: true,
+        opacity: 0.8
+    });
+    const galaxy = new THREE.Mesh(galaxyGeometry, galaxyMaterial);
+    scene.add(galaxy);
+
+    const starsGeometry = new THREE.BufferGeometry();
+    const starsCount = 20000;
+    const positions = new Float32Array(starsCount * 3);
+    const sizes = new Float32Array(starsCount);
+    const colors = new Float32Array(starsCount * 3);
+    for (let i = 0; i < starsCount; i++) {
+        positions[i * 3] = (Math.random() - 0.5) * 2000;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 2000;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 2000;
+        sizes[i] = Math.random() * 3 + 1;
+        colors[i * 3] = Math.random();
+        colors[i * 3 + 1] = Math.random();
+        colors[i * 3 + 2] = 1;
+    }
+    starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    starsGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+    starsGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    const starsMaterial = new THREE.PointsMaterial({
+        sizeAttenuation: true,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.8
+    });
+    const stars = new THREE.Points(starsGeometry, starsMaterial);
+    scene.add(stars);
+
+    const comets = [];
+    function createComet() {
+        const cometGroup = new THREE.Group();
+        const headGeometry = new THREE.SphereGeometry(2, 16, 16);
+        const headMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8 });
+        const head = new THREE.Mesh(headGeometry, headMaterial);
+        cometGroup.add(head);
+
+        const tailGeometry = new THREE.BufferGeometry();
+        const tailPositions = new Float32Array(30 * 3);
+        for (let i = 0; i < 30; i++) {
+            tailPositions[i * 3] = 0;
+            tailPositions[i * 3 + 1] = 0;
+            tailPositions[i * 3 + 2] = -i * 2;
+        }
+        tailGeometry.setAttribute('position', new THREE.BufferAttribute(tailPositions, 3));
+        const tailMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, transparent: true, opacity: 0.5 });
+        const tail = new THREE.Line(tailGeometry, tailMaterial);
+        cometGroup.add(tail);
+
+        cometGroup.position.set(
+            Math.random() * 2000 - 1000,
+            Math.random() * 2000 - 1000,
+            1000
+        );
+        scene.add(cometGroup);
+        comets.push(cometGroup);
+
+        gsap.to(cometGroup.position, {
+            z: -2000,
+            duration: 5 + Math.random() * 5,
+            ease: "linear",
+            onUpdate: () => {
+                const positions = tail.geometry.attributes.position.array;
+                for (let i = 0; i < 30; i++) {
+                    positions[i * 3] = (Math.random() - 0.5) * i * 0.2;
+                    positions[i * 3 + 1] = (Math.random() - 0.5) * i * 0.2;
+                }
+                tail.geometry.attributes.position.needsUpdate = true;
+            },
+            onComplete: () => {
+                scene.remove(cometGroup);
+                comets.splice(comets.indexOf(cometGroup), 1);
+                createComet();
+            }
+        });
+    }
+    for (let i = 0; i < 10; i++) createComet();
+
+    const planets = [];
+    const planetData = {
+        green: [
+            { position: { x: -100, y: 50, z: -200 }, color: 0x00ffcc, ringColor: 0xff00ff },
+            { position: { x: 80, y: -30, z: -180 }, color: 0xff00ff, ringColor: 0x00ffcc },
+            { position: { x: -50, y: -80, z: -220 }, color: 0xffff00, ringColor: 0x00ffff },
+            { position: { x: 120, y: 70, z: -190 }, color: 0x00ffff, ringColor: 0xffa500 },
+            { position: { x: 0, y: 100, z: -210 }, color: 0xffa500, ringColor: 0xffff00 }
+        ],
+        move: [
+            { position: { x: -90, y: 60, z: -230 }, color: 0x66ccff, ringColor: 0xff66cc },
+            { position: { x: 70, y: -40, z: -200 }, color: 0xff66cc, ringColor: 0x66ccff },
+            { position: { x: -60, y: -70, z: -240 }, color: 0xccff66, ringColor: 0x66ffcc },
+            { position: { x: 110, y: 80, z: -210 }, color: 0x66ffcc, ringColor: 0xccff66 },
+            { position: { x: 10, y: 90, z: -220 }, color: 0xffcc66, ringColor: 0x66ccff }
+        ]
+    };
+
+    const dimensionPositions = {
+        green: [
+            [
+                { x: -120, y: 60, z: -250 },
+                { x: -90, y: 40, z: -230 },
+                { x: -110, y: 70, z: -240 }
+            ],
+            [
+                { x: 100, y: -20, z: -220 },
+                { x: 70, y: -40, z: -200 },
+                { x: 90, y: -10, z: -210 }
+            ],
+            [
+                { x: -70, y: -90, z: -260 },
+                { x: -40, y: -70, z: -240 },
+                { x: -60, y: -80, z: -250 }
+            ],
+            [
+                { x: 140, y: 80, z: -230 },
+                { x: 110, y: 60, z: -210 },
+                { x: 130, y: 90, z: -220 }
+            ],
+            [
+                { x: 20, y: 110, z: -250 },
+                { x: -10, y: 90, z: -230 },
+                { x: 10, y: 120, z: -240 }
+            ]
+        ],
+        move: [
+            [
+                { x: -110, y: 70, z: -260 },
+                { x: -80, y: 50, z: -240 },
+                { x: -100, y: 80, z: -250 }
+            ],
+            [
+                { x: 90, y: -30, z: -230 },
+                { x: 60, y: -50, z: -210 },
+                { x: 80, y: -20, z: -220 }
+            ],
+            [
+                { x: -80, y: -80, z: -270 },
+                { x: -50, y: -60, z: -250 },
+                { x: -70, y: -70, z: -260 }
+            ],
+            [
+                { x: 130, y: 90, z: -240 },
+                { x: 100, y: 70, z: -220 },
+                { x: 120, y: 100, z: -230 }
+            ],
+            [
+                { x: 30, y: 100, z: -260 },
+                { x: 0, y: 80, z: -240 },
+                { x: 20, y: 110, z: -250 }
+            ]
+        ]
+    };
+
+    function adjustPlanetScale() {
+        const scaleFactor = Math.min(window.innerWidth, window.innerHeight) / 800;
+        planets.forEach(({ planet, ring }) => {
+            planet.scale.set(scaleFactor, scaleFactor, scaleFactor);
+            ring.scale.set(scaleFactor, scaleFactor, scaleFactor);
+        });
+        shipGroup.scale.set(scaleFactor, scaleFactor, scaleFactor);
+    }
+
+    function createPlanets(galaxyKey) {
+        const data = planetData[galaxyKey];
+        data.forEach((planetInfo, index) => {
+            const planetGeometry = new THREE.SphereGeometry(15, 64, 64);
+            const planetMaterial = new THREE.MeshPhongMaterial({
+                color: planetInfo.color,
+                specular: 0x555555,
+                shininess: 30
+            });
+            const planet = new THREE.Mesh(planetGeometry, planetMaterial);
+            planet.position.set(planetInfo.position.x, planetInfo.position.y, planetInfo.position.z);
+            planet.visible = false;
+            scene.add(planet);
+
+            const ringGeometry = new THREE.RingGeometry(20, 25, 64);
+            const ringMaterial = new THREE.MeshPhongMaterial({
+                color: planetInfo.ringColor,
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.8
+            });
+            const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+            ring.rotation.x = Math.PI / 2;
+            ring.position.set(planetInfo.position.x, planetInfo.position.y, planetInfo.position.z);
+            ring.visible = false;
+            scene.add(ring);
+
+            const fragmentsGeometry = new THREE.BufferGeometry();
+            const fragmentCount = 200;
+            const fragmentPositions = new Float32Array(fragmentCount * 3);
+            const fragmentVelocities = new Float32Array(fragmentCount * 3);
+            for (let i = 0; i < fragmentCount; i++) {
+                fragmentPositions[i * 3] = planetInfo.position.x;
+                fragmentPositions[i * 3 + 1] = planetInfo.position.y;
+                fragmentPositions[i * 3 + 2] = planetInfo.position.z;
+                fragmentVelocities[i * 3] = (Math.random() - 0.5) * 5;
+                fragmentVelocities[i * 3 + 1] = (Math.random() - 0.5) * 5;
+                fragmentVelocities[i * 3 + 2] = (Math.random() - 0.5) * 5;
+            }
+            fragmentsGeometry.setAttribute('position', new THREE.BufferAttribute(fragmentPositions, 3));
+            const fragmentsMaterial = new THREE.PointsMaterial({
+                color: planetInfo.color,
+                size: 2,
+                transparent: true,
+                opacity: 0
+            });
+            const fragments = new THREE.Points(fragmentsGeometry, fragmentsMaterial);
+            scene.add(fragments);
+
+            const rays = new THREE.Group();
+            for (let i = 0; i < 5; i++) {
+                const rayGeometry = new THREE.BufferGeometry();
+                const rayVertices = new Float32Array([
+                    planetInfo.position.x, planetInfo.position.y, planetInfo.position.z,
+                    planetInfo.position.x + (Math.random() - 0.5) * 30,
+                    planetInfo.position.y + (Math.random() - 0.5) * 30,
+                    planetInfo.position.z + (Math.random() - 0.5) * 30
+                ]);
+                rayGeometry.setAttribute('position', new THREE.BufferAttribute(rayVertices, 3));
+                const rayMaterial = new THREE.LineBasicMaterial({
+                    color: 0x00ffff,
+                    transparent: true,
+                    opacity: 0
+                });
+                const ray = new THREE.Line(rayGeometry, rayMaterial);
+                rays.add(ray);
+            }
+            scene.add(rays);
+
+            planets.push({ planet, ring, fragments, fragmentVelocities, rays, galaxy: galaxyKey });
+        });
+    }
+
+    createPlanets('green');
+    createPlanets('move');
+
+    const shipGroup = new THREE.Group();
+    const shipBody = new THREE.Mesh(
+        new THREE.ConeGeometry(2, 5, 32),
+        new THREE.MeshPhongMaterial({ color: 0x00ffcc, specular: 0xffffff, shininess: 50 })
+    );
+    shipBody.rotation.x = Math.PI / 2;
+    shipGroup.add(shipBody);
+
+    const shipWings = new THREE.Mesh(
+        new THREE.BoxGeometry(6, 0.5, 2),
+        new THREE.MeshPhongMaterial({ color: 0xff00ff })
+    );
+    shipWings.position.set(0, -1, 0);
+    shipGroup.add(shipWings);
+
+    const shipGlow = new THREE.Mesh(
+        new THREE.SphereGeometry(1, 16, 16),
+        new THREE.MeshBasicMaterial({ color: 0x00ffcc, transparent: true, opacity: 0.5 })
+    );
+    shipGlow.position.set(0, 0, -3);
+    shipGroup.add(shipGlow);
+
+    shipGroup.position.set(0, 10, 20);
+    scene.add(shipGroup);
+
+    camera.position.set(0, 0, window.innerWidth < 768 ? 150 : 100);
+
+    const spaceAmbience = new Howl({
+        src: ['https://cdn.freesound.org/previews/242/242999_4486188-lq.mp3'],
+        loop: true,
+        volume: 0.3,
+        autoplay: true
+    });
+
+    const warpSound = new Howl({
+        src: ['https://cdn.freesound.org/previews/120/120859_649468-lq.mp3'],
+        volume: 0.7
+    });
+
+    const clickSound = new Howl({
+        src: ['https://cdn.freesound.org/previews/242/242934_71257-lq.mp3'],
+        volume: 0.5
+    });
+
+    gsap.from("#cosmo-intro h1", {
+        opacity: 0,
+        y: 50,
+        duration: 1.5,
+        ease: "elastic.out(1, 0.3)"
+    });
+
+    gsap.from(".cosmo-btn", {
+        opacity: 0,
+        y: 20,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power2.out",
+        delay: 0.5
+    });
+
+    document.querySelectorAll('.direction-btn, .cosmo-btn, .dimension-btn, .btn, .btn-reverse').forEach(button => {
+        button.addEventListener('click', () => clickSound.play());
+    });
+
+    gsap.to(stars.rotation, {
+        y: "+=6.28",
+        duration: 20,
+        ease: "linear",
+        repeat: -1
+    });
+
+    planets.forEach(({ planet, ring }) => {
+        gsap.to(planet.rotation, {
+            y: "+=6.28",
+            duration: 10,
+            ease: "linear",
+            repeat: -1
+        });
+        gsap.to(ring.rotation, {
+            z: "+=6.28",
+            duration: 15,
+            ease: "linear",
+            repeat: -1
+        });
+    });
+
+    gsap.to(shipGroup.rotation, {
+        y: "+=6.28",
+        duration: 10,
+        ease: "linear",
+        repeat: -1
+    });
+
+    gsap.to(shipGlow.scale, {
+        x: 1.2,
+        y: 1.2,
+        z: 1.2,
+        duration: 1,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true
+    });
+
+    gsap.to(starsMaterial, {
+        opacity: 0.6,
+        duration: 2,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true
+    });
+
+    let currentPlanetIndex = -1;
+    let currentDimensionIndex = -1;
+    let currentGalaxy = null;
+
+    function enterGalaxy(galaxy) {
+        currentGalaxy = galaxy;
+        const cosmoIntro = document.getElementById('cosmo-intro');
+        const intro = document.getElementById('intro');
+        const directionButtons = document.getElementById('direction-buttons');
+
+        const planetNames = {
+            green: ['Planeta Verde', 'Planeta Elétrico', 'Planeta Futura', 'Planeta Inovação', 'Planeta Harmonia'],
+            move: ['Planeta Eco-Trans', 'Planeta Volt-Way', 'Planeta Neo-Route', 'Planeta Charge-Nex', 'Planeta Share-Move']
+        };
+
+        directionButtons.innerHTML = '';
+        planetNames[galaxy].forEach((name, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'direction-btn';
+            btn.textContent = name;
+            btn.onclick = () => travelTo(index);
+            directionButtons.appendChild(btn);
+            btn.addEventListener('click', () => clickSound.play());
+        });
+
+        gsap.to(cosmoIntro, {
+            opacity: 0,
+            duration: 0.5,
+            ease: "power2.inOut",
+            onComplete: () => {
+                cosmoIntro.classList.add('hidden');
+                intro.style.display = 'flex';
+                intro.classList.remove('hidden');
+                planets.forEach(p => {
+                    p.planet.visible = p.galaxy === galaxy;
+                    p.ring.visible = p.galaxy === galaxy;
+                    p.fragments.material.opacity = 0;
+                });
+                intro.querySelector('h1').textContent = `Explore a Galáxia ELP ${galaxy === 'green' ? 'Green Technology' : 'Move Mobilidade'}`;
+                gsap.to(intro, {
+                    opacity: 1,
+                    duration: 0.5,
+                    ease: "power2.out"
+                });
+            }
+        });
+
+        gsap.to(camera.position, {
+            z: window.innerWidth < 768 ? 250 : 200,
+            duration: 1.5,
+            ease: "power2.inOut"
+        });
+        warpSound.play();
+    }
+
+  function explodePlanet(index, callback) {
+        const { planet, ring, fragments, fragmentVelocities, rays } = planets[index];
+        planet.visible = false;
+        ring.visible = false;
+        fragments.material.opacity = 1;
+
+        const positions = fragments.geometry.attributes.position.array;
+        gsap.to(fragments.material, {
+            opacity: 0,
+            duration: 2,
+            ease: "power2.in",
+            onUpdate: () => {
+                for (let i = 0; i < fragmentVelocities.length / 3; i++) {
+                    positions[i * 3] += fragmentVelocities[i * 3];
+                    positions[i * 3 + 1] += fragmentVelocities[i * 3 + 1];
+                    positions[i * 3 + 2] += fragmentVelocities[i * 3 + 2];
+                }
+                fragments.geometry.attributes.position.needsUpdate = true;
+            },
+            onComplete: () => {
+                fragments.material.opacity = 0;
+                callback();
+            }
+        });
+
+        rays.children.forEach(ray => {
+            gsap.to(ray.material, {
+                opacity: 0.8,
+                duration: 0.5,
+                ease: "power2.out",
+                yoyo: true,
+                repeat: 1,
+                onComplete: () => ray.material.opacity = 0
+            });
+        });
+    }
+
+    function reconstructPlanet(index, callback) {
+        const { planet, ring, fragments, fragmentVelocities, rays } = planets[index];
+        planet.visible = true;
+        ring.visible = true;
+        fragments.material.opacity = 0;
+
+        const positions = fragments.geometry.attributes.position.array;
+        for (let i = 0; i < fragmentVelocities.length / 3; i++) {
+            positions[i * 3] = planet.position.x;
+            positions[i * 3 + 1] = planet.position.y;
+            positions[i * 3 + 2] = planet.position.z;
+        }
+        fragments.geometry.attributes.position.needsUpdate = true;
+
+        fragments.material.opacity = 1;
+        gsap.to(fragments.material, {
+            opacity: 0,
+            duration: 2,
+            ease: "power2.out",
+            onComplete: callback
+        });
+
+        rays.children.forEach(ray => {
+            gsap.to(ray.material, {
+                opacity: 0.8,
+                duration: 0.5,
+                ease: "power2.out",
+                yoyo: true,
+                repeat: 1,
+                onComplete: () => ray.material.opacity = 0
+            });
+        });
+    }
+
+    function getPlanetGlobalIndex(galaxy, localIndex) {
+        return galaxy === 'green' ? localIndex : localIndex + 5;
+    }
+
+    function travelTo(localIndex) {
+        currentPlanetIndex = getPlanetGlobalIndex(currentGalaxy, localIndex);
+        currentDimensionIndex = -1;
+        const intro = document.getElementById('intro');
+        const targetPlanet = planets[currentPlanetIndex];
+        const scaleFactor = Math.min(window.innerWidth, window.innerHeight) / 800;
+
+        const timeline = gsap.timeline({
+            onComplete: () => {
+                reconstructPlanet(currentPlanetIndex, () => showStory(localIndex));
+            }
+        });
+
+        timeline.to(intro, {
+            opacity: 0,
+            duration: 0.5,
+            ease: "power2.inOut",
+            onComplete: () => intro.classList.add('hidden')
+        });
+
+        timeline.to(shipGroup.position, {
+            x: targetPlanet.planet.position.x,
+            y: targetPlanet.planet.position.y + 30 * scaleFactor,
+            z: targetPlanet.planet.position.z + 50 * scaleFactor,
+            duration: 1.5,
+            ease: "power2.inOut"
+        }, 0);
+
+        timeline.to(camera.position, {
+            x: targetPlanet.planet.position.x,
+            y: targetPlanet.planet.position.y,
+            z: targetPlanet.planet.position.z + 70 * scaleFactor,
+            duration: 1.5,
+            ease: "power2.inOut"
+        }, 0);
+
+        timeline.to(starsMaterial, {
+            opacity: 0.5,
+            duration: 0.5,
+            ease: "power2.inOut"
+        }, 0);
+
+        warpSound.play();
+    }
+
+    function travelToDimension(localIndex, dimensionIndex) {
+        currentDimensionIndex = dimensionIndex;
+        const globalIndex = getPlanetGlobalIndex(currentGalaxy, localIndex);
+        const story = document.getElementById(`${currentGalaxy}-planet-${localIndex}`);
+        const targetPosition = dimensionPositions[currentGalaxy][localIndex][dimensionIndex];
+        const scaleFactor = Math.min(window.innerWidth, window.innerHeight) / 800;
+
+        const timeline = gsap.timeline({
+            onComplete: () => showDimension(localIndex, dimensionIndex)
+        });
+
+        timeline.to(story, {
+            opacity: 0,
+            duration: 0.5,
+            ease: "power2.inOut",
+            onComplete: () => story.classList.remove('active')
+        });
+
+        timeline.to(shipGroup.position, {
+            x: targetPosition.x,
+            y: targetPosition.y + 20 * scaleFactor,
+            z: targetPosition.z + 40 * scaleFactor,
+            duration: 1.5,
+            ease: "power2.inOut"
+        }, 0);
+
+        timeline.to(camera.position, {
+            x: targetPosition.x,
+            y: targetPosition.y,
+            z: targetPosition.z + 60 * scaleFactor,
+            duration: 1.5,
+            ease: "power2.inOut"
+        }, 0);
+
+        timeline.to(starsMaterial, {
+            opacity: 0.3,
+            duration: 0.5,
+            ease: "power2.inOut"
+        }, 0);
+
+        warpSound.play();
+    }
+
+    function travelToNextPlanet(currentLocalIndex) {
+        const nextLocalIndex = (currentLocalIndex + 1) % 5;
+        hideStory(currentLocalIndex, () => travelTo(nextLocalIndex));
+    }
+
+    function travelToPreviousPlanet(currentLocalIndex) {
+        const prevLocalIndex = (currentLocalIndex - 1 + 5) % 5;
+        hideStory(currentLocalIndex, () => travelTo(prevLocalIndex));
+    }
+
+    function travelBackToPlanet(localIndex) {
+        const globalIndex = getPlanetGlobalIndex(currentGalaxy, localIndex);
+        const dimension = document.getElementById(`${currentGalaxy}-dimension-${localIndex}-${currentDimensionIndex}`);
+        const targetPlanet = planets[globalIndex];
+        const scaleFactor = Math.min(window.innerWidth, window.innerHeight) / 800;
+
+        const timeline = gsap.timeline({
+            onComplete: () => showStory(localIndex)
+        });
+
+        timeline.to(dimension, {
+            opacity: 0,
+            duration: 0.5,
+            ease: "power2.inOut",
+            onComplete: () => dimension.classList.remove('active')
+        });
+
+        timeline.to(shipGroup.position, {
+            x: targetPlanet.planet.position.x,
+            y: targetPlanet.planet.position.y + 30 * scaleFactor,
+            z: targetPlanet.planet.position.z + 50 * scaleFactor,
+            duration: 1.5,
+            ease: "power2.inOut"
+        }, 0);
+
+        timeline.to(camera.position, {
+            x: targetPlanet.planet.position.x,
+            y: targetPlanet.planet.position.y,
+            z: targetPlanet.planet.position.z + 70 * scaleFactor,
+            duration: 1.5,
+            ease: "power2.inOut"
+        }, 0);
+
+        timeline.to(starsMaterial, {
+            opacity: 0.5,
+            duration: 0.5,
+            ease: "power2.inOut"
+        }, 0);
+
+        warpSound.play();
+        currentDimensionIndex = -1;
+    }
+
+    function travelBack() {
+        if (currentDimensionIndex !== -1) {
+            travelBackToPlanet(currentPlanetIndex % 5);
+        } else {
+            hideStory(currentPlanetIndex % 5, () => {
+                const timeline = gsap.timeline({
+                    onComplete: resetScene
+                });
+
+                timeline.to(shipGroup.position, {
+                    x: 0,
+                    y: 10,
+                    z: 20,
+                    duration: 1.5,
+                    ease: "power2.inOut"
+                }, 0);
+
+                timeline.to(camera.position, {
+                    x: 0,
+                    y: 0,
+                    z: window.innerWidth < 768 ? 250 : 200,
+                    duration: 1.5,
+                    ease: "power2.inOut"
+                }, 0);
+
+                timeline.to(starsMaterial, {
+                    opacity: 0.8,
+                    duration: 0.5,
+                    ease: "power2.inOut"
+                }, 0);
+
+                warpSound.play();
+
+                planets.forEach((planet, index) => {
+                    if (index !== currentPlanetIndex && planet.galaxy === currentGalaxy) {
+                        reconstructPlanet(index, () => {});
+                    } else {
+                        planet.planet.visible = false;
+                        planet.ring.visible = false;
+                    }
+                });
+            });
+        }
+    }
+
+    function travelBackToCosmo() {
+        const timeline = gsap.timeline({
+            onComplete: resetToCosmo
+        });
+
+        document.querySelectorAll('.story-section.active, .dimension-section.active').forEach(section => {
+            timeline.to(section, {
+                opacity: 0,
+                duration: 0.5,
+                ease: "power2.inOut",
+                onComplete: () => section.classList.remove('active')
+            }, 0);
+        });
+
+        const intro = document.getElementById('intro');
+        if (!intro.classList.contains('hidden')) {
+            timeline.to(intro, {
+                opacity: 0,
+                duration: 0.5,
+                ease: "power2.inOut",
+                onComplete: () => intro.classList.add('hidden')
+            }, 0);
+        }
+
+        timeline.to(shipGroup.position, {
+            x: 0,
+            y: 10,
+            z: 20,
+            duration: 1.5,
+            ease: "power2.inOut"
+        }, 0);
+
+        timeline.to(camera.position, {
+            x: 0,
+            y: 0,
+            z: window.innerWidth < 768 ? 150 : 100,
+            duration: 1.5,
+            ease: "power2.inOut"
+        }, 0);
+
+        timeline.to(starsMaterial, {
+            opacity: 0.8,
+            duration: 0.5,
+            ease: "power2.inOut"
+        }, 0);
+
+        planets.forEach(p => {
+            p.planet.visible = false;
+            p.ring.visible = false;
+            p.fragments.material.opacity = 0;
+        });
+
+        gsap.to(camera, {
+            fov: 90,
+            duration: 1,
+            ease: "power2.in",
+            yoyo: true,
+            repeat: 1,
+            onUpdate: () => camera.updateProjectionMatrix()
+        });
+
+        warpSound.play();
+    }
+
+    function showStory(localIndex) {
+        const story = document.getElementById(`${currentGalaxy}-planet-${localIndex}`);
+        story.classList.add('active');
+        gsap.fromTo(story, {
+            opacity: 0,
+            y: 50
+        }, {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            ease: "power2.out",
+            onComplete: () => story.scrollTop = 0
+        });
+
+        gsap.from(story.querySelectorAll('h2, p, img, .dimension-btn, .btn, .btn-reverse, .product-section'), {
+            opacity: 0,
+            y: 20,
+            duration: 0.5,
+            ease: "power2.out",
+            stagger: 0.1
+        });
+    }
+
+    function showDimension(localIndex, dimensionIndex) {
+        const dimension = document.getElementById(`${currentGalaxy}-dimension-${localIndex}-${dimensionIndex}`);
+        dimension.classList.add('active');
+        gsap.fromTo(dimension, {
+            opacity: 0,
+            y: 50
+        }, {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            ease: "power2.out",
+            onComplete: () => dimension.scrollTop = 0
+        });
+
+        gsap.from(dimension.querySelectorAll('h2, p, img, .btn, .btn-reverse'), {
+            opacity: 0,
+            y: 20,
+            duration: 0.5,
+            ease: "power2.out",
+            stagger: 0.1
+        });
+    }
+
+    function hideStory(localIndex, callback) {
+        const story = document.getElementById(`${currentGalaxy}-planet-${localIndex}`);
+        gsap.to(story, {
+            opacity: 0,
+            y: 50,
+            duration: 0.5,
+            ease: "power2.inOut",
+            onComplete: () => {
+                story.classList.remove('active');
+                explodePlanet(currentPlanetIndex, callback);
+            }
+        });
+    }
+
+    function resetScene() {
+        const intro = document.getElementById('intro');
+        intro.style.display = 'flex';
+        intro.classList.remove('hidden');
+        gsap.to(intro, {
+            opacity: 1,
+            duration: 0.5,
+            ease: "power2.out"
+        });
+
+        planets.forEach((planet, index) => {
+            if (planet.galaxy === currentGalaxy) {
+                planet.planet.visible = true;
+                planet.ring.visible = true;
+            }
+        });
+
+        currentPlanetIndex = -1;
+        currentDimensionIndex = -1;
+    }
+
+    function resetToCosmo() {
+        const cosmoIntro = document.getElementById('cosmo-intro');
+        cosmoIntro.classList.remove('hidden');
+        gsap.to(cosmoIntro, {
+            opacity: 1,
+            duration: 0.5,
+            ease: "power2.out"
+        });
+
+        currentGalaxy = null;
+        currentPlanetIndex = -1;
+        currentDimensionIndex = -1;
+
+        gsap.from(".cosmo-btn", {
+            opacity: 0,
+            y: 20,
+            duration: 0.5,
+            stagger: 0.2,
+            ease: "power2.out"
+        });
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
+        adjustPlanetScale();
+    });
 
-        scene.fog = new THREE.FogExp2(0x0a0a23, 0.002);
-        const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
-        scene.add(ambientLight);
-        const pointLight = new THREE.PointLight(0xffffff, 1, 500);
-        pointLight.position.set(50, 50, 50);
-        scene.add(pointLight);
-
-        // Estrelas
-        const starsGeometry = new THREE.BufferGeometry();
-        const starsCount = 20000;
-        const positions = new Float32Array(starsCount * 3);
-        const sizes = new Float32Array(starsCount);
-        const colors = new Float32Array(starsCount * 3);
-        for (let i = 0; i < starsCount; i++) {
-            positions[i * 3] = (Math.random() - 0.5) * 3000;
-            positions[i * 3 + 1] = (Math.random() - 0.5) * 3000;
-            positions[i * 3 + 2] = (Math.random() - 0.5) * 3000;
-            sizes[i] = Math.random() * 3 + 1;
-            colors[i * 3] = Math.random();
-            colors[i * 3 + 1] = Math.random();
-            colors[i * 3 + 2] = 1;
-        }
-        starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        starsGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-        starsGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-        const starsMaterial = new THREE.PointsMaterial({
-            sizeAttenuation: true,
-            vertexColors: true,
-            transparent: true,
-            opacity: 0.8
-        });
-        const stars = new THREE.Points(starsGeometry, starsMaterial);
-        scene.add(stars);
-
-        // Nave Espacial
-        const shipGroup = new THREE.Group();
-        const shipBody = new THREE.Mesh(
-            new THREE.ConeGeometry(2, 5, 32),
-            new THREE.MeshPhongMaterial({ color: 0x00ffcc, specular: 0xffffff, shininess: 50 })
-        );
-        shipBody.rotation.x = Math.PI / 2;
-        shipGroup.add(shipBody);
-        const shipWings = new THREE.Mesh(
-            new THREE.BoxGeometry(6, 0.5, 2),
-            new THREE.MeshPhongMaterial({ color: 0xff00ff })
-        );
-        shipWings.position.set(0, -1, 0);
-        shipGroup.add(shipWings);
-        const shipGlow = new THREE.Mesh(
-            new THREE.SphereGeometry(1, 16, 16),
-            new THREE.MeshBasicMaterial({ color: 0x00ffcc, transparent: true, opacity: 0.5 })
-        );
-        shipGlow.position.set(0, 0, -3);
-        shipGroup.add(shipGlow);
-        shipGroup.position.set(0, 10, 20);
-        scene.add(shipGroup);
-
-        camera.position.z = 50;
-
-        // Animações GSAP
-        gsap.to(stars.rotation, { y: "+=6.28", duration: 20, ease: "linear", repeat: -1 });
-        gsap.to(shipGroup.position, { z: -50, duration: 5, ease: "power2.inOut", repeat: -1, yoyo: true });
-        gsap.to(shipGlow.scale, { x: 1.2, y: 1.2, z: 1.2, duration: 1, ease: "sine.inOut", repeat: -1, yoyo: true });
-
-        // Render Loop
-        function animate() {
-            requestAnimationFrame(animate);
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        // Chatbot e Lógica de Auto-Programação
-        async function sendMessage() {
-            const input = document.getElementById('chat-input').value;
-            if (!input) return;
-
-            const messages = document.getElementById('chat-messages');
-            messages.innerHTML += `<p class="user">Você: ${input}</p>`;
-
-            // Chamada simulada à API Grok 3 (substitua por chamada real via backend)
-            const response = await fetch('/api/grok', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ prompt: input })
-            });
-            const data = await response.json();
-
-            messages.innerHTML += `<p class="grok">Grok: ${data.response}</p>`;
-            messages.scrollTop = messages.scrollHeight;
-            document.getElementById('chat-input').value = '';
-
-            // Identificar perfil e galáxia
-            const { galaxy, content } = determineGalaxy(input, data.response);
-            if (galaxy) {
-                showGalaxy(galaxy, content);
-            }
-        }
-
-        function determineGalaxy(input, response) {
-            // Lógica para identificar perfil e galáxia com base na pergunta
-            let galaxy, content;
-            if (input.toLowerCase().includes('ações') || response.toLowerCase().includes('ações')) {
-                galaxy = 'Galáxia de Ações';
-                content = 'Bem-vindo à Galáxia de Ações! Aqui você aprenderá sobre investimentos em bolsa de valores. Ações são uma ótima opção para diversificar sua carteira. Recomendo começar com empresas de tecnologia, como Apple ou Tesla, que têm crescimento estável.';
-            } else if (input.toLowerCase().includes('cripto') || response.toLowerCase().includes('cripto')) {
-                galaxy = 'Galáxia de Criptomoedas';
-                content = 'Você chegou à Galáxia de Criptomoedas! Este é um mercado volátil, mas com alto potencial. Para iniciantes, sugiro investir em Bitcoin ou Ethereum, que são mais consolidados.';
-            } else if (input.toLowerCase().includes('esg') || response.toLowerCase().includes('esg')) {
-                galaxy = 'Galáxia Sustentável';
-                content = 'Bem-vindo à Galáxia Sustentável! Investimentos ESG (Environmental, Social, Governance) focam em sustentabilidade. Empresas como Natura e Unilever são boas escolhas para quem busca impacto positivo.';
-            } else {
-                galaxy = 'Galáxia Geral';
-                content = 'Você está na Galáxia Geral! Parece que você tem dúvidas variadas. Vou te ajudar com um plano diversificado: 50% em ações, 30% em renda fixa e 20% em cripto. O que acha?';
-            }
-            return { galaxy, content };
-        }
-
-        function showGalaxy(galaxy, content) {
-            gsap.to('#interface', { opacity: 0, duration: 1, onComplete: () => {
-                document.getElementById('interface').style.display = 'none';
-                const galaxySection = document.getElementById('galaxy-section');
-                galaxySection.style.display = 'block';
-                document.getElementById('galaxy-title').textContent = galaxy;
-                document.getElementById('galaxy-content').textContent = content;
-                gsap.from('#galaxy-section', { opacity: 0, y: 50, duration: 1 });
-
-                // Ativar rolagem
-                document.body.style.overflow = 'auto';
-
-                // Animações com ScrollTrigger
-                gsap.registerPlugin(ScrollTrigger);
-                gsap.from('.scroll-element', {
-                    scrollTrigger: {
-                        trigger: '.scroll-element',
-                        start: 'top 80%',
-                        end: 'top 30%',
-                        scrub: true
-                    },
-                    opacity: 0,
-                    y: 50,
-                    duration: 1,
-                    stagger: 0.2
-                });
-
-                // Animação 3D baseada no scroll
-                gsap.to(shipGroup.position, {
-                    scrollTrigger: {
-                        trigger: '#galaxy-section',
-                        start: 'top top',
-                        end: 'bottom bottom',
-                        scrub: true
-                    },
-                    y: -20,
-                    ease: 'power2.inOut'
-                });
-            }});
-        }
-
-        function proceedToPayment() {
-            gsap.to('#galaxy-section', { opacity: 0, duration: 1, onComplete: () => {
-                document.getElementById('galaxy-section').style.display = 'none';
-                document.getElementById('payment-portal').style.display = 'block';
-                gsap.from('#payment-portal', { opacity: 0, scale: 0.5, duration: 1 });
-            }});
-        }
-
-        // Integração com Stripe
-        const stripe = Stripe('pk_test_sua_chave_publica_aqui');
-        function processPayment() {
-            stripe.redirectToCheckout({
-                lineItems: [{ price: 'price_123', quantity: 1 }],
-                mode: 'payment',
-                successUrl: 'https://seu-site.com/sucesso',
-                cancelUrl: 'https://seu-site.com/cancelado'
-            });
-        }
-
-        // Redimensionamento
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        // Enviar mensagem com Enter
-        document.getElementById('chat-input').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
-        });
-    </script>
+    adjustPlanetScale();
+</script>
 </body>
+
 </html>
